@@ -1,0 +1,73 @@
+# Frontend
+streamlit
+streamlit-mic-recorder
+#framework
+langchain
+langchain-core
+langchain-community
+langchain-text-splitters
+langchain-huggingface
+#backend
+fastapi
+uvicorn[standard]
+python-dotenv
+python-multipart
+pydantic
+pydantic-settings
+#LLM
+transformers
+accelerate
+sentencepiece
+tokenizers
+huggingface-hub
+#Embedding
+sentence-transformers
+#vector databse
+faiss-cpu
+#Mongodb
+pymongo
+motor
+#Audio
+sounddevice
+soundfile
+librosa
+pydub
+ffmpeg-python
+# Machine Learning
+torch
+torchvision
+torchaudio
+numpy
+scipy
+pandas
+scikit-learn
+
+# Networking
+requests
+httpx
+
+# Utilities
+loguru
+rich
+tqdm
+orjson
+
+# File Processing
+pypdf
+pdfplumber
+python-docx
+openpyxl
+# Image Processing
+Pillow
+opencv-python
+
+# Authentication
+
+passlib[bcrypt]
+python-jose[cryptography]
+email-validator
+#AWS
+boto3
+#testing
+pytest
+pytest-asyncio

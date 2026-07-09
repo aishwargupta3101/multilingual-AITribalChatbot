@@ -195,9 +195,9 @@ cython_debug/
 .abstra/
 
 # Visual Studio Code
-#   Visual Studio Code specific template is maintained in a separate VisualStudioCode.gitignore 
+#   Visual Studio Code specific template is maintained in a separate VisualStudioCode.gitignore
 #   that can be found at https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
-#   and can be added to the global gitignore or merged into this file. However, if you prefer, 
+#   and can be added to the global gitignore or merged into this file. However, if you prefer,
 #   you could uncomment the following to ignore the entire vscode folder
 # .vscode/
 # Temporary file for partial code execution
@@ -216,3 +216,80 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Tribal AI Chatbot Project
+
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+
+# Local databases
+*.db
+*.sqlite3
+
+# MongoDB local data
+mongodb_data/
+
+# FAISS Vector Database
+vector_db/
+faiss_index/
+*.faiss
+*.index
+
+# Uploaded files
+data/uploads/
+data/audio/
+data/temp/
+data/output/
+
+# AI Models (if stored locally)
+models/
+checkpoints/
+weights/
+
+# Hugging Face cache
+.huggingface/
+hf_cache/
+cache/
+
+# NVIDIA NeMo
+nemo_cache/
+nemo_experiments/
+
+# SeamlessM4T cache
+seamless_cache/
+
+# Audio files
+*.wav
+*.mp3
+*.flac
+*.ogg
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+
+# Docker
+docker-data/
+docker-volumes/
+
+# AWS
+.aws/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# IDE settings
+.idea/
+.vscode/
+
+# OS files
+Thumbs.db
+.DS_Store

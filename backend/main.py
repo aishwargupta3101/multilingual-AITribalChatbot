@@ -5,6 +5,11 @@ from backend.api.router import api_router
 from backend.config.logger import logger
 from backend.config.settings import settings
 from backend.utils.exceptions import global_exception_handler
+from backend.middleware import(
+    LoggingMiddleware,
+    TimerMiddleware,
+    RequestIDMiddleware
+)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -13,21 +18,22 @@ async def lifespan(app: FastAPI):
     logger.info("Stopping Tribal AI Chatbot Backend...")
 app = FastAPI(
     title=settings.APP_NAME,
-    version="1.0.0",
+    version=settings.APP_VERSION,
     lifespan=lifespan,
 )
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:8501",
-        "http://127.0.0.1:8501",
-    ],
+    allow_origins=settings.cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.add_middleware(RequestIDMiddleware)
+app.add_middleware(TimerMiddleware)
+app.add_middleware(LoggingMiddleware)
 app.include_router(api_router)
 app.add_exception_handler(Exception, global_exception_handler)
+
 
 @app.get("/")
 async def root():

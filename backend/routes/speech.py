@@ -1,13 +1,15 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from backend.api.dependencies import get_speech_service
+from backend.schemas.speech import SpeechRequest
 from backend.services.speech_service import SpeechService
-from backend.schemas.speech import SpeechRequest,SpeechResponse
-router= APIRouter(
+router = APIRouter(
     prefix="/speech",
     tags=["Speech"]
 )
-@router.post(
-    "/",
-    response_model=SpeechResponse)
-async def speech (request:SpeechRequest):
-    return await SpeechService.speech_to_text(request)
 
+@router.post("/")
+async def speech(
+    request: SpeechRequest,
+    speech_service: SpeechService = Depends(get_speech_service)
+):
+    return await speech_service.speech_to_text(request)

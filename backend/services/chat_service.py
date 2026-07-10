@@ -1,13 +1,20 @@
 from datetime import datetime
-from backend.schemas.chat import ChatRequest,ChatResponse
+from backend.schemas.chat import ChatRequest
+from backend.utils.response import ResponseBuilder
 
 class ChatService:
-    @staticmethod
-    async def process_chat(request:ChatRequest) ->ChatResponse:
-        answer = f"You asked:{request.question}"
-        return ChatResponse(
-            success=True,
-            answer=answer,
-            language=request.language,
-            timestamp=datetime.now()
-        )
+
+    async def process_chat(
+            self,
+            request:ChatRequest
+    ):
+            answer = f"You asked:{request.question}"
+            return ResponseBuilder.success(
+                    message="chat processed successfully",
+                    data={
+                        "answer": answer,
+                        "language" : request.language,
+                        "timestamp" :str(datetime.now())
+                    }
+
+                )

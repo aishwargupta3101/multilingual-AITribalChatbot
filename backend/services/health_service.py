@@ -1,9 +1,11 @@
-from backend.schemas.health import HealthResponse
-
+from backend.utils.response import ResponseBuilder
 class HealthService:
-    @staticmethod
-    async def check():
-        return HealthResponse(
-            status="healthy",
-            version="1.0.0"
+
+    async def check(self):
+        return ResponseBuilder.success(
+            message="Backend Healthy",
+            data={
+                "status":"healthy",
+                "version":"1.0.0"
+            }
         )

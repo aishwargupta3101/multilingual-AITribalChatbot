@@ -10,6 +10,11 @@ from backend.middleware import(
     TimerMiddleware,
     RequestIDMiddleware
 )
+from backend.exceptions import(
+    TribalAIException,
+    tribal_exception_handler,
+    generic_exception_handler,
+)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -32,7 +37,8 @@ app.add_middleware(RequestIDMiddleware)
 app.add_middleware(TimerMiddleware)
 app.add_middleware(LoggingMiddleware)
 app.include_router(api_router)
-app.add_exception_handler(Exception, global_exception_handler)
+app.add_exception_handler(Exception, generic_exception_handler)
+app.add_exception_handler(TribalAIException,tribal_exception_handler)
 
 
 @app.get("/")

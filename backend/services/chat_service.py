@@ -1,6 +1,7 @@
 from datetime import datetime
 from backend.schemas.chat import ChatRequest
 from backend.utils.response import ResponseBuilder
+from backend.config.logger import logger
 
 class ChatService:
 
@@ -8,13 +9,15 @@ class ChatService:
             self,
             request:ChatRequest
     ):
-            answer = f"You asked:{request.question}"
-            return ResponseBuilder.success(
-                    message="chat processed successfully",
-                    data={
-                        "answer": answer,
-                        "language" : request.language,
-                        "timestamp" :str(datetime.now())
-                    }
+        logger.info("ChatService started")
+        answer = f"You asked: {request.question}"
+        logger.info("Chat response generated")
 
-                )
+        return ResponseBuilder.success(
+            message="Chat processed successfully",
+            data={
+                "answer": answer,
+                "language": request.language,
+                "timestamp": str(datetime.now())
+            }
+        )

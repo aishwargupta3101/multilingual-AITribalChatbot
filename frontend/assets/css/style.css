@@ -1,0 +1,10 @@
+body{
+    font-family:Arial;
+}
+.main-title{
+    color:#2E8B57;
+    font-size:40px;
+}
+.chat-box{
+    border-radius:15px;
+}

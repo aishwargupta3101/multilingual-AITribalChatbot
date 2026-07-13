@@ -1,0 +1,4 @@
+CHAT_COLLECTION = "chat_history"
+USER_COLLECTION= "users"
+DOCUMENTS_COLLECTION="documents"
+SESSION_COLLECTION="sessions"

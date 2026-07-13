@@ -1,0 +1,6 @@
+BASE_URL= "http://127.0.0.1:8000"
+HEALTH_ENDPOINT ="/api/v1/health"
+CHAT_ENDPOINT="/api/v1/chat"
+SPEECH_ENDPOINT="/api/v1/speech"
+TRANSLATION_ENDPOINT="/api/v1/translation"
+TTS_ENDPOINT ="/api/v1/tts"

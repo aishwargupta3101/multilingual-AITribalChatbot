@@ -7,10 +7,6 @@ SUPPORTED_LANGUAGES = [
 APP_NAME ="🌿 Tribal AI Chatbot"
 WELCOME_MESSAGE ="""
 Welcome to the Multilingual Tribal AI Chatbot.
-
-Supported Languages:
--English
--Gondi
--Santali
--Kokborok
 """
+AI_MODEL ="Llama 3"
+TEMPERATURE =0.3

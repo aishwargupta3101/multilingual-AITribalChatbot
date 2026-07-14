@@ -21,7 +21,7 @@ def show_chat_box():
         )
     render_message("user",user_input)
     payload={
-        "session_id":str(uuid.uuid4()),
+        "session_id":st.session_state.session_id,
         "question":user_input,
         "language":st.session_state.language
     }

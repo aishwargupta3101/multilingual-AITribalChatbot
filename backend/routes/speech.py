@@ -1,15 +1,9 @@
-from fastapi import APIRouter, Depends
-from backend.api.dependencies import get_speech_service
-from backend.schemas.speech import SpeechRequest
+from fastapi import APIRouter,File,UploadFile
 from backend.services.speech_service import SpeechService
-router = APIRouter(
-    prefix="/speech",
-    tags=["Speech"]
-)
+from backend.services.speech_service import SpeechService
+router = APIRouter()
+speech_services =SpeechService()
 
-@router.post("/")
-async def speech(
-    request: SpeechRequest,
-    speech_service: SpeechService = Depends(get_speech_service)
-):
-    return await speech_service.speech_to_text(request)
+@router.post("/upload")
+async def upload_audio(file:UploadFile = File(...)):
+    return await speech_services.save_audio(file)

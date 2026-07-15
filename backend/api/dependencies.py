@@ -3,8 +3,7 @@ from backend.services.speech_service import SpeechService
 from backend.services.translation_service import TranslationService
 from backend.services.tts_service import TTSService
 from backend.services.health_service import HealthService
-from backend.database.mongodb import MongoDB
-
+from backend.database.connection import mongodb
 def get_chat_service()-> ChatService:
     return ChatService()
 
@@ -20,4 +19,4 @@ def get_tts_service() -> TTSService:
 def get_health_service() -> HealthService:
     return HealthService()
 def get_database():
-    return MongoDB()
+    return mongodb()

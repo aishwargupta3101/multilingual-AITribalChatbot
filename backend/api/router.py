@@ -6,6 +6,8 @@ from backend.routes.translation import router as translation_router
 from backend.routes.tts import router as tts_router
 from backend.routes.upload import router as upload_router
 from backend.routes.speech import router as speech_router
+from backend.routes.history import router as history_router
+from backend.routes.session import router as session_router
 
 
 api_router = APIRouter(prefix="/api/v1")
@@ -24,4 +26,14 @@ api_router.include_router(
     prefix="/speech",
     tags=["Speech"]
 
+)
+api_router.include_router(
+    history_router,
+    prefix="/api/v1",
+    tags=["History"]
+)
+api_router.include_router(
+    session_router,
+    prefix="/api/v1",
+    tags=["Sessions"]
 )

@@ -4,7 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from backend.api.router import api_router
 from backend.config.logger import logger
 from backend.config.settings import settings
-from backend.utils.exceptions import global_exception_handler
+from backend.database.connection import mongodb
+from backend.database.indexes import create_indexes
 from backend.middleware import(
     LoggingMiddleware,
     TimerMiddleware,
@@ -19,8 +20,11 @@ from backend.exceptions import(
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("Starting Tribal AI Chatbot Backend...")
+    await mongodb.connect()
+    await create_indexes()
     yield
-    logger.info("Stopping Tribal AI Chatbot Backend...")
+    await mongodb.disconnect()
+    logger.info("Stopping Tribal AI Chatbot Backend....")
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION,

@@ -6,7 +6,7 @@ class Settings(BaseSettings):
     HOST: str = "0.0.0.0"
     PORT: int = 8000
     LOG_LEVEL: str = "INFO"
-    MONGO_URI: str
+    MONGODB_URI: str
     DATABASE_NAME: str
     LLAMA_MODEL: str
     MAX_NEW_TOKEN:int

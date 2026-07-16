@@ -33,7 +33,7 @@ class ChatRepository:
     async def get_recent_message(
         self,
         session_id: str,
-        limit:int =10,
+        limit:int =8,
     ):
         cursor =(
             collections.chat_history

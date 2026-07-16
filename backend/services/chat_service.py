@@ -4,6 +4,8 @@ from backend.utils.response import ResponseBuilder
 from backend.config.logger import logger
 from backend.repositories.chat_repository import chat_repository
 from backend.repositories.session_repository import session_repository
+from backend.llm.llama_service import llama_service
+import time
 
 class ChatService:
 
@@ -11,7 +13,13 @@ class ChatService:
             self,
             request:ChatRequest
     ):
-        logger.info("ChatService started")
+        logger.info(
+            f"Session : {request.session_id}"
+        )
+        logger.info(
+            f"Question :{request.question}"
+        )
+        question = request.question[:2000]
         await  session_repository.create_session(
             request.session_id
         )
@@ -35,17 +43,29 @@ class ChatService:
         conversation.append(
             {
                 "role":"user",
-                "content":request.question
+                "content":(
+                    f"Please answer in {request.language}.\n\n"
+                    f"{request.question}"
+                )
             }
         )
 
         await chat_repository.save_message(
             session_id=request.session_id,
             role="user",
-            message=request.question,
+            message=question,
             language=request.language,
         )
-        answer = f"You asked: {request.question}"
+        start = time.time()
+        answer =  await llama_service.generate_response(
+            conversation
+        )
+        end= time.time()
+        logger.info(
+            f"AI Response Time: {end -start:.2f} seconds"
+        )
+        if not answer:
+            answer ="Sorry , I couldn't process your request."
         await chat_repository.save_message(
             session_id=request.session_id,
             role="assistant",

@@ -1,20 +1,14 @@
-from pathlib import Path
-from fastapi import APIRouter,UploadFile,File
+from fastapi import APIRouter,File,Form,UploadFile
+from backend.services.upload_service import upload_service
 router = APIRouter()
 
-UPLOAD_DIR = Path("data/uploads")
-UPLOAD_DIR.mkdir(
-    parents=True,
-    exist_ok=True
-)
-@router.post("/")
-async def upload_file(
-    file:UploadFile=File(...)
+@router.post("/upload")
+async def upload_document(
+    session_id:str =Form(...),
+    file:UploadFile = File(...),
+
 ):
-    destination = UPLOAD_DIR /file.filename
-    with open(destination,"wb") as f:
-        f.write(await file.read())
-    return{
-        "filename":file.filename,
-        "status":"uploaded"
-    }
+    return await upload_service.upload_document(
+        session_id=session_id,
+        file=file,
+    )

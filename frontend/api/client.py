@@ -8,7 +8,7 @@ class APIClient:
     def get(endpoint):
         response = requests.get(
             BASE_URL + endpoint,
-            timeout=10
+            timeout=120
         )
         response.raise_for_status()
         return response.json()
@@ -17,7 +17,7 @@ class APIClient:
         response = requests.post(
             BASE_URL + endpoint,
             json=payload,
-            timeout=30
+            timeout=180
         )
         response.raise_for_status()
         return response.json()
@@ -33,7 +33,7 @@ class APIClient:
         response = requests.post(
             BASE_URL+ endpoint,
             files=files,
-            timeout =60
+            timeout =120
         )
         response.raise_for_status()
         return response.json()
@@ -50,7 +50,7 @@ class APIClient:
             response = requests.post(
                 BASE_URL + endpoint,
                 files=files,
-                timeout=60
+                timeout=120
             )
             response.raise_for_status()
             return response.json()

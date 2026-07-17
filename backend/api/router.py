@@ -10,6 +10,10 @@ from backend.routes.llama_test import router as llama_test_router
 from backend.routes.stream import router as stream_router
 from backend.routes.upload import router as upload_router
 from backend.routes.document_test import router as document_test_router
+from backend.routes.embedding_test import( router as embedding_test_router)
+from backend.routes.faiss_test import (
+    router as faiss_test_router
+)
 
 api_router = APIRouter(prefix="/api/v1")
 api_router.include_router(health_router)
@@ -46,4 +50,12 @@ api_router.include_router(
 api_router.include_router(
     document_test_router,
     tags=["Document Test"]
+)
+api_router.include_router(
+    embedding_test_router,
+    tags=["Embedding"]
+)
+api_router.include_router(
+    faiss_test_router,
+    tags=["FAISS"]
 )

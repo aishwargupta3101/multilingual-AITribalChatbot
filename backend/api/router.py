@@ -14,6 +14,12 @@ from backend.routes.embedding_test import( router as embedding_test_router)
 from backend.routes.faiss_test import (
     router as faiss_test_router
 )
+from backend.routes.retriever_test import (
+    router as retriever_test_router
+)
+from backend.routes.rag_test import (
+    router as rag_test_router
+)
 
 api_router = APIRouter(prefix="/api/v1")
 api_router.include_router(health_router)
@@ -58,4 +64,12 @@ api_router.include_router(
 api_router.include_router(
     faiss_test_router,
     tags=["FAISS"]
+)
+api_router.include_router(
+    retriever_test_router,
+    tags=["Retriever"]
+)
+api_router.include_router(
+    rag_test_router,
+    tags=["RAG"]
 )

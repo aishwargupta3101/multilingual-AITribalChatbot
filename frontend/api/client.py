@@ -1,8 +1,7 @@
-from http.client import responses
-
 import requests
 
 from api.endpoints import BASE_URL
+
 class APIClient:
     @staticmethod
     def get(endpoint):
@@ -15,6 +14,7 @@ class APIClient:
     @staticmethod
     def post(endpoint, payload):
         response = requests.post(
+
             BASE_URL + endpoint,
             json=payload,
             timeout=180
@@ -22,26 +22,35 @@ class APIClient:
         response.raise_for_status()
         return response.json()
     @staticmethod
-    def upload(endpoint,file):
-        files={
-            "file":(
+    def upload(endpoint, file, session_id):
+        """
+        Upload a document along with the session ID.
+        """
+        files = {
+            "file": (
                 file.name,
                 file,
                 file.type
             )
         }
+
+        data = {
+            "session_id": session_id
+        }
         response = requests.post(
-            BASE_URL+ endpoint,
+            BASE_URL + endpoint,
             files=files,
-            timeout =120
+            data=data,
+            timeout=120
         )
         response.raise_for_status()
         return response.json()
     @staticmethod
     def upload_audio(endpoint, audio_path):
-        with open(audio_path,"rb") as audio:
-            files ={
-                "file":(
+        with open(audio_path, "rb") as audio:
+
+            files = {
+                "file": (
                     "user_audio.wav",
                     audio,
                     "audio/wav"

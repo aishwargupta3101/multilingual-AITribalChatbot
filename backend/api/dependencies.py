@@ -4,6 +4,10 @@ from backend.services.translation_service import TranslationService
 from backend.services.tts_service import TTSService
 from backend.services.health_service import HealthService
 from backend.database.connection import mongodb
+from backend.services.translation_service import (
+    TranslationService,
+    translation_service
+)
 def get_chat_service()-> ChatService:
     return ChatService()
 

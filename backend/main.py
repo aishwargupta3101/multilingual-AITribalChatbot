@@ -16,6 +16,7 @@ from backend.exceptions import(
     tribal_exception_handler,
     generic_exception_handler,
 )
+from backend.api.translation import router as translation_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -41,6 +42,10 @@ app.add_middleware(RequestIDMiddleware)
 app.add_middleware(TimerMiddleware)
 app.add_middleware(LoggingMiddleware)
 app.include_router(api_router)
+app.include_router(
+    translation_router,
+    prefix="/api/v1"
+)
 app.add_exception_handler(Exception, generic_exception_handler)
 app.add_exception_handler(TribalAIException,tribal_exception_handler)
 

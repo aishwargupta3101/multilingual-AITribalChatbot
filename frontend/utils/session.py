@@ -17,3 +17,5 @@ def initialize_session():
 
     if "selected_page" not in st.session_state:
         st.session_state.selected_page ="Home"
+    if "document_id" not in st.session_state:
+        st.session_state.document_id= None

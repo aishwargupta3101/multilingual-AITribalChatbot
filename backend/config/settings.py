@@ -25,7 +25,8 @@ class Settings(BaseSettings):
     ALLOWED_FILE_TYPES:str
     model_config = SettingsConfigDict(
         env_file=".env",
-        case_sensitive=True
+        case_sensitive=True,
+        extra="ignore"
     )
     @property
     def cors_origins(self):

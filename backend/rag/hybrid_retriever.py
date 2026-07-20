@@ -21,16 +21,36 @@ class HybridRetriever:
             vector_db_path=vector_db_path,
             k=k
         )
-        merged_documents = []
-
-        seen = set()
-        for document in faiss_documents+ bm25_documents:
-            key=(
+        scores ={}
+        for rank,document in enumerate(faiss_documents):
+            key =(
                 document.page_content,
                 document.metadata.get("chunk")
             )
-            if key not in seen:
-                seen.add(key)
-                merged_documents.append(document)
-        return merged_documents
+            scores[key] = {
+                "document" : document,
+                "score":(k-rank)*2
+            }
+        for rank, document in enumerate(bm25_documents):
+            key =(
+                document.page_content,
+                document.metadata.get("chunk")
+            )
+            if key in scores :
+                scores[key]["score"] += (k-rank)
+            else:
+                scores[key] ={
+                    "document":document,
+                    "score":(k-rank)
+                }
+        ranked =sorted(
+            scores.values(),
+            key=lambda item: item["score"],
+            reverse=True
+        )
+        return[
+            item["document"]
+            for item in ranked[:k]
+        ]
+
 hybrid_retriever = HybridRetriever()

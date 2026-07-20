@@ -1,14 +1,22 @@
-from fastapi import APIRouter,File,Form,UploadFile
+from fastapi import APIRouter, UploadFile, File, Form
+
 from backend.services.upload_service import upload_service
-router = APIRouter()
+from backend.utils.response import ResponseBuilder
+router = APIRouter(
+    prefix="/upload",
+    tags=["Upload"]
+)
 
-@router.post("/upload")
+@router.post("/")
 async def upload_document(
-    session_id:str =Form(...),
-    file:UploadFile = File(...),
-
+    session_id: str = Form(...),
+    file: UploadFile = File(...)
 ):
-    return await upload_service.upload_document(
+    result = await upload_service.upload_document(
         session_id=session_id,
-        file=file,
+        file=file
+    )
+    return ResponseBuilder.success(
+        message="Document uploaded successfully.",
+        data=result
     )

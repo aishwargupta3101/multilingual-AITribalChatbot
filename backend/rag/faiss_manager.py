@@ -40,7 +40,7 @@ class FAISSManager:
             embeddings=embedding_model,
             allow_dangerous_deserialization=True
         )
-    def create_and_save(self,documents,save_path:str):
+    def create_and_save(self,documents,vector_db_path:str):
         """
         Convenience method:
         Create vector store and save it.
@@ -48,7 +48,7 @@ class FAISSManager:
         vector_store = self.create_vector_store(documents)
         self.save_vector_store(
             vector_store,
-            save_path
+            vector_db_path
         )
         return vector_store
 

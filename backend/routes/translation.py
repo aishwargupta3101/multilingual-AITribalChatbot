@@ -12,4 +12,12 @@ async def translate(
     request: TranslationRequest,
     translation_service: TranslationService = Depends(get_translation_service)
 ):
-    return await translation_service.translate(request)
+    translated= translation_service.translate(
+        text=request.text,
+        source_language=request.source_language,
+        target_language=request.target_language
+    )
+    return {
+        "success":True,
+        "translated_text":translated
+    }

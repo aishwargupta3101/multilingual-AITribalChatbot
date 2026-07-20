@@ -23,7 +23,8 @@ def show_chat_box():
     payload={
         "session_id":st.session_state.session_id,
         "question":user_input,
-        "language":st.session_state.language
+        "language":st.session_state.language,
+        "document_id": st.session_state.get("document_id")
     }
     with st.spinner("Thinking..."):
         try:

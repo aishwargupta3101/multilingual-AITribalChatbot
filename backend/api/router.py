@@ -20,6 +20,7 @@ from backend.routes.retriever_test import (
 from backend.routes.rag_test import (
     router as rag_test_router
 )
+from backend.api.translation import router as translation_router
 
 api_router = APIRouter(prefix="/api/v1")
 api_router.include_router(health_router)
@@ -72,4 +73,7 @@ api_router.include_router(
 api_router.include_router(
     rag_test_router,
     tags=["RAG"]
+)
+api_router.include_router(
+    translation_router
 )

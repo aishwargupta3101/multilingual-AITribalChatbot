@@ -23,11 +23,13 @@ def show_sidebar():
             ]
         )
         st.divider()
+        st.subheader("🌍 Language")
         st.session_state.language = st.selectbox(
             "Language",
             SUPPORTED_LANGUAGES,
             index=SUPPORTED_LANGUAGES.index(
                 st.session_state.language
-            )
+            ),
+            format_func=lambda x: x.title()
         )
-        st.write("Languages:" ,SUPPORTED_LANGUAGES)
+        st.write(SUPPORTED_LANGUAGES)

@@ -63,3 +63,35 @@ class APIClient:
             )
             response.raise_for_status()
             return response.json()
+
+    @staticmethod
+    def speech_to_text(audio_bytes):
+        files = {
+            "audio": (
+                "recording.wav",
+                audio_bytes,
+                "audio/wav"
+            )
+        }
+        response = requests.post(
+            "http://127.0.0.1:8000/api/v1/speech",
+            files=files,
+            timeout=120
+        )
+        response.raise_for_status()
+        return response.json()
+    @staticmethod
+    def chat(question,session_id,language,document_id=None):
+        payload = {
+            "question":question,
+            "session_id" : session_id,
+            "language":language,
+            "document_id":document_id
+        }
+        response = requests.post(
+            BASE_URL+"/api/v1/chat",
+            json=payload,
+            timeout=180
+        )
+        response.raise_for_status()
+        return response.json()

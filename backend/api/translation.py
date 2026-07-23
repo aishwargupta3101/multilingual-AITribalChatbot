@@ -11,22 +11,19 @@ router = APIRouter(
 )
 
 @router.post(
-    "/translate",
+    "",
     response_model=TranslationResponse
 )
 async def translate(request:TranslationRequest):
     try:
-        translated = translation_service.translate(
+        translated_text = translation_service.translate(
             text=request.text,
             source_language=request.source_language,
             target_language=request.target_language
         )
         return TranslationResponse(
             success=True,
-            translated_text=translated,
-            source_language=request.source_language,
-            target_language=request.target_language,
-            message="Translation completed successfully"
+            translated_text=translated_text
 
         )
     except Exception as e:

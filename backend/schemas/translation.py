@@ -7,6 +7,3 @@ class TranslationRequest(BaseModel):
 class TranslationResponse(BaseModel):
     success:bool
     translated_text:str
-    source_language:str
-    target_language:str
-    message:str

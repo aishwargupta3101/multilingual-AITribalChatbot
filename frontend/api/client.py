@@ -95,3 +95,17 @@ class APIClient:
         )
         response.raise_for_status()
         return response.json()
+    @staticmethod
+    def text_to_speech(text,language):
+        payload ={
+            "text":text,
+            "language":language
+        }
+        response = requests.post(
+            BASE_URL + "/api/v1/tts/",
+            json=payload,
+            timeout=180,
+            stream=True
+        )
+        response.raise_for_status()
+        return response.content

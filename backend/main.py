@@ -18,6 +18,7 @@ from backend.exceptions import(
 )
 from backend.api.translation import router as translation_router
 from backend.speech.speech_router import router as speech_router
+from backend.tts.tts_router import router as tts_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -43,10 +44,7 @@ app.add_middleware(RequestIDMiddleware)
 app.add_middleware(TimerMiddleware)
 app.add_middleware(LoggingMiddleware)
 app.include_router(api_router)
-app.include_router(
-    translation_router,
-    prefix="/api/v1"
-)
+
 app.include_router(speech_router)
 app.add_exception_handler(Exception, generic_exception_handler)
 app.add_exception_handler(TribalAIException,tribal_exception_handler)

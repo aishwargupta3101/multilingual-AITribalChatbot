@@ -1,9 +1,9 @@
 from fastapi import APIRouter
 from backend.routes.health import router as health_router
 from backend.routes.chat import router as chat_router
-from backend.routes.translation import router as translation_router
-from backend.routes.tts import router as tts_router
-from backend.routes.speech import router as speech_router
+from backend.api.translation import router as translation_router
+from backend.tts.tts_router import router as tts_router
+from backend.speech.speech_router import router as speech_router
 from backend.routes.history import router as history_router
 from backend.routes.session import router as session_router
 from backend.routes.llama_test import router as llama_test_router
@@ -31,12 +31,6 @@ api_router.include_router(tts_router)
 api_router.include_router(
     upload_router,
     tags=["Upload"]
-)
-api_router.include_router(
-    speech_router,
-    prefix="/speech",
-    tags=["Speech"]
-
 )
 api_router.include_router(
     history_router,

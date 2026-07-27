@@ -51,11 +51,13 @@ class NLLBService:
         target_code = SUPPORTED_LANGUAGES[target_language]["code"]
         if source_code is None:
             raise ValueError(
-                f"{source_language} is not supported by NLLB."
+                f"Translation for '{source_language}' is not available yet. "
+                "Support will be added after fine-tuning."
             )
         if target_code is None:
             raise ValueError(
-                f"{target_language} is not supported by NLLB."
+                f"Translation for '{target_language}' is not available yet. "
+                "Support will be added after fine-tuning."
             )
         self.tokenizer.src_lang = source_code
         inputs = self.tokenizer(

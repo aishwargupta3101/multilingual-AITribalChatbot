@@ -1,25 +1,35 @@
 """
-SeamlessM4T Text-to-Speech Service
+Temporary XTTS Service
+
+NOTE:
+This currently uses SeamlessM4T as a temporary backend for TTS.
+In Phase 8 (Fine-Tuning), replace the model loading with Coqui XTTS v2
+without changing the rest of the project.
 """
 
 import logging
 import os
 import uuid
-
 import soundfile as sf
 import torch
 from transformers import AutoProcessor, SeamlessM4Tv2Model
 logger = logging.getLogger(__name__)
 
+class XTTSService:
 
-class SeamlessTTSService:
     LANGUAGE_CODES = {
         "english": "eng",
         "hindi": "hin",
     }
-
+    FUTURE_LANGUAGES = {
+        "manipuri",
+        "monpa",
+        "tai khamti",
+        "tai-khamti",
+    }
     def __init__(self):
-        logger.info("Loading SeamlessM4T TTS Model...")
+        logger.info("Loading Temporary XTTS Service (SeamlessM4T)...")
+
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.processor = AutoProcessor.from_pretrained(
             "facebook/seamless-m4t-v2-large"
@@ -28,13 +38,18 @@ class SeamlessTTSService:
             "facebook/seamless-m4t-v2-large"
         ).to(self.device)
         os.makedirs("generated_audio", exist_ok=True)
-        logger.info("SeamlessM4T Loaded Successfully.")
-
+        logger.info("Temporary XTTS Service Loaded Successfully.")
     def text_to_speech(self, text: str, language: str) -> str:
-        language = language.lower()
+
+        language = language.lower().strip()
+        if language in self.FUTURE_LANGUAGES:
+            raise NotImplementedError(
+                f"TTS for '{language}' is not available yet. "
+                "It will be added after XTTS fine-tuning."
+            )
         if language not in self.LANGUAGE_CODES:
             raise ValueError(
-                f"TTS not supported for {language}"
+                f"Unsupported language: {language}"
             )
         tgt_lang = self.LANGUAGE_CODES[language]
         inputs = self.processor(
@@ -43,8 +58,8 @@ class SeamlessTTSService:
             return_tensors="pt",
         )
         inputs = {
-            k: v.to(self.device)
-            for k, v in inputs.items()
+            key: value.to(self.device)
+            for key, value in inputs.items()
         }
         with torch.no_grad():
             output = self.model.generate(
@@ -58,9 +73,10 @@ class SeamlessTTSService:
             audio = output.audio
         else:
             audio = output
+
         if not isinstance(audio, torch.Tensor):
             raise RuntimeError(
-                f"Unsupported output type from generate(): {type(output)}"
+                f"Unsupported output type: {type(output)}"
             )
         audio = audio.detach().cpu().numpy().squeeze()
         filename = f"{uuid.uuid4()}.wav"
@@ -75,5 +91,4 @@ class SeamlessTTSService:
         )
         logger.info(f"TTS Audio Saved: {filepath}")
         return filepath
-
-seamless_tts_service = SeamlessTTSService()
+xtts_service = XTTSService()

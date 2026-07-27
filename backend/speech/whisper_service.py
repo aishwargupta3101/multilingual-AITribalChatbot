@@ -20,7 +20,8 @@ class WhisperService:
         segments, info = self.model.transcribe(
             audio_path,
             beam_size=5,
-            vad_filter=True
+            vad_filter=True,
+            language=None
         )
         text = " ".join(segment.text for segment in segments).strip()
         print("Detected Language:", info.language)

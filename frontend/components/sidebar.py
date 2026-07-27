@@ -4,6 +4,8 @@ from utils.constants import SUPPORTED_LANGUAGES
 
 def show_sidebar():
     with st.sidebar:
+        if "language" not in st.session_state:
+            st.session_state.language = SUPPORTED_LANGUAGES[0]
         st.title("🌿 Tribal AI")
         st.divider()
         if st.button("🆕 New Chat" , use_container_width=True):

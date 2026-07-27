@@ -1,8 +1,8 @@
 SUPPORTED_LANGUAGES = [
     "english",
-    "gondi",
-    "santali",
-    "kokborok",
+    "tai_khamti",
+    "manipuri",
+    "monpa",
     "hindi"
 ]
 APP_NAME ="🌿 Tribal AI Chatbot"

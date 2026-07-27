@@ -4,6 +4,8 @@ from api.client import APIClient
 from api.endpoints import CHAT_ENDPOINT
 from components.message import render_message
 def show_chat_box():
+    if "language" not in st.session_state:
+        st.session_state.language="english"
     for message in st.session_state.messages:
         render_message(
 

@@ -1,7 +1,6 @@
 """
 Supported Languages
 """
-
 SUPPORTED_LANGUAGES = {
     "english": {
         "name": "English",
@@ -13,19 +12,19 @@ SUPPORTED_LANGUAGES = {
         "code": "hin_Deva",
         "locale": "hi"
     },
-    "gondi": {
-        "name": "Gondi",
-        "code": None,
-        "locale": "gon"
+    "manipuri": {
+        "name": "Manipuri",
+        "code": "mni_Beng",
+        "locale": "mni"
     },
-    "santali": {
-        "name": "Santali",
+    "monpa": {
+        "name": "Monpa",
         "code": None,
-        "locale": "sat"
+        "locale": "mon"
     },
-    "kokborok": {
-        "name": "Kokborok",
+    "tai_khamti": {
+        "name": "Tai Khamti",
         "code": None,
-        "locale": "trp"
+        "locale": "tkt"
     }
 }

@@ -24,10 +24,13 @@ The goal is to bridge the digital language divide and provide easy access to edu
 - Scalable backend architecture
 
 # 🌍 Supported Languages
-### Initial Release
-- Gondi
-- Santali
-- Kokborok
+## Current Release
+
+- English
+- Hindi
+- Manipuri
+- Monpa
+- Tai Khamti
 
 ### Future Expansion
 - Bhili
@@ -48,7 +51,7 @@ The goal is to bridge the digital language divide and provide easy access to edu
 - Noise tolerant transcription
 
 **Model**
-- NVIDIA NeMo
+-  Faster-Whisper
 
 ## 🌐 Language Translation
 
@@ -88,8 +91,9 @@ Knowledge sources can include:
 - Response spoken in the user's native language
 
 **Model**
+- XTTS Service (Current implementation uses SeamlessM4T for English and Hindi)
+- Planned: Fine-tuned XTTS v2 for Manipuri, Monpa and Tai Khamti
 
-- Meta SeamlessM4T
 ## 💾 Chat History
 
 - Store conversations
@@ -109,28 +113,35 @@ User
 Speech Input
    │
    ▼
-NVIDIA NeMo
+Faster-Whisper
 (Speech-to-Text)
    │
    ▼
-Meta SeamlessM4T
+Meta NLLB
 (Translation)
    │
    ▼
-Llama 3 + LangChain
-        │
-        ▼
-      FAISS
-(Vector Search)
-        │
-        ▼
+Llama 3
+   │
+   ▼
+LangChain
+   │
+   ▼
+Hybrid RAG
+(FAISS + BM25)
+   │
+   ▼
 Generated Response
-        │
-        ▼
-Meta SeamlessM4T
-(Text-to-Speech)
-        │
-        ▼
+   │
+   ▼
+Meta NLLB
+(Optional Translation)
+   │
+   ▼
+XTTS Service
+(Currently SeamlessM4T)
+   │
+   ▼
 Voice Output
 ```
 
@@ -138,19 +149,20 @@ Voice Output
 
 # 🛠️ Technology Stack
 
-| Component | Technology |
-|------------|------------|
-| Frontend | Streamlit |
-| Backend | FastAPI |
-| LLM | Llama 3 |
-| Speech-to-Text | NVIDIA NeMo |
-| Translation | Meta SeamlessM4T |
-| Text-to-Speech | Meta SeamlessM4T |
-| Framework | LangChain |
-| Vector Database | FAISS |
-| Database | MongoDB |
-| Deployment | Docker |
-| Cloud | AWS |
+| Component       | Technology                           |
+| --------------- | ------------------------------------ |
+| Frontend        | Streamlit                            |
+| Backend         | FastAPI                              |
+| LLM             | Llama 3                              |
+| Speech-to-Text  | Faster-Whisper                       |
+| Translation     | Meta NLLB-200                        |
+| Text-to-Speech  | XTTS Service (Temporary SeamlessM4T) |
+| Framework       | LangChain                            |
+| Vector Database | FAISS                                |
+| Database        | MongoDB                              |
+| Deployment      | Docker                               |
+| Cloud           | AWS                                  |
+
 
 
 # 📂 Project Structure

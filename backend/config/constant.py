@@ -1,8 +1,9 @@
 SUPPORTED_LANGUAGES = {
     "english": "en",
-    "gondi": "gon",
-    "santali": "sat",
-    "kokborok": "kok"
+    "hindi": "hi",
+    "manipuri": "mni",
+    "monpa": "mon",
+    "tai_khamti": "tkt"
 }
 SUPPORTED_FILE_TYPES = [
     ".pdf",

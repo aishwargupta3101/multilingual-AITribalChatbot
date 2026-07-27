@@ -5,6 +5,8 @@ def show_voice_recorder():
     st.subheader("🎤 Voice Chat")
     if "messages" not in st.session_state:
         st.session_state.messages =[]
+    if "language" not in st.session_state:
+        st.session_state.language="english"
     audio = st.audio_input("Record your question")
     if audio is not None:
         st.audio(audio)

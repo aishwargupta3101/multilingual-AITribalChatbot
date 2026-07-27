@@ -3,8 +3,8 @@ Text-to-Speech Service
 """
 
 import logging
-from backend.tts.seamless_tts_service import (
-    seamless_tts_service
+from backend.tts.xtts_service import (
+    xtts_service
 )
 logger = logging.getLogger(__name__)
 
@@ -15,7 +15,7 @@ class TTSService:
         language: str
     ):
         try:
-            audio_file = seamless_tts_service.text_to_speech(
+            audio_file = xtts_service.text_to_speech(
                 text=text,
                 language=language
             )

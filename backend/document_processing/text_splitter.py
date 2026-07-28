@@ -20,6 +20,7 @@ class DocumentSplitter:
             documents.append(
                 Document(
                     page_content=chunk,
+
                     metadata={
                         "source":source,
                         "chunk":index +1

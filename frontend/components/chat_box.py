@@ -16,7 +16,7 @@ def show_chat_box():
             sources=message.get("sources"),
             timestamp=message.get("timestamp")
         )
-    voice_text= st.session_state.get("voice_test","")
+    voice_text= st.session_state.get("voice_test", "")
     user_input = st.chat_input("Ask something....")
     if not user_input and voice_text:
         user_input = voice_text

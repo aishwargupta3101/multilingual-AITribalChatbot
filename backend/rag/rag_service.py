@@ -23,6 +23,7 @@ class RAGService:
         for document in documents:
             sources.append(
                 {
+
                     "source": document.metadata.get(
                         "source",
                         "Unknown"

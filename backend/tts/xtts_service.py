@@ -91,4 +91,10 @@ class XTTSService:
         )
         logger.info(f"TTS Audio Saved: {filepath}")
         return filepath
-xtts_service = XTTSService()
+_xtts_service = None
+
+def get_xtts_service():
+    global _xtts_service
+    if _xtts_service is None:
+        _xtts_service = XTTSService()
+    return _xtts_service

@@ -49,6 +49,10 @@ class NLLBService:
             raise ValueError(f"Unsupported target language: {target_language}")
         source_code = SUPPORTED_LANGUAGES[source_language]["code"]
         target_code = SUPPORTED_LANGUAGES[target_language]["code"]
+        print("Source Language:", source_language)
+        print("Target Language:", target_language)
+        print("Source Code:", source_code)
+        print("Target Code:", target_code)
         if source_code is None:
             raise ValueError(
                 f"Translation for '{source_language}' is not available yet. "
@@ -74,6 +78,11 @@ class NLLBService:
                 bos_token_id = self.tokenizer.convert_tokens_to_ids(
                     target_code
                 )
+        print("=" * 60)
+        print("Source Code:", source_code)
+        print("Target Code:", target_code)
+        print("Tokenizer src_lang:", self.tokenizer.src_lang)
+        print("Input Text:", text)
 
         generated_tokens = self.model.generate(
             **inputs,
@@ -84,9 +93,9 @@ class NLLBService:
             generated_tokens,
             skip_special_tokens=True
         )[0]
+        print("Translated Text:", translated_text)
         logger.info(
-            f"Translation completed: { translated_text}"
+            f"Translation completed: {translated_text}"
         )
         return translated_text
-
 nllb_service = NLLBService()

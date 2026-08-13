@@ -282,58 +282,9 @@ The application can be deployed using:
 - Nginx
 - MongoDB Atlas
 
-# 🔮 Future Improvements
 
-- Offline mode
-- Mobile application
-- AI Agents
-- Image understanding
-- Video understanding
-- Live translation
-- Government scheme assistant
-- Healthcare assistant
-- Agriculture advisor
-- Multi-user authentication
-- Analytics Dashboard
 
----
 
-# 📈 Roadmap
-
-- ✅ Speech Recognition
-- ✅ Translation
-- ✅ RAG Integration
-- ✅ Voice Output
-- ⏳ AI Agents
-- ⏳ Mobile App
-- ⏳ Offline Deployment
-- ⏳ More Tribal Languages
-
----
-
-# 🤝 Contributing
-
-Contributions are welcome!
-
-1. Fork the repository
-2. Create a new branch
-3. Commit your changes
-4. Push to your branch
-5. Open a Pull Request
-
----
-
-# 📄 License
-
-This project is licensed under the **MIT License**.
-
----
-
-# 👨‍💻 Author
-
-**Aishwar Gupta**
-
-B.Tech Computer Science Engineering
 
 Generative AI Developer
 

@@ -1,0 +1,692 @@
+[
+  {
+    "category": "AI Assistant",
+    "english": "Can you explain this in my language?",
+    "tai_khamti_script": "ᩈᩬᨶᩈᩢᨠᨶᩅ᩵ᩤᩋᩢ᩠ᨶᨶᩦ᩶ᨶᩱ᩶ᨠ᩠ᩅᩤ᩠ᨾᩈᩱᩅ᩵ᩤ?",
+    "transliteration": "Son sak wa an nei nai kwam sai wa?"
+  },
+  {
+    "category": "AI Assistant",
+    "english": "Can you answer in simple words?",
+    "tai_khamti_script": "ᨲᩬ᩠ᨷᨠ᩠ᩅᩤ᩠ᨾᨦ᩵ᩤ᩠ᨿᨦ᩵ᩤ᩠ᨿᨯᩱ᩶ᩉᩤ?",
+    "transliteration": "Top kwam ngay ngay dai ha?"
+  },
+  {
+    "category": "AI Assistant",
+    "english": "Can you teach me something new today?",
+    "tai_khamti_script": "ᩅᩢ᩠ᨶᨶᩦ᩶ᩈᩬ᩠ᨶᩈᩢᨠᨶᩅ᩵ᩤᩋᩢ᩠ᨶᨾᩯ᩠᩵ᨶᩉᩤ?",
+    "transliteration": "Wan nei son sak wa an maen ha?"
+  },
+  {
+    "category": "AI Assistant",
+    "english": "Can you ask me a quiz question?",
+    "tai_khamti_script": "ᨳᩤ᩠ᨾᨠ᩠ᩅᩤ᩠ᨾᨳᩤ᩠ᨾᩈᩢᨠᨶᩅ᩵ᩤᨯᩱ᩶ᩉᩤ?",
+    "transliteration": "Tham kwam tham sak wa dai ha?"
+  },
+  {
+    "category": "AI Assistant",
+    "english": "Can you remember our previous conversation?",
+    "tai_khamti_script": "ᨧᩮᩢ᩶ᩤᨧᩡᨯᩱ᩶ᨠ᩠ᩅᩤ᩠ᨾᩉᩢ᩶ᨦᩉᩖᩢᨦᩉᩤ?",
+    "transliteration": "Chau ja dai kwam hang hlang ha?"
+  },
+  {
+    "category": "AI Assistant",
+    "english": "Can you help me fill out a form?",
+    "tai_khamti_script": "ᨧᩮᩢ᩶ᩤᨩ᩵ᩅ᩠ᨿᩉᩱ᩶ᨲᩯ᩠ᨾᨼᩬ᩠ᨾᨯᩱ᩶ᩉᩤ?",
+    "transliteration": "Chau chuai hai taem form dai ha?"
+  },
+  {
+    "category": "AI Assistant",
+    "english": "Can you read this aloud?",
+    "tai_khamti_script": "ᩋ᩵ᩤ᩠ᨶᩋᩢ᩠ᨶᨶᩦ᩶ᩉᩱ᩶ᨯᩢ᩠ᨦᨯᩢ᩠ᨦᨯᩱ᩶ᩉᩤ?",
+    "transliteration": "An an nei hai dang dang dai ha?"
+  },
+  {
+    "category": "AI Assistant",
+    "english": "Can you spell this word?",
+    "tai_khamti_script": "ᨲᩯ᩠ᨾᨲᩢ᩠ᩅᩈᩯ᩠ᨶᨠ᩠ᩅᩤ᩠ᨾᨶᩦ᩶ᨯᩱ᩶ᩉᩤ?",
+    "transliteration": "Taem tau saen kwam nei dai ha?"
+  },
+  {
+    "category": "AI Assistant",
+    "english": "Can you explain this picture?",
+    "tai_khamti_script": "ᩈᩬ᩠ᨶᩈᩢᨠᨶᩅ᩵ᩤᩁᩪ᩠ᨔᨽᩤ᩠ᨻᨶᩦ᩶ᨯᩱ᩶ᩉᩤ?",
+    "transliteration": "Son sak wa rup phap nei dai ha?"
+  },
+  {
+    "category": "AI Assistant",
+    "english": "Can you compare these two things?",
+    "tai_khamti_script": "ᨾᩯ᩠᩵ᨶᩈᩬ᩠ᨦᩋᩢ᩠ᨶᨶᩦ᩶ᨯᩱ᩶ᩉᩤ?",
+    "transliteration": "Maen song an nei dai ha?"
+  },
+  {
+    "category": "AI Assistant",
+    "english": "Can you tell me today's important information?",
+    "tai_khamti_script": "ᩅᩢ᩠ᨶᨶᩦ᩶ᨾᩦᨡ᩵ᩤ᩠ᩅᩈᩤᩁᩢᩋᩢ᩠ᨶᩈᩢᨠᨶᩅ᩵ᩤᩉᩤ?",
+    "transliteration": "Wan nei me khaw san an sak wa ha?"
+  },
+  {
+    "category": "AI Assistant",
+    "english": "Can you give me a daily learning tip?",
+    "tai_khamti_script": "ᩉᩱ᩶ᨠ᩠ᩅᩤ᩠ᨾᩁᩪ᩶ᨠᩪ᩶ᩅᩢ᩠ᨶᨯᩱ᩶ᩉᩤ?",
+    "transliteration": "Hai kwam ru ku wan dai ha?"
+  },
+  {
+    "category": "AI Assistant",
+    "english": "Can you help me practice speaking?",
+    "tai_khamti_script": "ᨩ᩵ᩅ᩠ᨿᩈᩬ᩠ᨶᩉᩱ᩶ᩈᩬ᩠ᨶᨠ᩠ᩅᩤ᩠ᨾᨯᩱ᩶ᩉᩤ?",
+    "transliteration": "Chuai son hai son kwam dai ha?"
+  },
+  {
+    "category": "AI Assistant",
+    "english": "Can you teach me new vocabulary?",
+    "tai_khamti_script": "ᩈᩬ᩠ᨶᨠ᩠ᩅᩤ᩠ᨾᨾᩯ᩠᩵ᨶᩉᩱ᩶ᨯᩱ᩶ᩉᩤ?",
+    "transliteration": "Son kwam maen hai dai ha?"
+  },
+  {
+    "category": "AI Assistant",
+    "english": "Can you explain this using an example?",
+    "tai_khamti_script": "ᩈᩬ᩠ᨶᩉᩱ᩶ᨯᩪᨲᩢ᩠ᩅᩋ᩵ᩤ᩠ᨶᨯᩱ᩶ᩉᩤ?",
+    "transliteration": "Son hai du tau an dai ha?"
+  },
+  {
+    "category": "Employment & Skills",
+    "english": "How can I find work near my village?",
+    "tai_khamti_script": "ᩉᩤᨠᩤ᩠ᨶᩉ᩠ᨶᩮᩢᨋᨾᩤ᩶ᩅᩤ᩶ᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Ha kan nue ma wa dai ha rue?"
+  },
+  {
+    "category": "Employment & Skills",
+    "english": "What skills should I learn?",
+    "tai_khamti_script": "ᩋᩢ᩠ᨶᩉᩖᩢᨦᨲᩰ᩠᩶ᨦᩈᩬ᩠ᨶ?",
+    "transliteration": "An hlang tong son?"
+  },
+  {
+    "category": "Employment & Skills",
+    "english": "How do I start a small business?",
+    "tai_khamti_script": "ᩉᩯ᩠᩶ᨾᨠᩤ᩠ᨶᨡᩤ᩠ᩅᩋᩢ᩠ᨶᩋᩬ᩠᩵ᨶᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Haem kan khaw an on dai ha rue?"
+  },
+  {
+    "category": "Employment & Skills",
+    "english": "How do I make handicrafts?",
+    "tai_khamti_script": "ᩉᩯ᩠᩶ᨾᨡᩬ᩠ᨦᩉᩯᩢ᩠ᨲᨾᩨᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Haem khong haet mue dai ha rue?"
+  },
+  {
+    "category": "Employment & Skills",
+    "english": "Where can I sell handmade products?",
+    "tai_khamti_script": "ᨡᩤ᩠ᨿᨡᩬ᩠ᨦᩉᩯᩢ᩠ᨲᨾᩨᨲᩦ᩶ᩉ᩠ᨶᩮᩢᨋ?",
+    "transliteration": "Khai khong haet mue ti nue?"
+  },
+  {
+    "category": "Employment & Skills",
+    "english": "How do I improve my interview skills?",
+    "tai_khamti_script": "ᩉᩯᩢ᩠ᨲᩉᩱ᩶ᨠᩤ᩠ᨶᨳᩤ᩠ᨾᨯᩦᨡᩮ᩶ᩤ?",
+    "transliteration": "Haet hai kan tham di khau?"
+  },
+  {
+    "category": "Employment & Skills",
+    "english": "How do I write my name on a form?",
+    "tai_khamti_script": "ᨲᩯ᩠ᨾᨩᩨ᩶ᨶᩱ᩶ᨼᩬ᩠ᨾᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Taem chue nai form dai ha rue?"
+  },
+  {
+    "category": "Employment & Skills",
+    "english": "How can I earn money from farming?",
+    "tai_khamti_script": "ᩉᩤᨦᩮᩢ᩠ᨶᨲᩦ᩶ᨠᩤ᩠ᨶᩉᩯᩢ᩠ᨲᨶᩤᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Ha ngern ti kan haet na dai ha rue?"
+  },
+  {
+    "category": "Employment & Skills",
+    "english": "What training programs are available?",
+    "tai_khamti_script": "ᨾᩦᨠᩤ᩠ᨶᩈᩬ᩠ᨶᩋᩢ᩠ᨶᩉᩖᩢᨦ?",
+    "transliteration": "Me kan son an hlang?"
+  },
+  {
+    "category": "Employment & Skills",
+    "english": "How do I apply for skill development courses?",
+    "tai_khamti_script": "ᩉᩯᩢ᩠ᨲᩁᩮᩢ᩶ᩋᨡᩮ᩶ᩤᩁᩮᩢ᩶ᩋᨶᩈᩬ᩠ᨶᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Haet reu khau reu n son dai ha rue?"
+  },
+  {
+    "category": "Banking & Finance",
+    "english": "How do I deposit money?",
+    "tai_khamti_script": "ᩋᩰᩢ᩠ᨶᨦᩮᩢ᩠ᨶᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "On ngern dai ha rue?"
+  },
+  {
+    "category": "Banking & Finance",
+    "english": "How do I withdraw money?",
+    "tai_khamti_script": "ᨳᩬ᩠᩶ᨶᨦᩮᩢ᩠ᨶᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Thon ngern dai ha rue?"
+  },
+  {
+    "category": "Banking & Finance",
+    "english": "What is an ATM?",
+    "tai_khamti_script": "ATM ᨶᩦ᩶ᨾᩯ᩠᩵ᨶᩋᩢ᩠ᨶᩉᩖᩢᨦ?",
+    "transliteration": "ATM nei maen an hlang?"
+  },
+  {
+    "category": "Banking & Finance",
+    "english": "How do I check my account balance?",
+    "tai_khamti_script": "ᨯᩪᨦᩮᩢ᩠ᨶᨶᩱ᩶ᨡᩮ᩶ᩤᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Du ngern nai khau dai ha rue?"
+  },
+  {
+    "category": "Banking & Finance",
+    "english": "What is a debit card?",
+    "tai_khamti_script": "Debit card ᨶᩦ᩶ᨾᩯ᩠᩵ᨶᩋᩢ᩠ᨶᩉᩖᩢᨦ?",
+    "transliteration": "Debit card nei maen an hlang?"
+  },
+  {
+    "category": "Banking & Finance",
+    "english": "What is a credit card?",
+    "tai_khamti_script": "Credit card ᨶᩦ᩶ᨾᩯ᩠᩵ᨶᩋᩢ᩠ᨶᩉᩖᩢᨦ?",
+    "transliteration": "Credit card nei maen an hlang?"
+  },
+  {
+    "category": "Banking & Finance",
+    "english": "How do I send money online?",
+    "tai_khamti_script": "ᩈᩰ᩠᩵ᨦᨦᩮᩢ᩠ᨶᨲᩦ᩶ online ᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Song ngern ti online dai ha rue?"
+  },
+  {
+    "category": "Banking & Finance",
+    "english": "What is UPI?",
+    "tai_khamti_script": "UPI ᨶᩦ᩶ᨾᩯ᩠᩵ᨶᩋᩢ᩠ᨶᩉᩖᩢᨦ?",
+    "transliteration": "UPI nei maen an hlang?"
+  },
+  {
+    "category": "Banking & Finance",
+    "english": "How do I create a UPI PIN?",
+    "tai_khamti_script": "ᩉᩯᩢ᩠ᨲ UPI PIN ᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Haet UPI PIN dai ha rue?"
+  },
+  {
+    "category": "Banking & Finance",
+    "english": "What should I do if I lose my ATM card?",
+    "tai_khamti_script": "ᨷᩤ᩠ᨲ ATM ᩉᩤ᩠ᨿᩉᩯᩢ᩠ᨲᩉᩖᩢᨦ?",
+    "transliteration": "Bat ATM hai haet hlang?"
+  },
+  {
+    "category": "Banking & Finance",
+    "english": "How can I avoid online fraud?",
+    "tai_khamti_script": "ᩉᩖᩦ᩠᩶ᨠ online ᨠᩤ᩠ᨶᩉᩖᩰᩢᨠᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Lick online kan lok dai ha rue?"
+  },
+  {
+    "category": "Banking & Finance",
+    "english": "What is a fixed deposit?",
+    "tai_khamti_script": "Fixed deposit ᨶᩦ᩶ᨾᩯ᩠᩵ᨶᩋᩢ᩠ᨶᩉᩖᩢᨦ?",
+    "transliteration": "Fixed deposit nei maen an hlang?"
+  },
+  {
+    "category": "Banking & Finance",
+    "english": "What is a savings account?",
+    "tai_khamti_script": "Savings account ᨶᩦ᩶ᨾᩯ᩠᩵ᨶᩋᩢ᩠ᨶᩉᩖᩢᨦ?",
+    "transliteration": "Savings account nei maen an hlang?"
+  },
+  {
+    "category": "Banking & Finance",
+    "english": "How do I apply for a loan?",
+    "tai_khamti_script": "ᩁᩮᩢ᩶ᩋᨦᩮᩢ᩠ᨶᨠᩪ᩶ᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Reu ngern ku dai ha rue?"
+  },
+  {
+    "category": "Banking & Finance",
+    "english": "What is interest?",
+    "tai_khamti_script": "ᨯᩬᩢ᩠ᨠᨾᩯ᩠᩵ᨶᩋᩢ᩠ᨶᩉᩖᩢᨦ?",
+    "transliteration": "Dok maen an hlang?"
+  },
+  {
+    "category": "Government Schemes",
+    "english": "How can I open a bank account?",
+    "tai_khamti_script": "ᨹᩬᩢ᩠᩶ᨲᨡᩮ᩶ᩤ Bank ᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Phot khau Bank dai ha rue?"
+  },
+  {
+    "category": "Government Schemes",
+    "english": "What is Jan Dhan Yojana?",
+    "tai_khamti_script": "Jan Dhan Yojana ᨶᩦ᩶ᨾᩯ᩠᩵ᨶᩋᩢ᩠ᨶᩉᩖᩢᨦ?",
+    "transliteration": "Jan Dhan Yojana nei maen an hlang?"
+  },
+  {
+    "category": "Government Schemes",
+    "english": "How do I get a voter ID?",
+    "tai_khamti_script": "ᩉᩤ Voter ID ᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Ha Voter ID dai ha rue?"
+  },
+  {
+    "category": "Government Schemes",
+    "english": "How do I update my mobile number in national ID?",
+    "tai_khamti_script": "ᩉᩯᩢ᩠ᨲ identity card ᨶᩱ᩶ Line number ᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Haet identity card nai Line number dai ha rue?"
+  },
+  {
+    "category": "Government Schemes",
+    "english": "Where can I apply for a birth certificate?",
+    "tai_khamti_script": "ᩁᩮᩢ᩶ᩋ Certificate ᨠᩮᩢ᩠᩶ᨯᨲᩦ᩶ᩉ᩠ᨶᩮᩢᨋ?",
+    "transliteration": "Reu Certificate get ti nue?"
+  },
+  {
+    "category": "Government Schemes",
+    "english": "How do I apply for a death certificate?",
+    "tai_khamti_script": "ᩁᩮᩢ᩶ᩋ Certificate ᨲᩤ᩠ᨿᨲᩦ᩶ᩉ᩠ᨶᩮᩢᨋ?",
+    "transliteration": "Reu Certificate tai ti nue?"
+  },
+  {
+    "category": "Government Schemes",
+    "english": "What documents are needed for a passport?",
+    "tai_khamti_script": "Passport ᨲᩰ᩠᩶ᨦᨠᩤ᩠ᨁ Document ᩉᩖᩢᨦ?",
+    "transliteration": "Passport tong kag Document hlang?"
+  },
+  {
+    "category": "Government Schemes",
+    "english": "How do I link national ID with my bank account?",
+    "tai_khamti_script": "Link identity card ᨲᩦ᩶ Bank ᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Link identity card ti Bank dai ha rue?"
+  },
+  {
+    "category": "Government Schemes",
+    "english": "How do I check my pension balance?",
+    "tai_khamti_script": "ᨯᩪ Pension ᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Du Pension dai ha rue?"
+  },
+  {
+    "category": "Government Schemes",
+    "english": "How can I apply for a gas connection?",
+    "tai_khamti_script": "ᩁᩮᩢ᩶ᩋ Gas connection ᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Reu Gas connection dai ha rue?"
+  },
+  {
+    "category": "Government Schemes",
+    "english": "How do I apply for a job card?",
+    "tai_khamti_script": "ᩁᩮᩢ᩶ᩋ Job card ᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Reu Job card dai ha rue?"
+  },
+  {
+    "category": "Government Schemes",
+    "english": "What is MGNREGA?",
+    "tai_khamti_script": "MGNREGA ᨶᩦ᩶ᨾᩯ᩠᩵ᨶᩋᩢ᩠ᨶᩉᩖᩢᨦ?",
+    "transliteration": "MGNREGA nei maen an hlang?"
+  },
+  {
+    "category": "Government Schemes",
+    "english": "How do I register for MGNREGA work?",
+    "tai_khamti_script": "ᩁᩮᩢ᩶ᩋ MGNREGA ᨠᩤ᩠ᨶᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Reu MGNREGA kan dai ha rue?"
+  },
+  {
+    "category": "Government Schemes",
+    "english": "How can I check my ration balance?",
+    "tai_khamti_script": "ᨯᩪ Ration balance ᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Du Ration balance dai ha rue?"
+  },
+  {
+    "category": "Government Schemes",
+    "english": "How do I update my family details?",
+    "tai_khamti_script": "ᩉᩯᩢ᩠ᨲ Details ᩉᩮᩢ᩶ᩋᨶᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Haet Details heun dai ha rue?"
+  },
+  {
+    "category": "Education",
+    "english": "How can I improve my reading skills?",
+    "tai_khamti_script": "ᩉᩯᩢ᩠ᨲᩉᩱ᩶ᨠᩤ᩠ᨶᩋ᩵ᩤ᩠ᨶᨯᩦᨡᩮ᩶ᩤ?",
+    "transliteration": "Haet hai kan an di khau?"
+  },
+  {
+    "category": "Education",
+    "english": "How do I memorize lessons quickly?",
+    "tai_khamti_script": "ᨧᩡᨯᩱ᩶ lesson ᩅᩱᩅᩱᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Ja dai lesson wai wai dai ha rue?"
+  },
+  {
+    "category": "Education",
+    "english": "What are vowels?",
+    "tai_khamti_script": "ᩈᩁᩡ ᨶᩦ᩶ᨾᩯ᩠᩵ᨶᩋᩢ᩠ᨶᩉᩖᩢᨨ?",
+    "transliteration": "Sara nei maen an hlang?"
+  },
+  {
+    "category": "Education",
+    "english": "What are consonants?",
+    "tai_khamti_script": "ᨻ᩠ᨿᨬ᩠ᨧᨶᩡ ᨶᩦ᩶ᨾᩯ᩠᩵ᨶᩋᩢ᩠ᨶᩉᩖᩢᨨ?",
+    "transliteration": "Phyanjana nei maen an hlang?"
+  },
+  {
+    "category": "Education",
+    "english": "Explain multiplication.",
+    "tai_khamti_script": "ᩈᩬ᩠ᨶ ᨠᩤ᩠ᨶᨣᩪ᩶ᨶᩉᩱ᩶ᨯᩪ",
+    "transliteration": "Son kan khun hai du"
+  },
+  {
+    "category": "Education",
+    "english": "What is division?",
+    "tai_khamti_script": "ᨠᩤ᩠ᨶᨹᩯ᩠᩶ᨶᨶᩦ᩶ᨾᩯ᩠᩵ᨶᩋᩢ᩠ᨶᩉᩖᩢᨦ?",
+    "transliteration": "Kan phaen nei maen an hlang?"
+  },
+  {
+    "category": "Education",
+    "english": "How do I solve word problems?",
+    "tai_khamti_script": "ᩉᩯᩢ᩠ᨲ math problem ᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Haet math problem dai ha rue?"
+  },
+  {
+    "category": "Education",
+    "english": "Teach me the alphabet.",
+    "tai_khamti_script": "ᩈᩬ᩠ᨶ alphabet ᩉᩱ᩶",
+    "transliteration": "Son alphabet hai"
+  },
+  {
+    "category": "Education",
+    "english": "How do I write my name?",
+    "tai_khamti_script": "ᨲᩯ᩠ᨾᨩᩨ᩶ᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Taem chue dai ha rue?"
+  },
+  {
+    "category": "Education",
+    "english": "What is the capital of India?",
+    "tai_khamti_script": "India ᨡᩬ᩠ᨦ Hauptstadt ᨾᩯ᩠᩵ᨶᩋᩢ᩠ᨶᩉᩖᩢᨨ?",
+    "transliteration": "India khong Hauptstadt maen an hlang?"
+  },
+  {
+    "category": "Education",
+    "english": "Tell me about our national flag.",
+    "tai_khamti_script": "ᩅ᩵ᩤᩈᩢᨠᨶ Flag ᩉᩱ᩶",
+    "transliteration": "Wa sak na Flag hai"
+  },
+  {
+    "category": "Education",
+    "english": "Why should children go to school?",
+    "tai_khamti_script": "ᩉᩯᩢ᩠ᨲᩉᩖᩢᨦᩉᩖᩮᩢᨠᨲᩰ᩠᩶ᨦᨠᩤ᩠ᩅ school?",
+    "transliteration": "Haet hlang lek tong kaw school?"
+  },
+  {
+    "category": "Education",
+    "english": "What is homework?",
+    "tai_khamti_script": "Homework ᨶᩦ᩶ᨾᩯ᩠᩵ᨶᩋᩢ᩠ᨶᩉᩖᩢᨦ?",
+    "transliteration": "Homework nei maen an hlang?"
+  },
+  {
+    "category": "Education",
+    "english": "Explain photosynthesis.",
+    "tai_khamti_script": "ᩈᩬ᩠ᨶ photosynthesis ᩉᩱ᩶ᨯᩪ",
+    "transliteration": "Son photosynthesis hai du"
+  },
+  {
+    "category": "Education",
+    "english": "What is the solar system?",
+    "tai_khamti_script": "Solar system ᨶᩦ᩶ᨾᩯ᩠᩵ᨶᩋᩢ᩠ᨶᩉᩖᩢᨦ?",
+    "transliteration": "Solar system nei maen an hlang?"
+  },
+  {
+    "category": "Education",
+    "english": "Tell me today's word of the day.",
+    "tai_khamti_script": "ᩅᩢ᩠ᨶᨶᩦ᩶ Word ᩉᩱ᩶ᩅ᩵ᩤ",
+    "transliteration": "Wan nei Word hai wa"
+  },
+  {
+    "category": "Education",
+    "english": "How can I improve my handwriting?",
+    "tai_khamti_script": "ᩉᩯᩢ᩠ᨲᩉᩱ᩶ᩉᩖᩢᨠᨲᩯ᩠ᨾᨯᩦᨡᩮ᩶ᩤ?",
+    "transliteration": "Haet hai lak taem di khau?"
+  },
+  {
+    "category": "Education",
+    "english": "Teach me counting from 1 to 100.",
+    "tai_khamti_script": "ᩈᩬ᩠ᨶ 1 ᨲᩦ᩶ 100 ᩉᩱ᩶",
+    "transliteration": "Son 1 ti 100 hai"
+  },
+  {
+    "category": "Education",
+    "english": "Explain fractions.",
+    "tai_khamti_script": "ᩈᩬ᩠ᨶ Fraction ᩉᩱ᩶ᨯᩪ",
+    "transliteration": "Son Fraction hai du"
+  },
+  {
+    "category": "Education",
+    "english": "Help me prepare for my exam.",
+    "tai_khamti_script": "ᨩ᩵ᩅ᩠ᨿ Exam ᩉᩱ᩶",
+    "transliteration": "Chuai Exam hai"
+  },
+  {
+    "category": "Agriculture",
+    "english": "How do I prepare my field before sowing?",
+    "tai_khamti_script": "ᩉᩯᩢ᩠ᨲᨶᩤᩉᩮᩢ᩶ᩋᨶᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Haet na heun dai ha rue?"
+  },
+  {
+    "category": "Agriculture",
+    "english": "Which crop grows well in this season?",
+    "tai_khamti_script": "Season ᨶᩦ᩶ Crop ᩉᩖᩢᨦᨯᩦ?",
+    "transliteration": "Season nei Crop hlang di?"
+  },
+  {
+    "category": "Agriculture",
+    "english": "Why are my plants not growing?",
+    "tai_khamti_script": "ᩉᩯᩢ᩠ᨲᩉᩖᩢᨦ Plant ᨷᩬᩢ᩠ᨲᩈᩪ᩠ᨦ?",
+    "transliteration": "Haet hlang Plant bot sung?"
+  },
+  {
+    "category": "Agriculture",
+    "english": "How can I improve soil fertility?",
+    "tai_khamti_script": "ᩉᩯᩢ᩠ᨲ Soil ᨯᩦᨡᩮ᩶ᩤᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Haet Soil di khau dai ha rue?"
+  },
+  {
+    "category": "Agriculture",
+    "english": "How often should I irrigate my field?",
+    "tai_khamti_script": "ᩉᩱ᩶ᨶᩲ᩶ᨲᩦ᩶ᨶᩤᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Hai nam ti na dai ha rue?"
+  },
+  {
+    "category": "Agriculture",
+    "english": "What causes crop diseases?",
+    "tai_khamti_script": "Crop disease ᨶᩦ᩶ᨾᩤ᩶ᨲᩦ᩶ᩉ᩠ᨶᩮᩢᨋ?",
+    "transliteration": "Crop disease nei ma ti nue?"
+  },
+  {
+    "category": "Agriculture",
+    "english": "How can I protect my crops from wild animals?",
+    "tai_khamti_script": "ᩉᩖᩦ᩠᩶ᨠ Animal ᨲᩦ᩶ Crop ᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Lick Animal ti Crop dai ha rue?"
+  },
+  {
+    "category": "Agriculture",
+    "english": "Which crops need less water?",
+    "tai_khamti_script": "Crop ᩉᩖᩢᨦᨲᩰ᩠᩶ᨦᨠᩤ᩠ᨁᨶᩲ᩶ᩋᩬ᩠᩵ᨶ?",
+    "transliteration": "Crop hlang tong kag nam on?"
+  },
+  {
+    "category": "Agriculture",
+    "english": "What is crop rotation?",
+    "tai_khamti_script": "Crop rotation ᨶᩦ᩶ᨾᩯ᩠᩵ᨶᩋᩢ᩠ᨶᩉᩖᩢᨨ?",
+    "transliteration": "Crop rotation nei maen an hlang?"
+  },
+  {
+    "category": "Agriculture",
+    "english": "How do I identify healthy seeds?",
+    "tai_khamti_script": "Seed ᨯᩦᨯᩪᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Seed di du dai ha rue?"
+  },
+  {
+    "category": "Agriculture",
+    "english": "When should I prune my plants?",
+    "tai_khamti_script": "Plant ᨲᩢ᩠ᨯᨲᩦ᩶ᩉ᩠ᨶᩮᩢᨋ?",
+    "transliteration": "Plant tat ti nue?"
+  },
+  {
+    "category": "Agriculture",
+    "english": "How do I preserve harvested grains?",
+    "tai_khamti_script": "ᨧᩡᨯᩱ᩶ Grain ᩅᩱ᩶ᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Ja dai Grain wai dai ha rue?"
+  },
+  {
+    "category": "Agriculture",
+    "english": "What is drip irrigation?",
+    "tai_khamti_script": "Drip irrigation ᨶᩦ᩶ᨾᩯ᩠᩵ᨶᩋᩢ᩠ᨶᩉᩖᩢᨨ?",
+    "transliteration": "Drip irrigation nei maen an hlang?"
+  },
+  {
+    "category": "Agriculture",
+    "english": "How can I reduce farming costs?",
+    "tai_khamti_script": "ᩉᩖᩢᨯ Cost ᨠᩤ᩠ᨶᩉᩯᩢ᩠ᨲᨶᩤᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Hlad Cost kan haet na dai ha rue?"
+  },
+  {
+    "category": "Agriculture",
+    "english": "Which vegetables grow best during winter?",
+    "tai_khamti_script": "Winter ᨶᩦ᩶ Vegetable ᩉᩖᩢᨦᨯᩦ?",
+    "transliteration": "Winter nei Vegetable hlang di?"
+  },
+  {
+    "category": "Agriculture",
+    "english": "How can I prevent soil erosion?",
+    "tai_khamti_script": "ᩉᩖᩦ᩠᩶ᨠ Soil erosion ᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Lick Soil erosion dai ha rue?"
+  },
+  {
+    "category": "Agriculture",
+    "english": "How do I check soil quality?",
+    "tai_khamti_script": "ᨯᩪ Soil quality ᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Du Soil quality dai ha rue?"
+  },
+  {
+    "category": "Agriculture",
+    "english": "Can I grow two crops together?",
+    "tai_khamti_script": "ᩉᩯᩢ᩠ᨲ Crop ᩈᩬ᩠ᨦᩋᩢ᩠ᨶᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Haet Crop song an dai ha rue?"
+  },
+  {
+    "category": "Agriculture",
+    "english": "What is the best time to plant trees?",
+    "tai_khamti_script": "Tree ᩈᩰᩢ᩠ᨾᨲᩦ᩶ᩉ᩠ᨶᩮᩢᨋᨯᩦ?",
+    "transliteration": "Tree som ti nue di?"
+  },
+  {
+    "category": "Agriculture",
+    "english": "How do I prepare organic fertilizer?",
+    "tai_khamti_script": "ᩉᩯᩢ᩠ᨲ Organic fertilizer ᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Haet Organic fertilizer dai ha rue?"
+  },
+  {
+    "category": "Health",
+    "english": "What should I eat during pregnancy?",
+    "tai_khamti_script": "Pregnancy ᨶᩱ᩶ᨠᩢ᩠ᨶᩉᩖᩢᨦ?",
+    "transliteration": "Pregnancy nai kan hlang?"
+  },
+  {
+    "category": "Health",
+    "english": "How do I stop dehydration?",
+    "tai_khamti_script": "Dehydration ᩉᩖᩦ᩠᩶ᨠᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Dehydration lick dai ha rue?"
+  },
+  {
+    "category": "Health",
+    "english": "What are the symptoms of malaria?",
+    "tai_khamti_script": "Malaria ᩈᩢ᩠ᨦᨠᩮᩢ᩠᩶ᨲᨾᩯ᩠᩵ᨶᩋᩢ᩠ᨶᩉᩖᩢᨨ?",
+    "transliteration": "Malaria sangget maen an hlang?"
+  },
+  {
+    "category": "Health",
+    "english": "What should I do after a snake bite?",
+    "tai_khamti_script": "Snake bite ᩉᩯᩢ᩠ᨲᩉᩖᩢᨦ?",
+    "transliteration": "Snake bite haet hlang?"
+  },
+  {
+    "category": "Health",
+    "english": "How can I prevent dengue?",
+    "tai_khamti_script": "Dengue ᩉᩖᩦ᩠᩶ᨠᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Dengue lick dai ha rue?"
+  },
+  {
+    "category": "Health",
+    "english": "When should I visit a doctor?",
+    "tai_khamti_script": "Doctor ᨲᩦ᩶ᩉ᩠ᨶᩮᩢᨋᨠᩤ᩠ᩅ?",
+    "transliteration": "Doctor ti nue kaw?"
+  },
+  {
+    "category": "Health",
+    "english": "Why is my child not eating?",
+    "tai_khamti_script": "ᩉᩯᩢ᩠ᨲᩉᩖᩢᨦᩉᩖᩮᩢᨠᨷᩬᩢ᩠ᨲᨠᩢ᩠ᨶ?",
+    "transliteration": "Haet hlang lek bot kan?"
+  },
+  {
+    "category": "Health",
+    "english": "How can I reduce a fever naturally?",
+    "tai_khamti_script": "Fever ᩉᩖᩢᨯᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Fever hlad dai ha rue?"
+  },
+  {
+    "category": "Health",
+    "english": "What are the signs of anemia?",
+    "tai_khamti_script": "Anemia ᩈᩢ᩠ᨦᨠᩮᩢ᩠᩶ᨲᨾᩯ᩠᩵ᨶᩋᩢ᩠ᨶᩉᩖᩢᨨ?",
+    "transliteration": "Anemia sangget maen an hlang?"
+  },
+  {
+    "category": "Health",
+    "english": "How do I treat a minor burn?",
+    "tai_khamti_script": "Burn ᩉᩯᩢ᩠ᨲᨯᩦᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Burn haet di dai ha rue?"
+  },
+  {
+    "category": "Health",
+    "english": "How should I clean a wound?",
+    "tai_khamti_script": "Wound ᩈᩢ᩶ᨠᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Wound sak dai ha rue?"
+  },
+  {
+    "category": "Health",
+    "english": "What should I do if someone faints?",
+    "tai_khamti_script": "Faint ᩉᩯᩢ᩠ᨲᩉᩖᩢᨦ?",
+    "transliteration": "Faint haet hlang?"
+  },
+  {
+    "category": "Health",
+    "english": "What foods are rich in iron?",
+    "tai_khamti_script": "Iron food ᩉᩖᩢᨯᨯᩦ?",
+    "transliteration": "Iron food hlang di?"
+  },
+  {
+    "category": "Health",
+    "english": "How much water should I drink daily?",
+    "tai_khamti_script": "ᨠᩪ᩶ᩅᩢ᩠ᨶᨶᩲ᩶ᨠᩢ᩠ᨶᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Ku wan nam kan dai ha rue?"
+  },
+  {
+    "category": "Health",
+    "english": "What should I do if I have diarrhea?",
+    "tai_khamti_script": "Diarrhea ᩉᩯᩢ᩠ᨲᩉᩖᩢᨦ?",
+    "transliteration": "Diarrhea haet hlang?"
+  },
+  {
+    "category": "Health",
+    "english": "Why do I feel tired all the time?",
+    "tai_khamti_script": "ᩉᩯᩢ᩠ᨲᩉᩖᩢᨦᩉ᩠ᨶᩮᩢᨋ᩵ᩤ᩠ᨶᨲᩰᩢ᩠ᩅ?",
+    "transliteration": "Haet hlang nue an tau?"
+  },
+  {
+    "category": "Health",
+    "english": "How can I improve my immunity?",
+    "tai_khamti_script": "Immunity ᩉᩯᩢ᩠ᨲᨯᩦᨡᩮ᩶ᩤᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Immunity haet di khau dai ha rue?"
+  },
+  {
+    "category": "Health",
+    "english": "What vaccines should children receive?",
+    "tai_khamti_script": "Vaccine ᩉᩖᩮᩢᨠᩉᩖᩢᨠᨲᩰ᩠᩶ᨦᨠᩤ᩠ᨁ?",
+    "transliteration": "Vaccine lek hlang tong kag?"
+  },
+  {
+    "category": "Health",
+    "english": "How do I prevent heatstroke?",
+    "tai_khamti_script": "Heatstroke ᩉᩖᩦ᩠᩶ᨠᨯᩱ᩶ᩉᩤᩁᩨ?",
+    "transliteration": "Heatstroke lick dai ha rue?"
+  },
+  {
+    "category": "Health",
+    "english": "What should I keep in a first-aid kit?",
+    "tai_khamti_script": "First-aid kit ᨶᩱ᩶ᩉᩖᩢᨦᩉᩱ᩶?",
+    "transliteration": "First-aid kit nai hlang hai?"
+  }
+]

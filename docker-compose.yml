@@ -1,0 +1,17 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tribal-chatbot-api
+    ports:
+      - "8000:8000"
+      - "8501:10000"
+
+    env_file:
+      - .env
+    environment:
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+      MONGODB_URI: mongodb://host.docker.internal:27017
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

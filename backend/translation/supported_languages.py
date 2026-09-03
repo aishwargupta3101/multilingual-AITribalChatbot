@@ -26,5 +26,16 @@ SUPPORTED_LANGUAGES = {
         "name": "Tai Khamti",
         "code": None,
         "locale": "tkt"
+    },
+    "naga": {
+        "name": "Naga",
+        "code": None,
+        "locale": "nag"
+    },
+
+    "mishmi": {
+        "name": "Mishmi",
+        "code": None,
+        "locale": "msh"
     }
 }

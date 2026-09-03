@@ -25,7 +25,9 @@ class XTTSService:
         "manipuri",
         "monpa",
         "tai khamti",
-        "tai-khamti",
+        "naga",
+        "mishmi",
+
     }
     def __init__(self):
         logger.info("Loading Temporary XTTS Service (SeamlessM4T)...")

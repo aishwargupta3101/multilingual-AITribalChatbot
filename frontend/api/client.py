@@ -14,10 +14,9 @@ class APIClient:
     @staticmethod
     def post(endpoint, payload):
         response = requests.post(
-
             BASE_URL + endpoint,
             json=payload,
-            timeout=180
+            timeout=300
         )
         response.raise_for_status()
         return response.json()
@@ -33,7 +32,6 @@ class APIClient:
                 file.type
             )
         }
-
         data = {
             "session_id": session_id
         }
@@ -45,10 +43,10 @@ class APIClient:
         )
         response.raise_for_status()
         return response.json()
+
     @staticmethod
     def upload_audio(endpoint, audio_path):
         with open(audio_path, "rb") as audio:
-
             files = {
                 "file": (
                     "user_audio.wav",
@@ -61,11 +59,13 @@ class APIClient:
                 files=files,
                 timeout=120
             )
-            response.raise_for_status()
-            return response.json()
-
+        response.raise_for_status()
+        return response.json()
     @staticmethod
-    def speech_to_text(audio_bytes):
+    def speech_to_text(
+        audio_bytes,
+        language="english"
+    ):
         files = {
             "audio": (
                 "recording.wav",
@@ -73,39 +73,50 @@ class APIClient:
                 "audio/wav"
             )
         }
+        data = {
+            "language": language
+        }
         response = requests.post(
-            "http://127.0.0.1:8000/api/v1/speech",
+            BASE_URL + "/api/v1/speech",
             files=files,
+            data=data,
             timeout=120
         )
         response.raise_for_status()
         return response.json()
     @staticmethod
-    def chat(question,session_id,language,document_id=None):
+    def chat(
+        question,
+        session_id,
+        language,
+        document_id=None
+    ):
         payload = {
-            "question":question,
-            "session_id" : session_id,
-            "language":language,
-            "document_id":document_id
+            "question": question,
+            "session_id": session_id,
+            "language": language,
+            "document_id": document_id
         }
         response = requests.post(
-            BASE_URL+"/api/v1/chat",
+            BASE_URL + "/api/v1/chat",
             json=payload,
             timeout=180
         )
         response.raise_for_status()
         return response.json()
     @staticmethod
-    def text_to_speech(text,language):
-        payload ={
-            "text":text,
-            "language":language
+    def text_to_speech(
+        text,
+        language
+    ):
+        payload = {
+            "text": text,
+            "language": language
         }
         response = requests.post(
-            BASE_URL + "/api/v1/tts/",
+            BASE_URL + "/api/v1/tts",
             json=payload,
-            timeout=180,
-            stream=True
+            timeout=600
         )
         response.raise_for_status()
         return response.content

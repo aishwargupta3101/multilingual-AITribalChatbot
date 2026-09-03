@@ -1,0 +1,88 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+.venv/
+venv/
+env/
+ENV/
+
+# =========================
+# Git / IDE
+# =========================
+.git/
+.idea/
+.vscode/
+
+# =========================
+# Environment
+# =========================
+.env
+.env.*
+
+# =========================
+# Python caches
+# =========================
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log
+
+# =========================
+# Generated audio / uploads
+# =========================
+generated_audio/
+uploads/
+data/audio/
+data/temp/
+data/output/
+
+*.wav
+*.mp3
+*.flac
+*.ogg
+
+# =========================
+# Local ML models / caches
+# =========================
+models/
+checkpoints/
+weights/
+cache/
+hf_cache/
+.huggingface/
+seamless_cache/
+nemo_cache/
+nemo_experiments/
+
+# =========================
+# Local databases
+# =========================
+*.db
+*.sqlite3
+mongodb_data/
+
+# =========================
+# Temporary files
+# =========================
+temp/
+tmp/
+*.tmp
+
+# =========================
+# Tests / coverage
+# =========================
+test_*.py
+.coverage
+.coverage.*
+htmlcov/

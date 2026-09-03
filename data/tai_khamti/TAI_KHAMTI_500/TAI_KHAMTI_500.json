@@ -1,0 +1,3502 @@
+[
+  {
+    "id": 1,
+    "category": "Education / AI Assistant",
+    "english": "Can you explain this in my language?",
+    "tai_khamti": "ကငါ  သဝါ?",
+    "transliteration": "Son sak wa an nei nai kwam sai wa?"
+  },
+  {
+    "id": 2,
+    "category": "Education / AI Assistant",
+    "english": "Can you help me learn Tai Khamti?",
+    "tai_khamti": "Son hai chao lik Tai Khamti chao?",
+    "transliteration": "Son hai chao lik Tai Khamti chao?"
+  },
+  {
+    "id": 3,
+    "category": "Education / AI Assistant",
+    "english": "What does this word mean?",
+    "tai_khamti": "Kwam nei ti wa sang?",
+    "transliteration": "Kwam nei ti wa sang?"
+  },
+  {
+    "id": 4,
+    "category": "Education / AI Assistant",
+    "english": "Can you translate this sentence into English?",
+    "tai_khamti": "Kwam nei an pen kwam Eng-ka-li sai wa?",
+    "transliteration": "Kwam nei an pen kwam Eng-ka-li sai wa?"
+  },
+  {
+    "id": 5,
+    "category": "Education / AI Assistant",
+    "english": "Please write this down.",
+    "tai_khamti": "Taang lik nei ti nai.",
+    "transliteration": "Taang lik nei ti nai."
+  },
+  {
+    "id": 6,
+    "category": "Education / AI Assistant",
+    "english": "How do you pronounce this?",
+    "tai_khamti": "An nei an kap ho hung?",
+    "transliteration": "An nei an kap ho hung?"
+  },
+  {
+    "id": 7,
+    "category": "Education / AI Assistant",
+    "english": "Can you speak slower?",
+    "tai_khamti": "Lat paaw paaw chao.",
+    "transliteration": "Lat paaw paaw chao."
+  },
+  {
+    "id": 8,
+    "category": "Education / AI Assistant",
+    "english": "I do not understand.",
+    "tai_khamti": "Kow ma khaw chai.",
+    "transliteration": "Kow ma khaw chai."
+  },
+  {
+    "id": 9,
+    "category": "Education / AI Assistant",
+    "english": "Could you repeat that?",
+    "tai_khamti": "Lat ma kow ti kai.",
+    "transliteration": "Lat ma kow ti kai."
+  },
+  {
+    "id": 10,
+    "category": "Education / AI Assistant",
+    "english": "Is this sentence correct?",
+    "tai_khamti": "Kwam nei tam ma tam?",
+    "transliteration": "Kwam nei tam ma tam?"
+  },
+  {
+    "id": 11,
+    "category": "Greetings / General",
+    "english": "Hello, how are you?",
+    "tai_khamti": "Maûng sú maî hôung?",
+    "transliteration": "Maûng sú maî hôung?"
+  },
+  {
+    "id": 12,
+    "category": "Greetings / General",
+    "english": "Good morning.",
+    "tai_khamti": "Mai suung taang caw.",
+    "transliteration": "Mai suung taang caw."
+  },
+  {
+    "id": 13,
+    "category": "Greetings / General",
+    "english": "Good evening.",
+    "tai_khamti": "Mai suung taang ham.",
+    "transliteration": "Mai suung taang ham."
+  },
+  {
+    "id": 14,
+    "category": "Greetings / General",
+    "english": "Goodbye.",
+    "tai_khamti": "Kow ti hang yaw.",
+    "transliteration": "Kow ti hang yaw."
+  },
+  {
+    "id": 15,
+    "category": "Greetings / General",
+    "english": "See you tomorrow.",
+    "tai_khamti": "Phuk nai kho pwo.",
+    "transliteration": "Phuk nai kho pwo."
+  },
+  {
+    "id": 16,
+    "category": "Greetings / General",
+    "english": "Welcome.",
+    "tai_khamti": "Yin li yap chao.",
+    "transliteration": "Yin li yap chao."
+  },
+  {
+    "id": 17,
+    "category": "Greetings / General",
+    "english": "Have a good day.",
+    "tai_khamti": "Hai pen wan li chao.",
+    "transliteration": "Hai pen wan li chao."
+  },
+  {
+    "id": 18,
+    "category": "Greetings / General",
+    "english": "Safe travels.",
+    "tai_khamti": "Hang li ma li chao.",
+    "transliteration": "Hang li ma li chao."
+  },
+  {
+    "id": 19,
+    "category": "Greetings / General",
+    "english": "How is your family?",
+    "tai_khamti": "Heu'an chao li mai?",
+    "transliteration": "Heu'an chao li mai?"
+  },
+  {
+    "id": 20,
+    "category": "Greetings / General",
+    "english": "I am fine.",
+    "tai_khamti": "Kow li yu chao.",
+    "transliteration": "Kow li yu chao."
+  },
+  {
+    "id": 21,
+    "category": "Daily Conversation",
+    "english": "What is your name?",
+    "tai_khamti": "Cheu chau sang wa?",
+    "transliteration": "Cheu chau sang wa?"
+  },
+  {
+    "id": 22,
+    "category": "Daily Conversation",
+    "english": "My name is...",
+    "tai_khamti": "Cheu kow wa...",
+    "transliteration": "Cheu kow wa..."
+  },
+  {
+    "id": 23,
+    "category": "Daily Conversation",
+    "english": "Where are you from?",
+    "tai_khamti": "Chao luk ti nai ma?",
+    "transliteration": "Chao luk ti nai ma?"
+  },
+  {
+    "id": 24,
+    "category": "Daily Conversation",
+    "english": "How old are you?",
+    "tai_khamti": "Chao pi ho hung yaw?",
+    "transliteration": "Chao pi ho hung yaw?"
+  },
+  {
+    "id": 25,
+    "category": "Daily Conversation",
+    "english": "Nice to meet you.",
+    "tai_khamti": "Yin li ta pwo chao.",
+    "transliteration": "Yin li ta pwo chao."
+  },
+  {
+    "id": 26,
+    "category": "Daily Conversation",
+    "english": "Thank you very much.",
+    "tai_khamti": "Yin li nam nam chao.",
+    "transliteration": "Yin li nam nam chao."
+  },
+  {
+    "id": 27,
+    "category": "Daily Conversation",
+    "english": "You are welcome.",
+    "tai_khamti": "Ma pen sang chao.",
+    "transliteration": "Ma pen sang chao."
+  },
+  {
+    "id": 28,
+    "category": "Daily Conversation",
+    "english": "Excuse me.",
+    "tai_khamti": "Khaw taam chao.",
+    "transliteration": "Khaw taam chao."
+  },
+  {
+    "id": 29,
+    "category": "Daily Conversation",
+    "english": "I am sorry.",
+    "tai_khamti": "Khaw ma thuk chao.",
+    "transliteration": "Khaw ma thuk chao."
+  },
+  {
+    "id": 30,
+    "category": "Daily Conversation",
+    "english": "Yes.",
+    "tai_khamti": "Chai chao.",
+    "transliteration": "Chai chao."
+  },
+  {
+    "id": 31,
+    "category": "Daily Conversation",
+    "english": "No.",
+    "tai_khamti": "Ma chai chao.",
+    "transliteration": "Ma chai chao."
+  },
+  {
+    "id": 32,
+    "category": "Daily Conversation",
+    "english": "Please.",
+    "tai_khamti": "Khaw chao.",
+    "transliteration": "Khaw chao."
+  },
+  {
+    "id": 33,
+    "category": "Daily Conversation",
+    "english": "Where do you live?",
+    "tai_khamti": "Chao yu ti nai?",
+    "transliteration": "Chao yu ti nai?"
+  },
+  {
+    "id": 34,
+    "category": "Daily Conversation",
+    "english": "What are you doing?",
+    "tai_khamti": "Chao het sang yu?",
+    "transliteration": "Chao het sang yu?"
+  },
+  {
+    "id": 35,
+    "category": "Daily Conversation",
+    "english": "I am busy.",
+    "tai_khamti": "Kow ma waang.",
+    "transliteration": "Kow ma waang."
+  },
+  {
+    "id": 36,
+    "category": "Daily Conversation",
+    "english": "I am free.",
+    "tai_khamti": "Kow waang yu.",
+    "transliteration": "Kow waang yu."
+  },
+  {
+    "id": 37,
+    "category": "Daily Conversation",
+    "english": "Who is that?",
+    "tai_khamti": "An nei pen pheu?",
+    "transliteration": "An nei pen pheu?"
+  },
+  {
+    "id": 38,
+    "category": "Daily Conversation",
+    "english": "What time is it?",
+    "tai_khamti": "Pheng ka ho hung yaw?",
+    "transliteration": "Pheng ka ho hung yaw?"
+  },
+  {
+    "id": 39,
+    "category": "Daily Conversation",
+    "english": "Today is a nice day.",
+    "tai_khamti": "Wan nei li nam.",
+    "transliteration": "Wan nei li nam."
+  },
+  {
+    "id": 40,
+    "category": "Daily Conversation",
+    "english": "See you later.",
+    "tai_khamti": "Kho pwo ti kai.",
+    "transliteration": "Kho pwo ti kai."
+  },
+  {
+    "id": 41,
+    "category": "Travel / Directions",
+    "english": "Where is the nearest hospital?",
+    "tai_khamti": "Hong yap ti nai ma kap chao?",
+    "transliteration": "Hong yap ti nai ma kap chao?"
+  },
+  {
+    "id": 42,
+    "category": "Travel / Directions",
+    "english": "Where is the bathroom?",
+    "tai_khamti": "Hong nam yu ti nai?",
+    "transliteration": "Hong nam yu ti nai?"
+  },
+  {
+    "id": 43,
+    "category": "Travel / Directions",
+    "english": "How do I get to the airport?",
+    "tai_khamti": "Ti ka tāng me hang ho hung?",
+    "transliteration": "Ti ka tāng me hang ho hung?"
+  },
+  {
+    "id": 44,
+    "category": "Travel / Directions",
+    "english": "Where is the bus stop?",
+    "tai_khamti": "Ti yap rot chaw yu ti nai?",
+    "transliteration": "Ti yap rot chaw yu ti nai?"
+  },
+  {
+    "id": 45,
+    "category": "Travel / Directions",
+    "english": "Turn left.",
+    "tai_khamti": "Ven waai.",
+    "transliteration": "Ven waai."
+  },
+  {
+    "id": 46,
+    "category": "Travel / Directions",
+    "english": "Turn right.",
+    "tai_khamti": "Ven kwhwa.",
+    "transliteration": "Ven kwhwa."
+  },
+  {
+    "id": 47,
+    "category": "Travel / Directions",
+    "english": "Go straight ahead.",
+    "tai_khamti": "Ka chau chau.",
+    "transliteration": "Ka chau chau."
+  },
+  {
+    "id": 48,
+    "category": "Travel / Directions",
+    "english": "Is it far from here?",
+    "tai_khamti": "Ti nei klai ma?",
+    "transliteration": "Ti nei klai ma?"
+  },
+  {
+    "id": 49,
+    "category": "Travel / Directions",
+    "english": "Is it near?",
+    "tai_khamti": "Ti nei chaw ma?",
+    "transliteration": "Ti nei chaw ma?"
+  },
+  {
+    "id": 50,
+    "category": "Travel / Directions",
+    "english": "Where can I find a taxi?",
+    "tai_khamti": "Ka yap rot taxi ti nai?",
+    "transliteration": "Ka yap rot taxi ti nai?"
+  },
+  {
+    "id": 51,
+    "category": "Travel / Directions",
+    "english": "Which way is north?",
+    "tai_khamti": "Taang peuk ma yu ti nai?",
+    "transliteration": "Taang peuk ma yu ti nai?"
+  },
+  {
+    "id": 52,
+    "category": "Travel / Directions",
+    "english": "I am lost.",
+    "tai_khamti": "Kow ma moo taang.",
+    "transliteration": "Kow ma moo taang."
+  },
+  {
+    "id": 53,
+    "category": "Travel / Directions",
+    "english": "Can you show me on the map?",
+    "tai_khamti": "Son hai kow ti map chao?",
+    "transliteration": "Son hai kow ti map chao?"
+  },
+  {
+    "id": 54,
+    "category": "Travel / Directions",
+    "english": "Where is the market?",
+    "tai_khamti": "Talaat yu ti nai?",
+    "transliteration": "Talaat yu ti nai?"
+  },
+  {
+    "id": 55,
+    "category": "Travel / Directions",
+    "english": "Where is the hotel?",
+    "tai_khamti": "Hong phaek yu ti nai?",
+    "transliteration": "Hong phaek yu ti nai?"
+  },
+  {
+    "id": 56,
+    "category": "Food / Dining",
+    "english": "Have you eaten rice yet?",
+    "tai_khamti": "Kow kin yaw ha?",
+    "transliteration": "Kow kin yaw ha?"
+  },
+  {
+    "id": 57,
+    "category": "Food / Dining",
+    "english": "I am hungry.",
+    "tai_khamti": "Kow tawp kow.",
+    "transliteration": "Kow tawp kow."
+  },
+  {
+    "id": 58,
+    "category": "Food / Dining",
+    "english": "I am thirsty.",
+    "tai_khamti": "Kow tawp nam.",
+    "transliteration": "Kow tawp nam."
+  },
+  {
+    "id": 59,
+    "category": "Food / Dining",
+    "english": "What is good to eat here?",
+    "tai_khamti": "Ti nei sang kin li?",
+    "transliteration": "Ti nei sang kin li?"
+  },
+  {
+    "id": 60,
+    "category": "Food / Dining",
+    "english": "The food is very delicious.",
+    "tai_khamti": "Ahan nei wan nam.",
+    "transliteration": "Ahan nei wan nam."
+  },
+  {
+    "id": 61,
+    "category": "Food / Dining",
+    "english": "Please give me water.",
+    "tai_khamti": "Khaw nam chao.",
+    "transliteration": "Khaw nam chao."
+  },
+  {
+    "id": 62,
+    "category": "Food / Dining",
+    "english": "I want coffee.",
+    "tai_khamti": "Kow khaw kafe.",
+    "transliteration": "Kow khaw kafe."
+  },
+  {
+    "id": 63,
+    "category": "Food / Dining",
+    "english": "Do you have vegetarian food?",
+    "tai_khamti": "Ahan pak yu ma?",
+    "transliteration": "Ahan pak yu ma?"
+  },
+  {
+    "id": 64,
+    "category": "Food / Dining",
+    "english": "Is this spicy?",
+    "tai_khamti": "An nei phet ma?",
+    "transliteration": "An nei phet ma?"
+  },
+  {
+    "id": 65,
+    "category": "Food / Dining",
+    "english": "Check, please.",
+    "tai_khamti": "Khep sen chao.",
+    "transliteration": "Khep sen chao."
+  },
+  {
+    "id": 66,
+    "category": "Food / Dining",
+    "english": "Where can we eat lunch?",
+    "tai_khamti": "Ti kin kow wan yu ti nai?",
+    "transliteration": "Ti kin kow wan yu ti nai?"
+  },
+  {
+    "id": 67,
+    "category": "Food / Dining",
+    "english": "I don't eat meat.",
+    "tai_khamti": "Kow ma kin neua.",
+    "transliteration": "Kow ma kin neua."
+  },
+  {
+    "id": 68,
+    "category": "Food / Dining",
+    "english": "Can I have the menu?",
+    "tai_khamti": "Khaw menu chao.",
+    "transliteration": "Khaw menu chao."
+  },
+  {
+    "id": 69,
+    "category": "Food / Dining",
+    "english": "Tea, please.",
+    "tai_khamti": "Khaw nam cha chao.",
+    "transliteration": "Khaw nam cha chao."
+  },
+  {
+    "id": 70,
+    "category": "Food / Dining",
+    "english": "This is cold.",
+    "tai_khamti": "An nei yen.",
+    "transliteration": "An nei yen."
+  },
+  {
+    "id": 71,
+    "category": "Shopping / Value",
+    "english": "How much does this cost?",
+    "tai_khamti": "An nei ka ho hung?",
+    "transliteration": "An nei ka ho hung?"
+  },
+  {
+    "id": 72,
+    "category": "Shopping / Value",
+    "english": "It is too expensive.",
+    "tai_khamti": "Ka kaat nam.",
+    "transliteration": "Ka kaat nam."
+  },
+  {
+    "id": 73,
+    "category": "Shopping / Value",
+    "english": "Can you make it cheaper?",
+    "tai_khamti": "Yat ka hai noi sai wa?",
+    "transliteration": "Yat ka hai noi sai wa?"
+  },
+  {
+    "id": 74,
+    "category": "Shopping / Value",
+    "english": "I will buy this.",
+    "tai_khamti": "Kow ti aw an nei.",
+    "transliteration": "Kow ti aw an nei."
+  },
+  {
+    "id": 75,
+    "category": "Shopping / Value",
+    "english": "Do you accept cards?",
+    "tai_khamti": "Yap card sai wa?",
+    "transliteration": "Yap card sai wa?"
+  },
+  {
+    "id": 76,
+    "category": "Shopping / Value",
+    "english": "Where is the cashier?",
+    "tai_khamti": "Ti khep sen yu ti nai?",
+    "transliteration": "Ti khep sen yu ti nai?"
+  },
+  {
+    "id": 77,
+    "category": "Shopping / Value",
+    "english": "Do you have a smaller size?",
+    "tai_khamti": "Size aw noi yu ma?",
+    "transliteration": "Size aw noi yu ma?"
+  },
+  {
+    "id": 78,
+    "category": "Shopping / Value",
+    "english": "Do you have a larger size?",
+    "tai_khamti": "Size aw luang yu ma?",
+    "transliteration": "Size aw luang yu ma?"
+  },
+  {
+    "id": 79,
+    "category": "Shopping / Value",
+    "english": "I am just looking.",
+    "tai_khamti": "Kow teuk phoi yu.",
+    "transliteration": "Kow teuk phoi yu."
+  },
+  {
+    "id": 80,
+    "category": "Shopping / Value",
+    "english": "Where can I buy clothes?",
+    "tai_khamti": "Ka su pha ti nai?",
+    "transliteration": "Ka su pha ti nai?"
+  },
+  {
+    "id": 81,
+    "category": "Shopping / Value",
+    "english": "Is there a discount?",
+    "tai_khamti": "Yat ka yu ma?",
+    "transliteration": "Yat ka yu ma?"
+  },
+  {
+    "id": 82,
+    "category": "Shopping / Value",
+    "english": "Can I return this?",
+    "tai_khamti": "Aau ma sang ti kai sai wa?",
+    "transliteration": "Aau ma sang ti kai sai wa?"
+  },
+  {
+    "id": 83,
+    "category": "Shopping / Value",
+    "english": "Do you have other colors?",
+    "tai_khamti": "Sim ma kap yu ma?",
+    "transliteration": "Sim ma kap yu ma?"
+  },
+  {
+    "id": 84,
+    "category": "Shopping / Value",
+    "english": "Where is the shopping mall?",
+    "tai_khamti": "Hong talaat luang yu ti nai?",
+    "transliteration": "Hong talaat luang yu ti nai?"
+  },
+  {
+    "id": 85,
+    "category": "Shopping / Value",
+    "english": "I'll take two of these.",
+    "tai_khamti": "Kow ti aw an nei song an.",
+    "transliteration": "Kow ti aw an nei song an."
+  },
+  {
+    "id": 86,
+    "category": "Emergencies / Health",
+    "english": "Help me!",
+    "tai_khamti": "Choi kow pa!",
+    "transliteration": "Choi kow pa!"
+  },
+  {
+    "id": 87,
+    "category": "Emergencies / Health",
+    "english": "Call the doctor.",
+    "tai_khamti": "Hong maaw chao.",
+    "transliteration": "Hong maaw chao."
+  },
+  {
+    "id": 88,
+    "category": "Emergencies / Health",
+    "english": "I feel sick.",
+    "tai_khamti": "Kow ma li ho.",
+    "transliteration": "Kow ma li ho."
+  },
+  {
+    "id": 89,
+    "category": "Emergencies / Health",
+    "english": "Call the police.",
+    "tai_khamti": "Hong police chao.",
+    "transliteration": "Hong police chao."
+  },
+  {
+    "id": 90,
+    "category": "Emergencies / Health",
+    "english": "Where is the pharmacy?",
+    "tai_khamti": "Hong ya yu ti nai?",
+    "transliteration": "Hong ya yu ti nai?"
+  },
+  {
+    "id": 91,
+    "category": "Emergencies / Health",
+    "english": "I need medicine.",
+    "tai_khamti": "Kow khaw ya.",
+    "transliteration": "Kow khaw ya."
+  },
+  {
+    "id": 92,
+    "category": "Emergencies / Health",
+    "english": "My head hurts.",
+    "tai_khamti": "Kow chep ho.",
+    "transliteration": "Kow chep ho."
+  },
+  {
+    "id": 93,
+    "category": "Emergencies / Health",
+    "english": "My stomach hurts.",
+    "tai_khamti": "Kow chep tawng.",
+    "transliteration": "Kow chep tawng."
+  },
+  {
+    "id": 94,
+    "category": "Emergencies / Health",
+    "english": "There is a fire.",
+    "tai_khamti": "Fai maat!",
+    "transliteration": "Fai maat!"
+  },
+  {
+    "id": 95,
+    "category": "Emergencies / Health",
+    "english": "Be careful!",
+    "tai_khamti": "Rakhang!",
+    "transliteration": "Rakhang!"
+  },
+  {
+    "id": 96,
+    "category": "Emergencies / Health",
+    "english": "I lost my bag.",
+    "tai_khamti": "Thung kow ma ka.",
+    "transliteration": "Thung kow ma ka."
+  },
+  {
+    "id": 97,
+    "category": "Emergencies / Health",
+    "english": "I lost my passport.",
+    "tai_khamti": "Passport kow ma ka.",
+    "transliteration": "Passport kow ma ka."
+  },
+  {
+    "id": 98,
+    "category": "Emergencies / Health",
+    "english": "Is everyone okay?",
+    "tai_khamti": "Khen pen sang ma?",
+    "transliteration": "Khen pen sang ma?"
+  },
+  {
+    "id": 99,
+    "category": "Emergencies / Health",
+    "english": "Where is the emergency room?",
+    "tai_khamti": "Hong choi kap yu ti nai?",
+    "transliteration": "Hong choi kap yu ti nai?"
+  },
+  {
+    "id": 100,
+    "category": "Emergencies / Health",
+    "english": "I need help fast.",
+    "tai_khamti": "Khaw choi wai wai.",
+    "transliteration": "Khaw choi wai wai."
+  },
+  {
+    "id": 101,
+    "category": "Time / Calendar",
+    "english": "What day is today?",
+    "tai_khamti": "Wan nei pen wan sang?",
+    "transliteration": "Wan nei pen wan sang?"
+  },
+  {
+    "id": 102,
+    "category": "Time / Calendar",
+    "english": "Today is Monday.",
+    "tai_khamti": "Wan nei pen wan phat.",
+    "transliteration": "Wan nei pen wan phat?"
+  },
+  {
+    "id": 103,
+    "category": "Time / Calendar",
+    "english": "What time do you wake up?",
+    "tai_khamti": "Chao tuk pheng ho hung?",
+    "transliteration": "Chao tuk pheng ho hung?"
+  },
+  {
+    "id": 104,
+    "category": "Time / Calendar",
+    "english": "I will come tomorrow.",
+    "tai_khamti": "Kow ti ma phuk nai.",
+    "transliteration": "Kow ti ma phuk nai."
+  },
+  {
+    "id": 105,
+    "category": "Time / Calendar",
+    "english": "Yesterday was cold.",
+    "tai_khamti": "Wan wa yen nam.",
+    "transliteration": "Wan wa yen nam."
+  },
+  {
+    "id": 106,
+    "category": "Time / Calendar",
+    "english": "What month is it?",
+    "tai_khamti": "Nei pen deu'an sang?",
+    "transliteration": "Nei pen deu'an sang?"
+  },
+  {
+    "id": 107,
+    "category": "Time / Calendar",
+    "english": "Next week I am going home.",
+    "tai_khamti": "Atit na kow ti ka heu'an.",
+    "transliteration": "Atit na kow ti ka heu'an."
+  },
+  {
+    "id": 108,
+    "category": "Time / Calendar",
+    "english": "It is five o'clock.",
+    "tai_khamti": "Pheng ha mong yaw.",
+    "transliteration": "Pheng ha mong yaw."
+  },
+  {
+    "id": 109,
+    "category": "Time / Calendar",
+    "english": "I am early.",
+    "tai_khamti": "Kow ma taang caw.",
+    "transliteration": "Kow ma taang caw."
+  },
+  {
+    "id": 110,
+    "category": "Time / Calendar",
+    "english": "I am late.",
+    "tai_khamti": "Kow ma taang laat.",
+    "transliteration": "Kow ma taang laat."
+  },
+  {
+    "id": 111,
+    "category": "Weather / Nature",
+    "english": "How is the weather today?",
+    "tai_khamti": "Akat wan nei ho hung?",
+    "transliteration": "Akat wan nei ho hung?"
+  },
+  {
+    "id": 112,
+    "category": "Weather / Nature",
+    "english": "It is raining.",
+    "tai_khamti": "Fon tok yu.",
+    "transliteration": "Fon tok yu."
+  },
+  {
+    "id": 113,
+    "category": "Weather / Nature",
+    "english": "It is very hot.",
+    "tai_khamti": "Mai nam nam.",
+    "transliteration": "Mai nam nam."
+  },
+  {
+    "id": 114,
+    "category": "Weather / Nature",
+    "english": "The wind is blowing.",
+    "tai_khamti": "Lom blow yu.",
+    "transliteration": "Lom blow yu."
+  },
+  {
+    "id": 115,
+    "category": "Weather / Nature",
+    "english": "The sky is clear.",
+    "tai_khamti": "Fa chaang yu.",
+    "transliteration": "Fa chaang yu."
+  },
+  {
+    "id": 116,
+    "category": "Weather / Nature",
+    "english": "It looks like it will rain.",
+    "tai_khamti": "Fon ti tok paaw.",
+    "transliteration": "Fon ti tok paaw."
+  },
+  {
+    "id": 117,
+    "category": "Weather / Nature",
+    "english": "The sun is shining.",
+    "tai_khamti": "Wan fa cheng yu.",
+    "transliteration": "Wan fa cheng yu."
+  },
+  {
+    "id": 118,
+    "category": "Weather / Nature",
+    "english": "It is foggy.",
+    "tai_khamti": "Mawk tok yu.",
+    "transliteration": "Mawk tok yu."
+  },
+  {
+    "id": 119,
+    "category": "Weather / Nature",
+    "english": "I love the mountains.",
+    "tai_khamti": "Kow li chai doi.",
+    "transliteration": "Kow li chai doi."
+  },
+  {
+    "id": 120,
+    "category": "Weather / Nature",
+    "english": "The river is wide.",
+    "tai_khamti": "Nam luang nam.",
+    "transliteration": "Nam luang nam."
+  },
+  {
+    "id": 121,
+    "category": "Family / Relationships",
+    "english": "This is my mother.",
+    "tai_khamti": "An nei pen mae kow.",
+    "transliteration": "An nei pen mae kow."
+  },
+  {
+    "id": 122,
+    "category": "Family / Relationships",
+    "english": "This is my father.",
+    "tai_khamti": "An nei pen po kow.",
+    "transliteration": "An nei pen po kow."
+  },
+  {
+    "id": 123,
+    "category": "Family / Relationships",
+    "english": "Do you have siblings?",
+    "tai_khamti": "Chao mi pi nong ma?",
+    "transliteration": "Chao mi pi nong ma?"
+  },
+  {
+    "id": 124,
+    "category": "Family / Relationships",
+    "english": "I have a younger brother.",
+    "tai_khamti": "Kow mi nong chai.",
+    "transliteration": "Kow mi nong chai."
+  },
+  {
+    "id": 125,
+    "category": "Family / Relationships",
+    "english": "She is my sister.",
+    "tai_khamti": "Khao pen pi nang kow.",
+    "transliteration": "Khao pen pi nang kow."
+  },
+  {
+    "id": 126,
+    "category": "Family / Relationships",
+    "english": "Is he your friend?",
+    "tai_khamti": "Khao pen paeng chao ma?",
+    "transliteration": "Khao pen paeng chao ma?"
+  },
+  {
+    "id": 127,
+    "category": "Family / Relationships",
+    "english": "Where is your family?",
+    "tai_khamti": "Heu'an chao yu ti nai?",
+    "transliteration": "Heu'an chao yu ti nai?"
+  },
+  {
+    "id": 128,
+    "category": "Family / Relationships",
+    "english": "I love my family.",
+    "tai_khamti": "Kow li chai heu'an kow.",
+    "transliteration": "Kow li chai heu'an kow."
+  },
+  {
+    "id": 129,
+    "category": "Family / Relationships",
+    "english": "He is my uncle.",
+    "tai_khamti": "Khao pen lo kow.",
+    "transliteration": "Khao pen lo kow."
+  },
+  {
+    "id": 130,
+    "category": "Family / Relationships",
+    "english": "They are my children.",
+    "tai_khamti": "Khao pen luk kow.",
+    "transliteration": "Khao pen luk kow."
+  },
+  {
+    "id": 131,
+    "category": "Work / Technology",
+    "english": "Where do you work?",
+    "tai_khamti": "Chao het kaan ti nai?",
+    "transliteration": "Chao het kaan ti nai?"
+  },
+  {
+    "id": 132,
+    "category": "Work / Technology",
+    "english": "I am a student.",
+    "tai_khamti": "Kow pen luk son.",
+    "transliteration": "Kow pen luk son."
+  },
+  {
+    "id": 133,
+    "category": "Work / Technology",
+    "english": "I am a teacher.",
+    "tai_khamti": "Kow pen chao son.",
+    "transliteration": "Kow pen chao son."
+  },
+  {
+    "id": 134,
+    "category": "Work / Technology",
+    "english": "Do you have Wi-Fi?",
+    "tai_khamti": "Mi Wi-Fi yu ma?",
+    "transliteration": "Mi Wi-Fi yu ma?"
+  },
+  {
+    "id": 135,
+    "category": "Work / Technology",
+    "english": "What is the Wi-Fi password?",
+    "tai_khamti": "Password Wi-Fi pen sang?",
+    "transliteration": "Password Wi-Fi pen sang?"
+  },
+  {
+    "id": 136,
+    "category": "Work / Technology",
+    "english": "My phone is out of battery.",
+    "tai_khamti": "Phone kow ma mi fai.",
+    "transliteration": "Phone kow ma mi fai."
+  },
+  {
+    "id": 137,
+    "category": "Work / Technology",
+    "english": "Where can I charge my phone?",
+    "tai_khamti": "Ka saat fai phone ti nai?",
+    "transliteration": "Ka saat fai phone ti nai?"
+  },
+  {
+    "id": 138,
+    "category": "Work / Technology",
+    "english": "I need to send an email.",
+    "tai_khamti": "Kow khaw song email.",
+    "transliteration": "Kow khaw song email."
+  },
+  {
+    "id": 139,
+    "category": "Work / Technology",
+    "english": "Can you fix this device?",
+    "tai_khamti": "Choi het an nei li sai wa?",
+    "transliteration": "Choi het an nei li sai wa?"
+  },
+  {
+    "id": 140,
+    "category": "Work / Technology",
+    "english": "I work at an office.",
+    "tai_khamti": "Kow het kaan ti office.",
+    "transliteration": "Kow het kaan ti office."
+  },
+  {
+    "id": 141,
+    "category": "Feelings / Emotions",
+    "english": "I am happy.",
+    "tai_khamti": "Kow li chai nam.",
+    "transliteration": "Kow li chai nam."
+  },
+  {
+    "id": 142,
+    "category": "Feelings / Emotions",
+    "english": "I am tired.",
+    "tai_khamti": "Kow meuk nam.",
+    "transliteration": "Kow meuk nam."
+  },
+  {
+    "id": 143,
+    "category": "Feelings / Emotions",
+    "english": "Don't worry.",
+    "tai_khamti": "Maw mai chai.",
+    "transliteration": "Maw mai chai."
+  },
+  {
+    "id": 144,
+    "category": "Feelings / Emotions",
+    "english": "I am surprised.",
+    "tai_khamti": "Kow paak chai.",
+    "transliteration": "Kow paak chai."
+  },
+  {
+    "id": 145,
+    "category": "Feelings / Emotions",
+    "english": "Are you okay?",
+    "tai_khamti": "Chao li yu ma?",
+    "transliteration": "Chao li yu ma?"
+  },
+  {
+    "id": 146,
+    "category": "Feelings / Emotions",
+    "english": "I feel sleepy.",
+    "tai_khamti": "Kow tawp non.",
+    "transliteration": "Kow tawp non."
+  },
+  {
+    "id": 147,
+    "category": "Feelings / Emotions",
+    "english": "I am bored.",
+    "tai_khamti": "Kow meuk chai.",
+    "transliteration": "Kow meuk chai."
+  },
+  {
+    "id": 148,
+    "category": "Feelings / Emotions",
+    "english": "This is exciting.",
+    "tai_khamti": "An nei li chai nam.",
+    "transliteration": "An nei li chai nam."
+  },
+  {
+    "id": 149,
+    "category": "Feelings / Emotions",
+    "english": "I am nervous.",
+    "tai_khamti": "Kow kwhaw chai.",
+    "transliteration": "Kow kwhaw chai."
+  },
+  {
+    "id": 150,
+    "category": "Feelings / Emotions",
+    "english": "Cheer up!",
+    "tai_khamti": "Hai li chai pa!",
+    "transliteration": "Hai li chai pa!"
+  },
+  {
+    "id": 151,
+    "category": "Hobbies / Leisure",
+    "english": "What do you like to do?",
+    "tai_khamti": "Chao li chai het sang?",
+    "transliteration": "Chao li chai het sang?"
+  },
+  {
+    "id": 152,
+    "category": "Hobbies / Leisure",
+    "english": "I like reading books.",
+    "tai_khamti": "Kow li chai an lik.",
+    "transliteration": "Kow li chai an lik."
+  },
+  {
+    "id": 153,
+    "category": "Hobbies / Leisure",
+    "english": "I like listening to music.",
+    "tai_khamti": "Kow li chai thong kwam.",
+    "transliteration": "Kow li chai thong kwam."
+  },
+  {
+    "id": 154,
+    "category": "Hobbies / Leisure",
+    "english": "Do you play sports?",
+    "tai_khamti": "Chao ki-la ma?",
+    "transliteration": "Chao ki-la ma?"
+  },
+  {
+    "id": 155,
+    "category": "Hobbies / Leisure",
+    "english": "I like traveling.",
+    "tai_khamti": "Kow li chai ka taang.",
+    "transliteration": "Kow li chai ka taang."
+  },
+  {
+    "id": 156,
+    "category": "Hobbies / Leisure",
+    "english": "Let's watch a movie.",
+    "tai_khamti": "Ka phoi phap kwan.",
+    "transliteration": "Ka phoi phap kwan."
+  },
+  {
+    "id": 157,
+    "category": "Hobbies / Leisure",
+    "english": "I enjoy cooking.",
+    "tai_khamti": "Kow li chai het kow.",
+    "transliteration": "Kow li chai het kow."
+  },
+  {
+    "id": 158,
+    "category": "Hobbies / Leisure",
+    "english": "Do you like photography?",
+    "tai_khamti": "Chao li chai phap ma?",
+    "transliteration": "Chao li chai phap ma?"
+  },
+  {
+    "id": 159,
+    "category": "Hobbies / Leisure",
+    "english": "I like playing football.",
+    "tai_khamti": "Kow li chai ki football.",
+    "transliteration": "Kow li chai ki football."
+  },
+  {
+    "id": 160,
+    "category": "Hobbies / Leisure",
+    "english": "Let's go for a walk.",
+    "tai_khamti": "Ka phoi taang pa.",
+    "transliteration": "Ka phoi taang pa."
+  },
+  {
+    "id": 161,
+    "category": "Housing / Living",
+    "english": "Where is your home?",
+    "tai_khamti": "Heu'an chao yu ti nai?",
+    "transliteration": "Heu'an chao yu ti nai?"
+  },
+  {
+    "id": 162,
+    "category": "Housing / Living",
+    "english": "Please close the door.",
+    "tai_khamti": "Choi kham tup chao.",
+    "transliteration": "Choi kham tup chao."
+  },
+  {
+    "id": 163,
+    "category": "Housing / Living",
+    "english": "Please open the window.",
+    "tai_khamti": "Choi pong tup chao.",
+    "transliteration": "Choi pong tup chao."
+  },
+  {
+    "id": 164,
+    "category": "Housing / Living",
+    "english": "Turn on the light.",
+    "tai_khamti": "Choi tit fai chao.",
+    "transliteration": "Choi tit fai chao."
+  },
+  {
+    "id": 165,
+    "category": "Housing / Living",
+    "english": "Turn off the fan.",
+    "tai_khamti": "Choi mwe fan chao.",
+    "transliteration": "Choi mwe fan chao."
+  },
+  {
+    "id": 166,
+    "category": "Housing / Living",
+    "english": "The room is clean.",
+    "tai_khamti": "Hong nei chaang li.",
+    "transliteration": "Hong nei chaang li."
+  },
+  {
+    "id": 167,
+    "category": "Housing / Living",
+    "english": "I am staying here.",
+    "tai_khamti": "Kow yu ti nei.",
+    "transliteration": "Kow yu ti nei."
+  },
+  {
+    "id": 168,
+    "category": "Housing / Living",
+    "english": "Where is the kitchen?",
+    "tai_khamti": "Hong het kow yu ti nai?",
+    "transliteration": "Hong het kow yu ti nai?"
+  },
+  {
+    "id": 169,
+    "category": "Housing / Living",
+    "english": "This bed is comfortable.",
+    "tai_khamti": "Ti non nei li non nam.",
+    "transliteration": "Ti non nei li non nam."
+  },
+  {
+    "id": 170,
+    "category": "Housing / Living",
+    "english": "I need a key.",
+    "tai_khamti": "Kow khaw so.",
+    "transliteration": "Kow khaw so."
+  },
+  {
+    "id": 171,
+    "category": "Shopping & Commerce",
+    "english": "Do you sell fruit?",
+    "tai_khamti": "Chao kai mak ma?",
+    "transliteration": "Chao kai mak ma?"
+  },
+  {
+    "id": 172,
+    "category": "Shopping & Commerce",
+    "english": "Is this fresh?",
+    "tai_khamti": "An nei maai yu ma?",
+    "transliteration": "An nei maai yu ma?"
+  },
+  {
+    "id": 173,
+    "category": "Shopping & Commerce",
+    "english": "Give me one kilo.",
+    "tai_khamti": "Choi hai kow neung kilo.",
+    "transliteration": "Choi hai kow neung kilo."
+  },
+  {
+    "id": 174,
+    "category": "Shopping & Commerce",
+    "english": "Do you have change?",
+    "tai_khamti": "Mi sen noi yu ma?",
+    "transliteration": "Mi sen noi yu ma?"
+  },
+  {
+    "id": 175,
+    "category": "Shopping & Commerce",
+    "english": "I want to pay cash.",
+    "tai_khamti": "Kow ti hai sen maai.",
+    "transliteration": "Kow ti hai sen maai."
+  },
+  {
+    "id": 176,
+    "category": "Shopping & Commerce",
+    "english": "Can I get a receipt?",
+    "tai_khamti": "Khaw sen receipt chao.",
+    "transliteration": "Khaw sen receipt chao."
+  },
+  {
+    "id": 177,
+    "category": "Shopping & Commerce",
+    "english": "This is broken.",
+    "tai_khamti": "An nei haak yaw.",
+    "transliteration": "An nei haak yaw."
+  },
+  {
+    "id": 178,
+    "category": "Shopping & Commerce",
+    "english": "Where can I buy tea?",
+    "tai_khamti": "Ka su nam cha ti nai?",
+    "transliteration": "Ka su nam cha ti nai?"
+  },
+  {
+    "id": 179,
+    "category": "Shopping & Commerce",
+    "english": "Are you open today?",
+    "tai_khamti": "Wan nei kham ma?",
+    "transliteration": "Wan nei kham ma?"
+  },
+  {
+    "id": 180,
+    "category": "Shopping & Commerce",
+    "english": "What time do you close?",
+    "tai_khamti": "Pheng ho hung ti tup?",
+    "transliteration": "Pheng ho hung ti tup?"
+  },
+  {
+    "id": 181,
+    "category": "Questions / Inquiries",
+    "english": "Why?",
+    "tai_khamti": "Pen sang?",
+    "transliteration": "Pen sang?"
+  },
+  {
+    "id": 182,
+    "category": "Questions / Inquiries",
+    "english": "When?",
+    "tai_khamti": "Pheng ho hung?",
+    "transliteration": "Pheng ho hung?"
+  },
+  {
+    "id": 183,
+    "category": "Questions / Inquiries",
+    "english": "How?",
+    "tai_khamti": "Ho hung?",
+    "transliteration": "Ho hung?"
+  },
+  {
+    "id": 184,
+    "category": "Questions / Inquiries",
+    "english": "Which one?",
+    "tai_khamti": "An nai?",
+    "transliteration": "An nai?"
+  },
+  {
+    "id": 185,
+    "category": "Questions / Inquiries",
+    "english": "Is it possible?",
+    "tai_khamti": "Pen sai wa?",
+    "transliteration": "Pen sai wa?"
+  },
+  {
+    "id": 186,
+    "category": "Questions / Inquiries",
+    "english": "What happened?",
+    "tai_khamti": "Pen sang yaw?",
+    "transliteration": "Pen sang yaw?"
+  },
+  {
+    "id": 187,
+    "category": "Questions / Inquiries",
+    "english": "Who is coming?",
+    "tai_khamti": "Pheu ti ma?",
+    "transliteration": "Pheu ti ma?"
+  },
+  {
+    "id": 188,
+    "category": "Questions / Inquiries",
+    "english": "Are you sure?",
+    "tai_khamti": "Chao li chai ma?",
+    "transliteration": "Chao li chai ma?"
+  },
+  {
+    "id": 189,
+    "category": "Questions / Inquiries",
+    "english": "Where are we?",
+    "tai_khamti": "Hau yu ti nai?",
+    "transliteration": "Hau yu ti nai?"
+  },
+  {
+    "id": 190,
+    "category": "Questions / Inquiries",
+    "english": "What is this called?",
+    "tai_khamti": "An nei hong wa sang?",
+    "transliteration": "An nei hong wa sang?"
+  },
+  {
+    "id": 191,
+    "category": "General / Courtesy",
+    "english": "No problem.",
+    "tai_khamti": "Ma pen sang.",
+    "transliteration": "Ma pen sang."
+  },
+  {
+    "id": 192,
+    "category": "General / Courtesy",
+    "english": "Take care.",
+    "tai_khamti": "Rakhang ho chao.",
+    "transliteration": "Rakhang ho chao."
+  },
+  {
+    "id": 193,
+    "category": "General / Courtesy",
+    "english": "Congratulations!",
+    "tai_khamti": "Yin li nam!",
+    "transliteration": "Yin li nam!"
+  },
+  {
+    "id": 194,
+    "category": "General / Courtesy",
+    "english": "Good luck!",
+    "tai_khamti": "Hai li hai pen!",
+    "transliteration": "Hai li hai pen!"
+  },
+  {
+    "id": 195,
+    "category": "General / Courtesy",
+    "english": "Have a safe journey.",
+    "tai_khamti": "Ka li ma li chao.",
+    "transliteration": "Ka li ma li chao."
+  },
+  {
+    "id": 196,
+    "category": "General / Courtesy",
+    "english": "Happy Birthday!",
+    "tai_khamti": "Wan koet li chao!",
+    "transliteration": "Wan koet li chao!"
+  },
+  {
+    "id": 197,
+    "category": "General / Courtesy",
+    "english": "I agree.",
+    "tai_khamti": "Kow li chai pa.",
+    "transliteration": "Kow li chai pa."
+  },
+  {
+    "id": 198,
+    "category": "General / Courtesy",
+    "english": "I disagree.",
+    "tai_khamti": "Kow ma li chai.",
+    "transliteration": "Kow ma li chai."
+  },
+  {
+    "id": 199,
+    "category": "General / Courtesy",
+    "english": "Wait a moment.",
+    "tai_khamti": "Thaw noi chao.",
+    "transliteration": "Thaw noi chao."
+  },
+  {
+    "id": 200,
+    "category": "General / Courtesy",
+    "english": "Let's start.",
+    "tai_khamti": "Hau tit pa.",
+    "transliteration": "Hau tit pa."
+  },
+  {
+    "id": 201,
+    "category": "Culture & Traditions",
+    "english": "What is this festival called?",
+    "tai_khamti": "Poy nei hong wa sang?",
+    "transliteration": "Poy nei hong wa sang?"
+  },
+  {
+    "id": 202,
+    "category": "Culture & Traditions",
+    "english": "This is a Tai Khamti traditional dance.",
+    "tai_khamti": "An nei pen ka Tai Khamti.",
+    "transliteration": "An nei pen ka Tai Khamti."
+  },
+  {
+    "id": 203,
+    "category": "Culture & Traditions",
+    "english": "Do you wear traditional clothes?",
+    "tai_khamti": "Chao song pha Tai Khamti ma?",
+    "transliteration": "Chao song pha Tai Khamti ma?"
+  },
+  {
+    "id": 204,
+    "category": "Culture & Traditions",
+    "english": "What is this food made of?",
+    "tai_khamti": "Ahan nei het luk sang ma?",
+    "transliteration": "Ahan nei het luk sang ma?"
+  },
+  {
+    "id": 205,
+    "category": "Culture & Traditions",
+    "english": "We celebrate Poi Sangken.",
+    "tai_khamti": "Hau het poy Sangken.",
+    "transliteration": "Hau het poy Sangken."
+  },
+  {
+    "id": 206,
+    "category": "Culture & Traditions",
+    "english": "This song is very famous.",
+    "tai_khamti": "Kwam nei chaw nam.",
+    "transliteration": "Kwam nei chaw nam."
+  },
+  {
+    "id": 207,
+    "category": "Culture & Traditions",
+    "english": "Respect your elders.",
+    "tai_khamti": "Hai wai chao luang.",
+    "transliteration": "Hai wai chao luang."
+  },
+  {
+    "id": 208,
+    "category": "Culture & Traditions",
+    "english": "We pray at the monastery.",
+    "tai_khamti": "Hau ka wai ti kyawng.",
+    "transliteration": "Hau ka wai ti kyawng."
+  },
+  {
+    "id": 209,
+    "category": "Culture & Traditions",
+    "english": "This is our village culture.",
+    "tai_khamti": "An nei pen taang man hau.",
+    "transliteration": "An nei pen taang man hau."
+  },
+  {
+    "id": 210,
+    "category": "Culture & Traditions",
+    "english": "Are there any performances today?",
+    "tai_khamti": "Wan nei mi poy ka ma?",
+    "transliteration": "Wan nei mi poy ka ma?"
+  },
+  {
+    "id": 211,
+    "category": "Commerce & Numbers",
+    "english": "Give me ten of these.",
+    "tai_khamti": "Choi hai kow sip an.",
+    "transliteration": "Choi hai kow sip an."
+  },
+  {
+    "id": 212,
+    "category": "Commerce & Numbers",
+    "english": "How many items are here?",
+    "tai_khamti": "Ti nei mi ho hung an?",
+    "transliteration": "Ti nei mi ho hung an?"
+  },
+  {
+    "id": 213,
+    "category": "Commerce & Numbers",
+    "english": "I want hundred rupees.",
+    "tai_khamti": "Kow khaw sen pak neung.",
+    "transliteration": "Kow khaw sen pak neung."
+  },
+  {
+    "id": 214,
+    "category": "Commerce & Numbers",
+    "english": "Is the total correct?",
+    "tai_khamti": "Sen nam nei tam ma?",
+    "transliteration": "Sen nam nei tam ma?"
+  },
+  {
+    "id": 215,
+    "category": "Commerce & Numbers",
+    "english": "Can I pay later?",
+    "tai_khamti": "Kow hai sen ti kai sai wa?",
+    "transliteration": "Kow hai sen ti kai sai wa?"
+  },
+  {
+    "id": 216,
+    "category": "Commerce & Numbers",
+    "english": "Do you have a smaller note?",
+    "tai_khamti": "Mi sen noi yu ma?",
+    "transliteration": "Mi sen noi yu ma?"
+  },
+  {
+    "id": 217,
+    "category": "Commerce & Numbers",
+    "english": "Keep the change.",
+    "tai_khamti": "Aw sen noi chao.",
+    "transliteration": "Aw sen noi chao."
+  },
+  {
+    "id": 218,
+    "category": "Commerce & Numbers",
+    "english": "What is the final price?",
+    "tai_khamti": "Ka phaik pen ho hung?",
+    "transliteration": "Ka phaik pen ho hung?"
+  },
+  {
+    "id": 219,
+    "category": "Commerce & Numbers",
+    "english": "I will pay in cash.",
+    "tai_khamti": "Kow ti hai sen maai.",
+    "transliteration": "Kow ti hai sen maai."
+  },
+  {
+    "id": 220,
+    "category": "Commerce & Numbers",
+    "english": "Is this taxable?",
+    "tai_khamti": "An nei mi tax ma?",
+    "transliteration": "An nei mi tax ma?"
+  },
+  {
+    "id": 221,
+    "category": "Health & Medical",
+    "english": "Where can I find a doctor?",
+    "tai_khamti": "Ka yap maaw ti nai?",
+    "transliteration": "Ka yap maaw ti nai?"
+  },
+  {
+    "id": 222,
+    "category": "Health & Medical",
+    "english": "Take this medicine twice a day.",
+    "tai_khamti": "Kin ya nei song pawk wan neung.",
+    "transliteration": "Kin ya nei song pawk wan neung."
+  },
+  {
+    "id": 223,
+    "category": "Health & Medical",
+    "english": "I have a fever.",
+    "tai_khamti": "Kow mi fai mai.",
+    "transliteration": "Kow mi fai mai."
+  },
+  {
+    "id": 224,
+    "category": "Health & Medical",
+    "english": "My throat hurts.",
+    "tai_khamti": "Kow chep kho.",
+    "transliteration": "Kow chep kho."
+  },
+  {
+    "id": 225,
+    "category": "Health & Medical",
+    "english": "Are you feeling better?",
+    "tai_khamti": "Chao li ma yaw ha?",
+    "transliteration": "Chao li ma yaw ha?"
+  },
+  {
+    "id": 226,
+    "category": "Health & Medical",
+    "english": "Rest well.",
+    "tai_khamti": "Non li li chao.",
+    "transliteration": "Non li li chao."
+  },
+  {
+    "id": 227,
+    "category": "Health & Medical",
+    "english": "Drink plenty of water.",
+    "tai_khamti": "Kin nam nam nam.",
+    "transliteration": "Kin nam nam nam."
+  },
+  {
+    "id": 228,
+    "category": "Health & Medical",
+    "english": "I need an injection.",
+    "tai_khamti": "Kow khaw yap ya.",
+    "transliteration": "Kow khaw yap ya."
+  },
+  {
+    "id": 229,
+    "category": "Health & Medical",
+    "english": "Is it infectious?",
+    "tai_khamti": "An nei mu ma?",
+    "transliteration": "An nei mu ma?"
+  },
+  {
+    "id": 230,
+    "category": "Health & Medical",
+    "english": "Where is the clinic?",
+    "tai_khamti": "Hong ya noi yu ti nai?",
+    "transliteration": "Hong ya noi yu ti nai?"
+  },
+  {
+    "id": 231,
+    "category": "Geography & Places",
+    "english": "Where is the river bank?",
+    "tai_khamti": "Ta nam yu ti nai?",
+    "transliteration": "Ta nam yu ti nai?"
+  },
+  {
+    "id": 232,
+    "category": "Geography & Places",
+    "english": "Is this town big?",
+    "tai_khamti": "Man nei luang ma?",
+    "transliteration": "Man nei luang ma?"
+  },
+  {
+    "id": 233,
+    "category": "Geography & Places",
+    "english": "I am going to the village.",
+    "tai_khamti": "Kow ti ka man.",
+    "transliteration": "Kow ti ka man."
+  },
+  {
+    "id": 234,
+    "category": "Geography & Places",
+    "english": "Where is the library?",
+    "tai_khamti": "Hong an lik yu ti nai?",
+    "transliteration": "Hong an lik yu ti nai?"
+  },
+  {
+    "id": 235,
+    "category": "Geography & Places",
+    "english": "The forest is thick.",
+    "tai_khamti": "Paa nei luang nam.",
+    "transliteration": "Paa nei luang nam."
+  },
+  {
+    "id": 236,
+    "category": "Geography & Places",
+    "english": "Where is the post office?",
+    "tai_khamti": "Hong song lik yu ti nai?",
+    "transliteration": "Hong song lik yu ti nai?"
+  },
+  {
+    "id": 237,
+    "category": "Geography & Places",
+    "english": "Is there a park nearby?",
+    "tai_khamti": "Mi park chaw nei ma?",
+    "transliteration": "Mi park chaw nei ma?"
+  },
+  {
+    "id": 238,
+    "category": "Geography & Places",
+    "english": "Where is the bridge?",
+    "tai_khamti": "Khua nam yu ti nai?",
+    "transliteration": "Khua nam yu ti nai?"
+  },
+  {
+    "id": 239,
+    "category": "Geography & Places",
+    "english": "This is a beautiful place.",
+    "tai_khamti": "Ti nei li phoi nam.",
+    "transliteration": "Ti nei li phoi nam."
+  },
+  {
+    "id": 240,
+    "category": "Geography & Places",
+    "english": "Where is the main street?",
+    "tai_khamti": "Taang luang yu ti nai?",
+    "transliteration": "Taang luang yu ti nai?"
+  },
+  {
+    "id": 241,
+    "category": "Education & School",
+    "english": "When does the class start?",
+    "tai_khamti": "Class ti tit pheng ho hung?",
+    "transliteration": "Class ti tit pheng ho hung?"
+  },
+  {
+    "id": 242,
+    "category": "Education & School",
+    "english": "I have homework.",
+    "tai_khamti": "Kow mi kaan heu'an.",
+    "transliteration": "Kow mi kaan heu'an."
+  },
+  {
+    "id": 243,
+    "category": "Education & School",
+    "english": "Where is my book?",
+    "tai_khamti": "Lik kow yu ti nai?",
+    "transliteration": "Lik kow yu ti nai?"
+  },
+  {
+    "id": 244,
+    "category": "Education & School",
+    "english": "Can you lend me a pen?",
+    "tai_khamti": "Khaw pik chao sai wa?",
+    "transliteration": "Khaw pik chao sai wa?"
+  },
+  {
+    "id": 245,
+    "category": "Education & School",
+    "english": "The teacher is speaking.",
+    "tai_khamti": "Chao son lat yu.",
+    "transliteration": "Chao son lat yu."
+  },
+  {
+    "id": 246,
+    "category": "Education & School",
+    "english": "I passed the exam.",
+    "tai_khamti": "Kow thuk exam yaw.",
+    "transliteration": "Kow thuk exam yaw."
+  },
+  {
+    "id": 247,
+    "category": "Education & School",
+    "english": "What is your subject?",
+    "tai_khamti": "Chao an lik sang?",
+    "transliteration": "Chao an lik sang?"
+  },
+  {
+    "id": 248,
+    "category": "Education & School",
+    "english": "Open your book.",
+    "tai_khamti": "Kham lik chao.",
+    "transliteration": "Kham lik chao."
+  },
+  {
+    "id": 249,
+    "category": "Education & School",
+    "english": "Close your book.",
+    "tai_khamti": "Tup lik chao.",
+    "transliteration": "Tup lik chao."
+  },
+  {
+    "id": 250,
+    "category": "Education & School",
+    "english": "Where is the classroom?",
+    "tai_khamti": "Hong son yu ti nai?",
+    "transliteration": "Hong son yu ti nai?"
+  },
+  {
+    "id": 251,
+    "category": "Food & Ingredients",
+    "english": "This fruit is sweet.",
+    "tai_khamti": "Mak nei wan nam.",
+    "transliteration": "Mak nei wan nam."
+  },
+  {
+    "id": 252,
+    "category": "Food & Ingredients",
+    "english": "Is this water clean?",
+    "tai_khamti": "Nam nei chaang ma?",
+    "transliteration": "Nam nei chaang ma?"
+  },
+  {
+    "id": 253,
+    "category": "Food & Ingredients",
+    "english": "I want fish.",
+    "tai_khamti": "Kow khaw pa.",
+    "transliteration": "Kow khaw pa."
+  },
+  {
+    "id": 254,
+    "category": "Food & Ingredients",
+    "english": "Is there salt in this?",
+    "tai_khamti": "Mi klua yu ma?",
+    "transliteration": "Mi klua yu ma?"
+  },
+  {
+    "id": 255,
+    "category": "Food & Ingredients",
+    "english": "Add more sugar.",
+    "tai_khamti": "Sae nam tan hai noi.",
+    "transliteration": "Sae nam tan hai noi."
+  },
+  {
+    "id": 256,
+    "category": "Food & Ingredients",
+    "english": "I like green tea.",
+    "tai_khamti": "Kow li chai nam cha khieu.",
+    "transliteration": "Kow li chai nam cha khieu."
+  },
+  {
+    "id": 257,
+    "category": "Food & Ingredients",
+    "english": "Bring some bread.",
+    "tai_khamti": "Aw kow nom ma.",
+    "transliteration": "Aw kow nom ma."
+  },
+  {
+    "id": 258,
+    "category": "Food & Ingredients",
+    "english": "This vegetable is fresh.",
+    "tai_khamti": "Pak nei maai nam.",
+    "transliteration": "Pak nei maai nam."
+  },
+  {
+    "id": 259,
+    "category": "Food & Ingredients",
+    "english": "Do you eat meat?",
+    "tai_khamti": "Chao kin neua ma?",
+    "transliteration": "Chao kin neua ma?"
+  },
+  {
+    "id": 260,
+    "category": "Food & Ingredients",
+    "english": "Pass me the rice.",
+    "tai_khamti": "Choi song kow ma.",
+    "transliteration": "Choi song kow ma."
+  },
+  {
+    "id": 261,
+    "category": "AI & Technical Queries",
+    "english": "Can you generate a story?",
+    "tai_khamti": "Teng kwam hai kow sai wa?",
+    "transliteration": "Teng kwam hai kow sai wa?"
+  },
+  {
+    "id": 262,
+    "category": "AI & Technical Queries",
+    "english": "Translate this into Tai Khamti.",
+    "tai_khamti": "An nei pen kwam Tai Khamti pa.",
+    "transliteration": "An nei pen kwam Tai Khamti pa."
+  },
+  {
+    "id": 263,
+    "category": "AI & Technical Queries",
+    "english": "Summarize this text.",
+    "tai_khamti": "Yat lik nei hai noi.",
+    "transliteration": "Yat lik nei hai noi."
+  },
+  {
+    "id": 264,
+    "category": "AI & Technical Queries",
+    "english": "Check for errors.",
+    "tai_khamti": "Phoi ti ma tam pa.",
+    "transliteration": "Phoi ti ma tam pa."
+  },
+  {
+    "id": 265,
+    "category": "AI & Technical Queries",
+    "english": "Write a short response.",
+    "tai_khamti": "Lat kwam noi pa.",
+    "transliteration": "Lat kwam noi pa."
+  },
+  {
+    "id": 266,
+    "category": "AI & Technical Queries",
+    "english": "Can you code in Python?",
+    "tai_khamti": "Het code Python sai wa?",
+    "transliteration": "Het code Python sai wa?"
+  },
+  {
+    "id": 267,
+    "category": "AI & Technical Queries",
+    "english": "How does AI work?",
+    "tai_khamti": "AI het kaan ho hung?",
+    "transliteration": "AI het kaan ho hung?"
+  },
+  {
+    "id": 268,
+    "category": "AI & Technical Queries",
+    "english": "Find the definition.",
+    "tai_khamti": "Moo ti wa an nei pa.",
+    "transliteration": "Moo ti wa an nei pa."
+  },
+  {
+    "id": 269,
+    "category": "AI & Technical Queries",
+    "english": "Create a list for me.",
+    "tai_khamti": "Het list hai kow pa.",
+    "transliteration": "Het list hai kow pa."
+  },
+  {
+    "id": 270,
+    "category": "AI & Technical Queries",
+    "english": "Explain this step by step.",
+    "tai_khamti": "Son hai kow taang taang pa.",
+    "transliteration": "Son hai kow taang taang pa."
+  },
+  {
+    "id": 271,
+    "category": "Daily Activities",
+    "english": "I am taking a bath.",
+    "tai_khamti": "Kow aaw nam yu.",
+    "transliteration": "Kow aaw nam yu."
+  },
+  {
+    "id": 272,
+    "category": "Daily Activities",
+    "english": "Let's drink tea.",
+    "tai_khamti": "Ka kin nam cha pa.",
+    "transliteration": "Ka kin nam cha pa."
+  },
+  {
+    "id": 273,
+    "category": "Daily Activities",
+    "english": "I am going to sleep.",
+    "tai_khamti": "Kow ti ka non.",
+    "transliteration": "Kow ti ka non."
+  },
+  {
+    "id": 274,
+    "category": "Daily Activities",
+    "english": "He is cooking dinner.",
+    "tai_khamti": "Khao het kow ham yu.",
+    "transliteration": "Khao het kow ham yu."
+  },
+  {
+    "id": 275,
+    "category": "Daily Activities",
+    "english": "We are cleaning the room.",
+    "tai_khamti": "Hau saang hong yu.",
+    "transliteration": "Hau saang hong yu."
+  },
+  {
+    "id": 276,
+    "category": "Daily Activities",
+    "english": "She is washing clothes.",
+    "tai_khamti": "Khao su pha yu.",
+    "transliteration": "Khao su pha yu."
+  },
+  {
+    "id": 277,
+    "category": "Daily Activities",
+    "english": "They are talking.",
+    "tai_khamti": "Khao lat kwam yu.",
+    "transliteration": "Khao lat kwam yu."
+  },
+  {
+    "id": 278,
+    "category": "Daily Activities",
+    "english": "I am writing a letter.",
+    "tai_khamti": "Kow taang lik yu.",
+    "transliteration": "Kow taang lik yu."
+  },
+  {
+    "id": 279,
+    "category": "Daily Activities",
+    "english": "Wait for me outside.",
+    "tai_khamti": "Thaw kow ti nok chao.",
+    "transliteration": "Thaw kow ti nok chao."
+  },
+  {
+    "id": 280,
+    "category": "Daily Activities",
+    "english": "Lock the gate.",
+    "tai_khamti": "Kham pratu chao.",
+    "transliteration": "Kham pratu chao."
+  },
+  {
+    "id": 281,
+    "category": "Descriptions & Attributes",
+    "english": "This box is heavy.",
+    "tai_khamti": "Thung nei naak nam.",
+    "transliteration": "Thung nei naak nam."
+  },
+  {
+    "id": 282,
+    "category": "Descriptions & Attributes",
+    "english": "That tree is tall.",
+    "tai_khamti": "Mai nei suung nam.",
+    "transliteration": "Mai nei suung nam."
+  },
+  {
+    "id": 283,
+    "category": "Descriptions & Attributes",
+    "english": "The road is long.",
+    "tai_khamti": "Taang nei yaaw nam.",
+    "transliteration": "Taang nei yaaw nam."
+  },
+  {
+    "id": 284,
+    "category": "Descriptions & Attributes",
+    "english": "This shirt is dirty.",
+    "tai_khamti": "Sua nei ma chaang.",
+    "transliteration": "Sua nei ma chaang."
+  },
+  {
+    "id": 285,
+    "category": "Descriptions & Attributes",
+    "english": "It is very dark.",
+    "tai_khamti": "Mawk nam nam.",
+    "transliteration": "Mawk nam nam."
+  },
+  {
+    "id": 286,
+    "category": "Descriptions & Attributes",
+    "english": "The light is bright.",
+    "tai_khamti": "Fai cheng nam.",
+    "transliteration": "Fai cheng nam."
+  },
+  {
+    "id": 287,
+    "category": "Descriptions & Attributes",
+    "english": "This answer is correct.",
+    "tai_khamti": "Kwam lat nei tam.",
+    "transliteration": "Kwam lat nei tam."
+  },
+  {
+    "id": 288,
+    "category": "Descriptions & Attributes",
+    "english": "This problem is difficult.",
+    "tai_khamti": "Kaan nei yak nam.",
+    "transliteration": "Kaan nei yak nam."
+  },
+  {
+    "id": 289,
+    "category": "Descriptions & Attributes",
+    "english": "It is easy to learn.",
+    "tai_khamti": "Son li nam.",
+    "transliteration": "Son li nam."
+  },
+  {
+    "id": 290,
+    "category": "Descriptions & Attributes",
+    "english": "The knife is sharp.",
+    "tai_khamti": "Moot nei khim nam.",
+    "transliteration": "Moot nei khim nam."
+  },
+  {
+    "id": 291,
+    "category": "Polite Expressions",
+    "english": "Pleased to assist you.",
+    "tai_khamti": "Yin li choi chao.",
+    "transliteration": "Yin li choi chao."
+  },
+  {
+    "id": 292,
+    "category": "Polite Expressions",
+    "english": "May I sit here?",
+    "tai_khamti": "Kow ti nang ti nei sai wa?",
+    "transliteration": "Kow ti nang ti nei sai wa?"
+  },
+  {
+    "id": 293,
+    "category": "Polite Expressions",
+    "english": "Of course.",
+    "tai_khamti": "Het sai chao.",
+    "transliteration": "Het sai chao."
+  },
+  {
+    "id": 294,
+    "category": "Polite Expressions",
+    "english": "Pardon me?",
+    "tai_khamti": "Lat ma kow ti kai chao?",
+    "transliteration": "Lat ma kow ti kai chao?"
+  },
+  {
+    "id": 295,
+    "category": "Polite Expressions",
+    "english": "Have a peaceful night.",
+    "tai_khamti": "Non li wan li chao.",
+    "transliteration": "Non li wan li chao."
+  },
+  {
+    "id": 296,
+    "category": "Polite Expressions",
+    "english": "Take your time.",
+    "tai_khamti": "Het paaw paaw chao.",
+    "transliteration": "Het paaw paaw chao."
+  },
+  {
+    "id": 297,
+    "category": "Polite Expressions",
+    "english": "Don't mention it.",
+    "tai_khamti": "Ma pen sang chao.",
+    "transliteration": "Ma pen sang chao."
+  },
+  {
+    "id": 298,
+    "category": "Polite Expressions",
+    "english": "I appreciate your help.",
+    "tai_khamti": "Yin li nam choi kow.",
+    "transliteration": "Yin li nam choi kow."
+  },
+  {
+    "id": 299,
+    "category": "Polite Expressions",
+    "english": "You are very kind.",
+    "tai_khamti": "Chao li chai nam.",
+    "transliteration": "Chao li chai nam."
+  },
+  {
+    "id": 300,
+    "category": "Polite Expressions",
+    "english": "See you again soon.",
+    "tai_khamti": "Kho pwo ti kai wai wai.",
+    "transliteration": "Kho pwo ti kai wai wai."
+  },
+  {
+    "id": 301,
+    "category": "Transportation & Travel",
+    "english": "Where is the bus stop?",
+    "tai_khamti": "Ti yap bus yu ti nai?",
+    "transliteration": "Ti yap bus yu ti nai?"
+  },
+  {
+    "id": 302,
+    "category": "Transportation & Travel",
+    "english": "I need a taxi.",
+    "tai_khamti": "Kow khaw taxi neung an.",
+    "transliteration": "Kow khaw taxi neung an."
+  },
+  {
+    "id": 303,
+    "category": "Transportation & Travel",
+    "english": "How far is the airport?",
+    "tai_khamti": "Hong fai yu klai ho hung?",
+    "transliteration": "Hong fai yu klai ho hung?"
+  },
+  {
+    "id": 304,
+    "category": "Transportation & Travel",
+    "english": "Is this train late?",
+    "tai_khamti": "Train nei laat yu ma?",
+    "transliteration": "Train nei laat yu ma?"
+  },
+  {
+    "id": 305,
+    "category": "Transportation & Travel",
+    "english": "I want to buy a ticket.",
+    "tai_khamti": "Kow khaw su ticket.",
+    "transliteration": "Kow khaw su ticket."
+  },
+  {
+    "id": 306,
+    "category": "Transportation & Travel",
+    "english": "Please drive slowly.",
+    "tai_khamti": "Choi khap paaw paaw chao.",
+    "transliteration": "Choi khap paaw paaw chao."
+  },
+  {
+    "id": 307,
+    "category": "Transportation & Travel",
+    "english": "Where is the train station?",
+    "tai_khamti": "Hong train yu ti nai?",
+    "transliteration": "Hong train yu ti nai?"
+  },
+  {
+    "id": 308,
+    "category": "Transportation & Travel",
+    "english": "Is it safe to travel at night?",
+    "tai_khamti": "Ka taang ham nei li yu ma?",
+    "transliteration": "Ka taang ham nei li yu ma?"
+  },
+  {
+    "id": 309,
+    "category": "Transportation & Travel",
+    "english": "How long does the journey take?",
+    "tai_khamti": "Ka taang nei aw pheng ho hung?",
+    "transliteration": "Ka taang nei aw pheng ho hung?"
+  },
+  {
+    "id": 310,
+    "category": "Transportation & Travel",
+    "english": "Stop here, please.",
+    "tai_khamti": "Choi yap ti nei chao.",
+    "transliteration": "Choi yap ti nei chao."
+  },
+  {
+    "id": 311,
+    "category": "Directions & Location",
+    "english": "Turn left here.",
+    "tai_khamti": "Choi wien paay sai ti nei.",
+    "transliteration": "Choi wien paay sai ti nei."
+  },
+  {
+    "id": 312,
+    "category": "Directions & Location",
+    "english": "Turn right at the corner.",
+    "tai_khamti": "Choi wien paay kwaa ti góc.",
+    "transliteration": "Choi wien paay kwaa ti góc."
+  },
+  {
+    "id": 313,
+    "category": "Directions & Location",
+    "english": "Go straight ahead.",
+    "tai_khamti": "Ka taang tang pa.",
+    "transliteration": "Ka taang tang pa."
+  },
+  {
+    "id": 314,
+    "category": "Directions & Location",
+    "english": "It is behind the church.",
+    "tai_khamti": "An nei yu ti kai kyawng.",
+    "transliteration": "An nei yu ti kai kyawng."
+  },
+  {
+    "id": 315,
+    "category": "Directions & Location",
+    "english": "Is it near or far?",
+    "tai_khamti": "Yu chaw ha yu klai?",
+    "transliteration": "Yu chaw ha yu klai?"
+  },
+  {
+    "id": 316,
+    "category": "Directions & Location",
+    "english": "It is next to the bank.",
+    "tai_khamti": "Yu ti kai bank.",
+    "transliteration": "Yu ti kai bank."
+  },
+  {
+    "id": 317,
+    "category": "Directions & Location",
+    "english": "Across the road.",
+    "tai_khamti": "Ka paay taang pa.",
+    "transliteration": "Ka paay taang pa."
+  },
+  {
+    "id": 318,
+    "category": "Directions & Location",
+    "english": "Which way should I go?",
+    "tai_khamti": "Kow ti ka taang nai?",
+    "transliteration": "Kow ti ka taang nai?"
+  },
+  {
+    "id": 319,
+    "category": "Directions & Location",
+    "english": "Is this the right direction?",
+    "tai_khamti": "Taang nei tam yu ma?",
+    "transliteration": "Taang nei tam yu ma?"
+  },
+  {
+    "id": 320,
+    "category": "Directions & Location",
+    "english": "Show me on the map.",
+    "tai_khamti": "Choi phoi hai kow ti map.",
+    "transliteration": "Choi phoi hai kow ti map."
+  },
+  {
+    "id": 321,
+    "category": "Emergencies & Safety",
+    "english": "Help me!",
+    "tai_khamti": "Choi kow pa!",
+    "transliteration": "Choi kow pa!"
+  },
+  {
+    "id": 322,
+    "category": "Emergencies & Safety",
+    "english": "Call the police!",
+    "tai_khamti": "Choi hong police pa!",
+    "transliteration": "Choi hong police pa!"
+  },
+  {
+    "id": 323,
+    "category": "Emergencies & Safety",
+    "english": "There is a fire!",
+    "tai_khamti": "Fai mai yu!",
+    "transliteration": "Fai mai yu!"
+  },
+  {
+    "id": 324,
+    "category": "Emergencies & Safety",
+    "english": "I lost my wallet.",
+    "tai_khamti": "Thung sen kow haan yaw.",
+    "transliteration": "Thung sen kow haan yaw."
+  },
+  {
+    "id": 325,
+    "category": "Emergencies & Safety",
+    "english": "I am lost.",
+    "tai_khamti": "Kow haan taang yaw.",
+    "transliteration": "Kow haan taang yaw."
+  },
+  {
+    "id": 326,
+    "category": "Emergencies & Safety",
+    "english": "Call an ambulance!",
+    "tai_khamti": "Choi hong hong ya pa!",
+    "transliteration": "Choi hong hong ya pa!"
+  },
+  {
+    "id": 327,
+    "category": "Emergencies & Safety",
+    "english": "Someone stole my bag.",
+    "tai_khamti": "Pheu aw thung kow ka yaw.",
+    "transliteration": "Pheu aw thung kow ka yaw."
+  },
+  {
+    "id": 328,
+    "category": "Emergencies & Safety",
+    "english": "Is everyone okay?",
+    "tai_khamti": "Kwan tang seng li yu ma?",
+    "transliteration": "Kwan tang seng li yu ma?"
+  },
+  {
+    "id": 329,
+    "category": "Emergencies & Safety",
+    "english": "Stay calm.",
+    "tai_khamti": "Hai chai li li chao.",
+    "transliteration": "Hai chai li li chao."
+  },
+  {
+    "id": 330,
+    "category": "Emergencies & Safety",
+    "english": "Where is the emergency exit?",
+    "tai_khamti": "Taang wok chep chawng yu ti nai?",
+    "transliteration": "Taang wok chep chawng yu ti nai?"
+  },
+  {
+    "id": 331,
+    "category": "Technology & Communication",
+    "english": "Do you have internet access?",
+    "tai_khamti": "Mi internet yu ma?",
+    "transliteration": "Mi internet yu ma?"
+  },
+  {
+    "id": 332,
+    "category": "Technology & Communication",
+    "english": "Send me a message.",
+    "tai_khamti": "Choi song message hai kow.",
+    "transliteration": "Choi song message hai kow."
+  },
+  {
+    "id": 333,
+    "category": "Technology & Communication",
+    "english": "What is your phone number?",
+    "tai_khamti": "Number phone chao pen sang?",
+    "transliteration": "Number phone chao pen sang?"
+  },
+  {
+    "id": 334,
+    "category": "Technology & Communication",
+    "english": "I cannot hear you clearly.",
+    "tai_khamti": "Kow ma thong kwam chao chaang.",
+    "transliteration": "Kow ma thong kwam chao chaang."
+  },
+  {
+    "id": 335,
+    "category": "Technology & Communication",
+    "english": "Please repeat that.",
+    "tai_khamti": "Choi lat hai pawk neung pa.",
+    "transliteration": "Choi lat hai pawk neung pa."
+  },
+  {
+    "id": 336,
+    "category": "Technology & Communication",
+    "english": "My computer is slow.",
+    "tai_khamti": "Computer kow paaw nam.",
+    "transliteration": "Computer kow paaw nam."
+  },
+  {
+    "id": 337,
+    "category": "Technology & Communication",
+    "english": "Is the file saved?",
+    "tai_khamti": "File nei save yaw ha?",
+    "transliteration": "File nei save yaw ha?"
+  },
+  {
+    "id": 338,
+    "category": "Technology & Communication",
+    "english": "Can you print this document?",
+    "tai_khamti": "Choi print lik nei hai kow pa?",
+    "transliteration": "Choi print lik nei hai kow pa?"
+  },
+  {
+    "id": 339,
+    "category": "Technology & Communication",
+    "english": "Check your inbox.",
+    "tai_khamti": "Phoi inbox chao pa.",
+    "transliteration": "Phoi inbox chao pa."
+  },
+  {
+    "id": 340,
+    "category": "Technology & Communication",
+    "english": "I am offline right now.",
+    "tai_khamti": "Kow ma mi internet yu.",
+    "transliteration": "Kow ma mi internet yu."
+  },
+  {
+    "id": 341,
+    "category": "Workplace & Business",
+    "english": "We have a meeting today.",
+    "tai_khamti": "Wan nei hau mi meeting.",
+    "transliteration": "Wan nei hau mi meeting."
+  },
+  {
+    "id": 342,
+    "category": "Workplace & Business",
+    "english": "Who is the manager?",
+    "tai_khamti": "Pheu pen manager?",
+    "transliteration": "Pheu pen manager?"
+  },
+  {
+    "id": 343,
+    "category": "Workplace & Business",
+    "english": "Sign the contract here.",
+    "tai_khamti": "Choi taang name ti nei.",
+    "transliteration": "Choi taang name ti nei."
+  },
+  {
+    "id": 344,
+    "category": "Workplace & Business",
+    "english": "The deadline is tomorrow.",
+    "tai_khamti": "Pheng phaik pen phuk nai.",
+    "transliteration": "Pheng phaik pen phuk nai."
+  },
+  {
+    "id": 345,
+    "category": "Workplace & Business",
+    "english": "I am writing a report.",
+    "tai_khamti": "Kow taang report yu.",
+    "transliteration": "Kow taang report yu."
+  },
+  {
+    "id": 346,
+    "category": "Workplace & Business",
+    "english": "We need more resources.",
+    "tai_khamti": "Hau khaw khawng nam nam.",
+    "transliteration": "Hau khaw khawng nam nam."
+  },
+  {
+    "id": 347,
+    "category": "Workplace & Business",
+    "english": "Is the deal approved?",
+    "tai_khamti": "Kaan nei thuk yaw ha?",
+    "transliteration": "Kaan nei thuk yaw ha?"
+  },
+  {
+    "id": 348,
+    "category": "Workplace & Business",
+    "english": "What is our budget?",
+    "tai_khamti": "Sen hau mi ho hung?",
+    "transliteration": "Sen hau mi ho hung?"
+  },
+  {
+    "id": 349,
+    "category": "Workplace & Business",
+    "english": "Send me the schedule.",
+    "tai_khamti": "Choi song schedule hai kow.",
+    "transliteration": "Choi song schedule hai kow."
+  },
+  {
+    "id": 350,
+    "category": "Workplace & Business",
+    "english": "Work hard!",
+    "tai_khamti": "Het kaan ki ki pa!",
+    "transliteration": "Het kaan ki ki pa!"
+  },
+  {
+    "id": 351,
+    "category": "Home & Daily Routine",
+    "english": "I am sweeping the floor.",
+    "tai_khamti": "Kow tawp heu'an yu.",
+    "transliteration": "Kow tawp heu'an yu."
+  },
+  {
+    "id": 352,
+    "category": "Home & Daily Routine",
+    "english": "Put the dishes away.",
+    "tai_khamti": "Aw bat ka saang pa.",
+    "transliteration": "Aw bat ka saang pa."
+  },
+  {
+    "id": 353,
+    "category": "Home & Daily Routine",
+    "english": "Is the food ready?",
+    "tai_khamti": "Kow li kin yaw ha?",
+    "transliteration": "Kow li kin yaw ha?"
+  },
+  {
+    "id": 354,
+    "category": "Home & Daily Routine",
+    "english": "Turn off the TV.",
+    "tai_khamti": "Choi mwe TV chao.",
+    "transliteration": "Choi mwe TV chao."
+  },
+  {
+    "id": 355,
+    "category": "Home & Daily Routine",
+    "english": "I am washing my hands.",
+    "tai_khamti": "Kow su mue yu.",
+    "transliteration": "Kow su mue yu."
+  },
+  {
+    "id": 356,
+    "category": "Home & Daily Routine",
+    "english": "Where are the clothes?",
+    "tai_khamti": "Pha yu ti nai?",
+    "transliteration": "Pha yu ti nai?"
+  },
+  {
+    "id": 357,
+    "category": "Home & Daily Routine",
+    "english": "Light a candle.",
+    "tai_khamti": "Choi tit fai tean pa.",
+    "transliteration": "Choi tit fai tean pa."
+  },
+  {
+    "id": 358,
+    "category": "Home & Daily Routine",
+    "english": "The water is boiled.",
+    "tai_khamti": "Nam mai yaw.",
+    "transliteration": "Nam mai yaw."
+  },
+  {
+    "id": 359,
+    "category": "Home & Daily Routine",
+    "english": "Close the window, please.",
+    "tai_khamti": "Choi tup pong chao.",
+    "transliteration": "Choi tup pong chao."
+  },
+  {
+    "id": 360,
+    "category": "Home & Daily Routine",
+    "english": "Time to sleep.",
+    "tai_khamti": "Pheng ka non yaw.",
+    "transliteration": "Pheng ka non yaw."
+  },
+  {
+    "id": 361,
+    "category": "Nature & Environment",
+    "english": "The stars are bright tonight.",
+    "tai_khamti": "Ham nei dao cheng nam.",
+    "transliteration": "Ham nei dao cheng nam."
+  },
+  {
+    "id": 362,
+    "category": "Nature & Environment",
+    "english": "The sea is calm.",
+    "tai_khamti": "Nam luang yen nam.",
+    "transliteration": "Nam luang yen nam."
+  },
+  {
+    "id": 363,
+    "category": "Nature & Environment",
+    "english": "Trees give us oxygen.",
+    "tai_khamti": "Mai hai hau lom chaang.",
+    "transliteration": "Mai hai hau lom chaang."
+  },
+  {
+    "id": 364,
+    "category": "Nature & Environment",
+    "english": "Protect nature.",
+    "tai_khamti": "Rakhang paa mai pa.",
+    "transliteration": "Rakhang paa mai pa."
+  },
+  {
+    "id": 365,
+    "category": "Nature & Environment",
+    "english": "The sun is setting.",
+    "tai_khamti": "Wan fa ti tok yaw.",
+    "transliteration": "Wan fa ti tok yaw."
+  },
+  {
+    "id": 366,
+    "category": "Nature & Environment",
+    "english": "It is a full moon.",
+    "tai_khamti": "Deu'an cheng luang nam.",
+    "transliteration": "Deu'an cheng luang nam."
+  },
+  {
+    "id": 367,
+    "category": "Nature & Environment",
+    "english": "Look at the flowers.",
+    "tai_khamti": "Phoi dok mai pa.",
+    "transliteration": "Phoi dok mai pa."
+  },
+  {
+    "id": 368,
+    "category": "Nature & Environment",
+    "english": "The birds are singing.",
+    "tai_khamti": "Nok thong kwam yu.",
+    "transliteration": "Nok thong kwam yu."
+  },
+  {
+    "id": 369,
+    "category": "Nature & Environment",
+    "english": "The soil is rich.",
+    "tai_khamti": "Din nei li nam.",
+    "transliteration": "Din nei li nam."
+  },
+  {
+    "id": 370,
+    "category": "Nature & Environment",
+    "english": "It is a windy day.",
+    "tai_khamti": "Wan nei lom blowing nam.",
+    "transliteration": "Wan nei lom blowing nam."
+  },
+  {
+    "id": 371,
+    "category": "Socializing & Free Time",
+    "english": "Would you like to join us?",
+    "tai_khamti": "Chao ti ma nam hau ma?",
+    "transliteration": "Chao ti ma nam hau ma?"
+  },
+  {
+    "id": 372,
+    "category": "Socializing & Free Time",
+    "english": "Let's grab a cup of coffee.",
+    "tai_khamti": "Ka kin coffee pa.",
+    "transliteration": "Ka kin coffee pa."
+  },
+  {
+    "id": 373,
+    "category": "Socializing & Free Time",
+    "english": "That sounds fun!",
+    "tai_khamti": "An nei thong li nam!",
+    "transliteration": "An nei thong li nam!"
+  },
+  {
+    "id": 374,
+    "category": "Socializing & Free Time",
+    "english": "I am free this weekend.",
+    "tai_khamti": "Atit nei kow wan yu.",
+    "transliteration": "Atit nei kow wan yu."
+  },
+  {
+    "id": 375,
+    "category": "Socializing & Free Time",
+    "english": "What are your plans?",
+    "tai_khamti": "Chao mi plan sang?",
+    "transliteration": "Chao mi plan sang?"
+  },
+  {
+    "id": 376,
+    "category": "Socializing & Free Time",
+    "english": "Nice talking to you.",
+    "tai_khamti": "Yin li lat kwam nam chao.",
+    "transliteration": "Yin li lat kwam nam chao."
+  },
+  {
+    "id": 377,
+    "category": "Socializing & Free Time",
+    "english": "Let's catch up later.",
+    "tai_khamti": "Hau ti kho pwo kai pa.",
+    "transliteration": "Hau ti kho pwo kai pa."
+  },
+  {
+    "id": 378,
+    "category": "Socializing & Free Time",
+    "english": "Enjoy your meal!",
+    "tai_khamti": "Kin kow li li chao!",
+    "transliteration": "Kin kow li li chao!"
+  },
+  {
+    "id": 379,
+    "category": "Socializing & Free Time",
+    "english": "That was hilarious!",
+    "tai_khamti": "An nei haa nam nam!",
+    "transliteration": "An nei haa nam nam!"
+  },
+  {
+    "id": 380,
+    "category": "Socializing & Free Time",
+    "english": "Welcome to my house!",
+    "tai_khamti": "Yin li ma heu'an kow!",
+    "transliteration": "Yin li ma heu'an kow!"
+  },
+  {
+    "id": 381,
+    "category": "Shopping & Groceries",
+    "english": "Are these apples fresh?",
+    "tai_khamti": "Mak nei maai yu ma?",
+    "transliteration": "Mak nei maai yu ma?"
+  },
+  {
+    "id": 382,
+    "category": "Shopping & Groceries",
+    "english": "Do you sell milk?",
+    "tai_khamti": "Chao kai nam nom ma?",
+    "transliteration": "Chao kai nam nom ma?"
+  },
+  {
+    "id": 383,
+    "category": "Shopping & Groceries",
+    "english": "Put it in a bag.",
+    "tai_khamti": "Sae ti thung pa.",
+    "transliteration": "Sae ti thung pa."
+  },
+  {
+    "id": 384,
+    "category": "Shopping & Groceries",
+    "english": "Where is the checkout counter?",
+    "tai_khamti": "Ti hai sen yu ti nai?",
+    "transliteration": "Ti hai sen yu ti nai?"
+  },
+  {
+    "id": 385,
+    "category": "Shopping & Groceries",
+    "english": "Is there a discount on this?",
+    "tai_khamti": "An nei mi discount ma?",
+    "transliteration": "An nei mi discount ma?"
+  },
+  {
+    "id": 386,
+    "category": "Shopping & Groceries",
+    "english": "I need three kilos of rice.",
+    "tai_khamti": "Kow khaw kow sam kilo.",
+    "transliteration": "Kow khaw kow sam kilo."
+  },
+  {
+    "id": 387,
+    "category": "Shopping & Groceries",
+    "english": "Do you have organic vegetables?",
+    "tai_khamti": "Mi pak chaang yu ma?",
+    "transliteration": "Mi pak chaang yu ma?"
+  },
+  {
+    "id": 388,
+    "category": "Shopping & Groceries",
+    "english": "This price is too high.",
+    "tai_khamti": "Ka nei luang nam nam.",
+    "transliteration": "Ka nei luang nam nam."
+  },
+  {
+    "id": 389,
+    "category": "Shopping & Groceries",
+    "english": "Do you accept cards?",
+    "tai_khamti": "Aw card sai wa?",
+    "transliteration": "Aw card sai wa?"
+  },
+  {
+    "id": 390,
+    "category": "Shopping & Groceries",
+    "english": "Where can I find spices?",
+    "tai_khamti": "Sae ahan yu ti nai?",
+    "transliteration": "Sae ahan yu ti nai?"
+  },
+  {
+    "id": 391,
+    "category": "Personal Reflections & Mindset",
+    "english": "Always try your best.",
+    "tai_khamti": "Het hai li phaik pa.",
+    "transliteration": "Het hai li phaik pa."
+  },
+  {
+    "id": 392,
+    "category": "Personal Reflections & Mindset",
+    "english": "Learning takes time.",
+    "tai_khamti": "Son lik aw pheng nam.",
+    "transliteration": "Son lik aw pheng nam."
+  },
+  {
+    "id": 393,
+    "category": "Personal Reflections & Mindset",
+    "english": "Believe in yourself.",
+    "tai_khamti": "Chuu chai ho chao pa.",
+    "transliteration": "Chuu chai ho chao pa."
+  },
+  {
+    "id": 394,
+    "category": "Personal Reflections & Mindset",
+    "english": "Errors help us grow.",
+    "tai_khamti": "Ti ma tam hai hau son.",
+    "transliteration": "Ti ma tam hai hau son."
+  },
+  {
+    "id": 395,
+    "category": "Personal Reflections & Mindset",
+    "english": "Stay humble and kind.",
+    "tai_khamti": "Hai chai yen lae li pa.",
+    "transliteration": "Hai chai yen lae li pa."
+  },
+  {
+    "id": 396,
+    "category": "Personal Reflections & Mindset",
+    "english": "Patience is essential.",
+    "tai_khamti": "Thaw chai pen kaan luang.",
+    "transliteration": "Thaw chai pen kaan luang."
+  },
+  {
+    "id": 397,
+    "category": "Personal Reflections & Mindset",
+    "english": "Every day is a new start.",
+    "tai_khamti": "Wan mai pen taang mai.",
+    "transliteration": "Wan mai pen taang mai."
+  },
+  {
+    "id": 398,
+    "category": "Personal Reflections & Mindset",
+    "english": "Focus on the positive.",
+    "tai_khamti": "Phoi ti li pa.",
+    "transliteration": "Phoi ti li pa."
+  },
+  {
+    "id": 399,
+    "category": "Personal Reflections & Mindset",
+    "english": "Practice makes perfect.",
+    "tai_khamti": "Het tang tang hai li.",
+    "transliteration": "Het tang tang hai li."
+  },
+  {
+    "id": 400,
+    "category": "Personal Reflections & Mindset",
+    "english": "Never give up.",
+    "tai_khamti": "Maw mai ma hai ka.",
+    "transliteration": "Maw mai ma hai ka."
+  },
+  {
+    "id": 401,
+    "category": "Health & Wellness",
+    "english": "Take a deep breath.",
+    "tai_khamti": "Aw lom chai luang pa.",
+    "transliteration": "Aw lom chai luang pa."
+  },
+  {
+    "id": 402,
+    "category": "Health & Wellness",
+    "english": "I need to see a dentist.",
+    "tai_khamti": "Kow khaw phoi phae khaw.",
+    "transliteration": "Kow khaw phoi phae khaw."
+  },
+  {
+    "id": 403,
+    "category": "Health & Wellness",
+    "english": "Drink plenty of water.",
+    "tai_khamti": "Kin nam nam nam pa.",
+    "transliteration": "Kin nam nam nam pa."
+  },
+  {
+    "id": 404,
+    "category": "Health & Wellness",
+    "english": "My head hurts.",
+    "tai_khamti": "Ho kow chep yu.",
+    "transliteration": "Ho kow chep yu."
+  },
+  {
+    "id": 405,
+    "category": "Health & Wellness",
+    "english": "Are you feeling better?",
+    "tai_khamti": "Chao li ma phaik yaw ma?",
+    "transliteration": "Chao li ma phaik yaw ma?"
+  },
+  {
+    "id": 406,
+    "category": "Health & Wellness",
+    "english": "I have a fever.",
+    "tai_khamti": "Kow mi fai chep yu.",
+    "transliteration": "Kow mi fai chep yu."
+  },
+  {
+    "id": 407,
+    "category": "Health & Wellness",
+    "english": "Get enough rest.",
+    "tai_khamti": "Non hai phaik pa.",
+    "transliteration": "Non hai phaik pa."
+  },
+  {
+    "id": 408,
+    "category": "Health & Wellness",
+    "english": "Is this medicine effective?",
+    "tai_khamti": "Ya nei li yu ma?",
+    "transliteration": "Ya nei li yu ma?"
+  },
+  {
+    "id": 409,
+    "category": "Health & Wellness",
+    "english": "Wash your hands frequently.",
+    "tai_khamti": "Su mue chao chawng chawng pa.",
+    "transliteration": "Su mue chao chawng chawng pa."
+  },
+  {
+    "id": 410,
+    "category": "Health & Wellness",
+    "english": "I feel dizzy.",
+    "tai_khamti": "Kow ho wien yu.",
+    "transliteration": "Kow ho wien yu."
+  },
+  {
+    "id": 411,
+    "category": "Daily Activities & Hobbies",
+    "english": "I like reading books.",
+    "tai_khamti": "Kow chawp lik.",
+    "transliteration": "Kow chawp lik."
+  },
+  {
+    "id": 412,
+    "category": "Daily Activities & Hobbies",
+    "english": "She is listening to music.",
+    "tai_khamti": "Maw thong kwam yu.",
+    "transliteration": "Maw thong kwam yu."
+  },
+  {
+    "id": 413,
+    "category": "Daily Activities & Hobbies",
+    "english": "They are playing soccer.",
+    "tai_khamti": "Kwan khaan ball yu.",
+    "transliteration": "Kwan khaan ball yu."
+  },
+  {
+    "id": 414,
+    "category": "Daily Activities & Hobbies",
+    "english": "I am learning how to cook.",
+    "tai_khamti": "Kow son het ahan yu.",
+    "transliteration": "Kow son het ahan yu."
+  },
+  {
+    "id": 415,
+    "category": "Daily Activities & Hobbies",
+    "english": "Let's go for a walk.",
+    "tai_khamti": "Ka taang paay pa.",
+    "transliteration": "Ka taang paay pa."
+  },
+  {
+    "id": 416,
+    "category": "Daily Activities & Hobbies",
+    "english": "Do you play any instruments?",
+    "tai_khamti": "Chao khaan musical instrument ma?",
+    "transliteration": "Chao khaan musical instrument ma?"
+  },
+  {
+    "id": 417,
+    "category": "Daily Activities & Hobbies",
+    "english": "He enjoys gardening.",
+    "tai_khamti": "Maw chawp het suan.",
+    "transliteration": "Maw chawp het suan."
+  },
+  {
+    "id": 418,
+    "category": "Daily Activities & Hobbies",
+    "english": "I take pictures of nature.",
+    "tai_khamti": "Kow aw phoi paa mai.",
+    "transliteration": "Kow aw phoi paa mai."
+  },
+  {
+    "id": 419,
+    "category": "Daily Activities & Hobbies",
+    "english": "We watch movies on weekends.",
+    "tai_khamti": "Hau phoi movie ti atit.",
+    "transliteration": "Hau phoi movie ti atit."
+  },
+  {
+    "id": 420,
+    "category": "Daily Activities & Hobbies",
+    "english": "Crafting is creative.",
+    "tai_khamti": "Het kaan mue pen ti li.",
+    "transliteration": "Het kaan mue pen ti li."
+  },
+  {
+    "id": 421,
+    "category": "Weather & Seasons",
+    "english": "It is very hot today.",
+    "tai_khamti": "Wan nei mai nam nam.",
+    "transliteration": "Wan nei mai nam nam."
+  },
+  {
+    "id": 422,
+    "category": "Weather & Seasons",
+    "english": "The rain has stopped.",
+    "tai_khamti": "Fon yap yaw.",
+    "transliteration": "Fon yap yaw."
+  },
+  {
+    "id": 423,
+    "category": "Weather & Seasons",
+    "english": "Winter is coming.",
+    "tai_khamti": "Pheng yen ti ma yaw.",
+    "transliteration": "Pheng yen ti ma yaw."
+  },
+  {
+    "id": 424,
+    "category": "Weather & Seasons",
+    "english": "The sky is clear.",
+    "tai_khamti": "Fa cheng li nam.",
+    "transliteration": "Fa cheng li nam."
+  },
+  {
+    "id": 425,
+    "category": "Weather & Seasons",
+    "english": "It is foggy this morning.",
+    "tai_khamti": "Wan nei mi lom chawng.",
+    "transliteration": "Wan nei mi lom chawng."
+  },
+  {
+    "id": 426,
+    "category": "Weather & Seasons",
+    "english": "I love autumn colors.",
+    "tai_khamti": "Kow chawp lam phae autumn.",
+    "transliteration": "Kow chawp lam phae autumn."
+  },
+  {
+    "id": 427,
+    "category": "Weather & Seasons",
+    "english": "Strong winds are blowing.",
+    "tai_khamti": "Lom luang blowing yu.",
+    "transliteration": "Lom luang blowing yu."
+  },
+  {
+    "id": 428,
+    "category": "Weather & Seasons",
+    "english": "The weather is pleasant.",
+    "tai_khamti": "Wan nei chawp nam.",
+    "transliteration": "Wan nei chawp nam."
+  },
+  {
+    "id": 429,
+    "category": "Weather & Seasons",
+    "english": "Is it going to snow?",
+    "tai_khamti": "Snow ti tok ma?",
+    "transliteration": "Snow ti tok ma?"
+  },
+  {
+    "id": 430,
+    "category": "Weather & Seasons",
+    "english": "Wear a heavy coat.",
+    "tai_khamti": "Sae pha mai pa.",
+    "transliteration": "Sae pha mai pa."
+  },
+  {
+    "id": 431,
+    "category": "Dining & Culinary",
+    "english": "Pass the salt, please.",
+    "tai_khamti": "Choi song salt hai kow pa.",
+    "transliteration": "Choi song salt hai kow pa."
+  },
+  {
+    "id": 432,
+    "category": "Dining & Culinary",
+    "english": "This dish is spicy.",
+    "tai_khamti": "Ahan nei khew nam.",
+    "transliteration": "Ahan nei khew nam."
+  },
+  {
+    "id": 433,
+    "category": "Dining & Culinary",
+    "english": "I am a vegetarian.",
+    "tai_khamti": "Kow kin pak chao.",
+    "transliteration": "Kow kin pak chao."
+  },
+  {
+    "id": 434,
+    "category": "Dining & Culinary",
+    "english": "Would you like dessert?",
+    "tai_khamti": "Chao khaw dessert ma?",
+    "transliteration": "Chao khaw dessert ma?"
+  },
+  {
+    "id": 435,
+    "category": "Dining & Culinary",
+    "english": "The soup is too hot.",
+    "tai_khamti": "Nam ahan mai nam.",
+    "transliteration": "Nam ahan mai nam."
+  },
+  {
+    "id": 436,
+    "category": "Dining & Culinary",
+    "english": "Can I have a glass of water?",
+    "tai_khamti": "Kow khaw nam neung bat pa?",
+    "transliteration": "Kow khaw nam neung bat pa?"
+  },
+  {
+    "id": 437,
+    "category": "Dining & Culinary",
+    "english": "The food smells delicious.",
+    "tai_khamti": "Ahan hoawm li nam.",
+    "transliteration": "Ahan hoawm li nam."
+  },
+  {
+    "id": 438,
+    "category": "Dining & Culinary",
+    "english": "Let's share this meal.",
+    "tai_khamti": "Hau kin ahan nei nam pa.",
+    "transliteration": "Hau kin ahan nei nam pa."
+  },
+  {
+    "id": 439,
+    "category": "Dining & Culinary",
+    "english": "Check the bill, please.",
+    "tai_khamti": "Choi phoi bill pa.",
+    "transliteration": "Choi phoi bill pa."
+  },
+  {
+    "id": 440,
+    "category": "Dining & Culinary",
+    "english": "Thank you for the meal.",
+    "tai_khamti": "Yin li ka kin ahan.",
+    "transliteration": "Yin li ka kin ahan."
+  },
+  {
+    "id": 441,
+    "category": "Family & Relationships",
+    "english": "My family is supportive.",
+    "tai_khamti": "Family kow choi kow nam.",
+    "transliteration": "Family kow choi kow nam."
+  },
+  {
+    "id": 442,
+    "category": "Family & Relationships",
+    "english": "She is my younger sister.",
+    "tai_khamti": "Maw pen nong saay kow.",
+    "transliteration": "Maw pen nong saay kow."
+  },
+  {
+    "id": 443,
+    "category": "Family & Relationships",
+    "english": "He is my uncle.",
+    "tai_khamti": "Maw pen lung kow.",
+    "transliteration": "Maw pen lung kow."
+  },
+  {
+    "id": 444,
+    "category": "Family & Relationships",
+    "english": "We are good friends.",
+    "tai_khamti": "Hau pen sang li.",
+    "transliteration": "Hau pen sang li."
+  },
+  {
+    "id": 445,
+    "category": "Family & Relationships",
+    "english": "Respect your elders.",
+    "tai_khamti": "Chaang phae elder chao pa.",
+    "transliteration": "Chaang phae elder chao pa."
+  },
+  {
+    "id": 446,
+    "category": "Family & Relationships",
+    "english": "They have two children.",
+    "tai_khamti": "Kwan mi luk sawng kwan.",
+    "transliteration": "Kwan mi luk sawng kwan."
+  },
+  {
+    "id": 447,
+    "category": "Family & Relationships",
+    "english": "My grandfather is wise.",
+    "tai_khamti": "Paw tao kow chaang nam.",
+    "transliteration": "Paw tao kow chaang nam."
+  },
+  {
+    "id": 448,
+    "category": "Family & Relationships",
+    "english": "Love your family.",
+    "tai_khamti": "Chawp family chao pa.",
+    "transliteration": "Chawp family chao pa."
+  },
+  {
+    "id": 449,
+    "category": "Family & Relationships",
+    "english": "She looks like her mother.",
+    "tai_khamti": "Maw phoi kai mae maw.",
+    "transliteration": "Maw phoi kai mae maw."
+  },
+  {
+    "id": 450,
+    "category": "Family & Relationships",
+    "english": "We celebrate together.",
+    "tai_khamti": "Hau poi nam pa.",
+    "transliteration": "Hau poi nam pa."
+  },
+  {
+    "id": 451,
+    "category": "Education & School",
+    "english": "Open your books.",
+    "tai_khamti": "Choi khai lik chao pa.",
+    "transliteration": "Choi khai lik chao pa."
+  },
+  {
+    "id": 452,
+    "category": "Education & School",
+    "english": "The teacher is explaining.",
+    "tai_khamti": "Phu son lat kwam yu.",
+    "transliteration": "Phu son lat kwam yu."
+  },
+  {
+    "id": 453,
+    "category": "Education & School",
+    "english": "Do you understand the lesson?",
+    "tai_khamti": "Chao thong lik nei ma?",
+    "transliteration": "Chao thong lik nei ma?"
+  },
+  {
+    "id": 454,
+    "category": "Education & School",
+    "english": "Write your name here.",
+    "tai_khamti": "Taang name chao ti nei.",
+    "transliteration": "Taang name chao ti nei."
+  },
+  {
+    "id": 455,
+    "category": "Education & School",
+    "english": "School starts at eight.",
+    "tai_khamti": "Hong lik tit ti paet.",
+    "transliteration": "Hong lik tit ti paet."
+  },
+  {
+    "id": 456,
+    "category": "Education & School",
+    "english": "I have a history test.",
+    "tai_khamti": "Kow mi test history.",
+    "transliteration": "Kow mi test history."
+  },
+  {
+    "id": 457,
+    "category": "Education & School",
+    "english": "Ask questions if needed.",
+    "tai_khamti": "Tham kwam pa.",
+    "transliteration": "Tham kwam pa."
+  },
+  {
+    "id": 458,
+    "category": "Education & School",
+    "english": "Study every day.",
+    "tai_khamti": "Son lik wan wan pa.",
+    "transliteration": "Son lik wan wan pa."
+  },
+  {
+    "id": 459,
+    "category": "Education & School",
+    "english": "The library is quiet.",
+    "tai_khamti": "Hong lik yen nam.",
+    "transliteration": "Hong lik yen nam."
+  },
+  {
+    "id": 460,
+    "category": "Education & School",
+    "english": "Graduation is near.",
+    "tai_khamti": "Kaan graduation chaw yaw.",
+    "transliteration": "Kaan graduation chaw yaw."
+  },
+  {
+    "id": 461,
+    "category": "Workplace Dynamics",
+    "english": "Let's collaborate on this.",
+    "tai_khamti": "Hau het kaan nam pa.",
+    "transliteration": "Hau het kaan nam pa."
+  },
+  {
+    "id": 462,
+    "category": "Workplace Dynamics",
+    "english": "He is a reliable worker.",
+    "tai_khamti": "Maw het kaan li nam.",
+    "transliteration": "Maw het kaan li nam."
+  },
+  {
+    "id": 463,
+    "category": "Workplace Dynamics",
+    "english": "Send the email now.",
+    "tai_khamti": "Song email phaik pa.",
+    "transliteration": "Song email phaik pa."
+  },
+  {
+    "id": 464,
+    "category": "Workplace Dynamics",
+    "english": "Our team is strong.",
+    "tai_khamti": "Team hau ki nam.",
+    "transliteration": "Team hau ki nam."
+  },
+  {
+    "id": 465,
+    "category": "Workplace Dynamics",
+    "english": "Keep up the good work.",
+    "tai_khamti": "Het kaan li pawk pa.",
+    "transliteration": "Het kaan li pawk pa."
+  },
+  {
+    "id": 466,
+    "category": "Workplace Dynamics",
+    "english": "We reached the goal.",
+    "tai_khamti": "Hau thong goal yaw.",
+    "transliteration": "Hau thong goal yaw."
+  },
+  {
+    "id": 467,
+    "category": "Workplace Dynamics",
+    "english": "Schedule a meeting.",
+    "tai_khamti": "Choi schedule meeting pa.",
+    "transliteration": "Choi schedule meeting pa."
+  },
+  {
+    "id": 468,
+    "category": "Workplace Dynamics",
+    "english": "Please review the document.",
+    "tai_khamti": "Choi phoi document pa.",
+    "transliteration": "Choi phoi document pa."
+  },
+  {
+    "id": 469,
+    "category": "Workplace Dynamics",
+    "english": "He gave a great presentation.",
+    "tai_khamti": "Maw lat kwam li nam.",
+    "transliteration": "Maw lat kwam li nam."
+  },
+  {
+    "id": 470,
+    "category": "Workplace Dynamics",
+    "english": "Success comes from effort.",
+    "tai_khamti": "Kaan thong ma ti kaan het.",
+    "transliteration": "Kaan thong ma ti kaan het."
+  },
+  {
+    "id": 471,
+    "category": "Feelings & Expressions",
+    "english": "I am so excited!",
+    "tai_khamti": "Kow yin li nam!",
+    "transliteration": "Kow yin li nam!"
+  },
+  {
+    "id": 472,
+    "category": "Feelings & Expressions",
+    "english": "Don't worry about it.",
+    "tai_khamti": "Maw mai chai pa.",
+    "transliteration": "Maw mai chai pa."
+  },
+  {
+    "id": 473,
+    "category": "Feelings & Expressions",
+    "english": "She feels proud.",
+    "tai_khamti": "Maw chai luang yu.",
+    "transliteration": "Maw chai luang yu."
+  },
+  {
+    "id": 474,
+    "category": "Feelings & Expressions",
+    "english": "Why are you sad?",
+    "tai_khamti": "Chao sad pen sang?",
+    "transliteration": "Chao sad pen sang?"
+  },
+  {
+    "id": 475,
+    "category": "Feelings & Expressions",
+    "english": "I am feeling tired.",
+    "tai_khamti": "Kow saaw yaw.",
+    "transliteration": "Kow saaw yaw."
+  },
+  {
+    "id": 476,
+    "category": "Feelings & Expressions",
+    "english": "That makes me happy.",
+    "tai_khamti": "An nei hai kow yin li.",
+    "transliteration": "An nei hai kow yin li."
+  },
+  {
+    "id": 477,
+    "category": "Feelings & Expressions",
+    "english": "Stay hopeful.",
+    "tai_khamti": "Hai mi chai li pa.",
+    "transliteration": "Hai mi chai li pa."
+  },
+  {
+    "id": 478,
+    "category": "Feelings & Expressions",
+    "english": "It was a huge relief.",
+    "tai_khamti": "An nei hai yen chai nam.",
+    "transliteration": "An nei hai yen chai nam."
+  },
+  {
+    "id": 479,
+    "category": "Feelings & Expressions",
+    "english": "I am surprised!",
+    "tai_khamti": "Kow phawng nam!",
+    "transliteration": "Kow phawng nam!"
+  },
+  {
+    "id": 480,
+    "category": "Feelings & Expressions",
+    "english": "Be patient with others.",
+    "tai_khamti": "Thaw chai nam kwan pa.",
+    "transliteration": "Thaw chai nam kwan pa."
+  },
+  {
+    "id": 481,
+    "category": "Time & Dates",
+    "english": "What day is today?",
+    "tai_khamti": "Wan nei pen wan sang?",
+    "transliteration": "Wan nei pen wan sang?"
+  },
+  {
+    "id": 482,
+    "category": "Time & Dates",
+    "english": "See you next month.",
+    "tai_khamti": "Kho pwo deu'an mai pa.",
+    "transliteration": "Kho pwo deu'an mai pa."
+  },
+  {
+    "id": 483,
+    "category": "Time & Dates",
+    "english": "It is early morning.",
+    "tai_khamti": "Pheng nei wan paaw.",
+    "transliteration": "Pheng nei wan paaw."
+  },
+  {
+    "id": 484,
+    "category": "Time & Dates",
+    "english": "Time flies quickly.",
+    "tai_khamti": "Pheng ka paaw nam.",
+    "transliteration": "Pheng ka paaw nam."
+  },
+  {
+    "id": 485,
+    "category": "Time & Dates",
+    "english": "Set the alarm for 6 AM.",
+    "tai_khamti": "Tit alarm ti hok pa.",
+    "transliteration": "Tit alarm ti hok pa."
+  },
+  {
+    "id": 486,
+    "category": "Time & Dates",
+    "english": "Today is a special day.",
+    "tai_khamti": "Wan nei pen wan luang.",
+    "transliteration": "Wan nei pen wan luang."
+  },
+  {
+    "id": 487,
+    "category": "Time & Dates",
+    "english": "Wait a minute.",
+    "tai_khamti": "Yap neung pa.",
+    "transliteration": "Yap neung pa."
+  },
+  {
+    "id": 488,
+    "category": "Time & Dates",
+    "english": "What time is it?",
+    "tai_khamti": "Pheng ho hung yaw?",
+    "transliteration": "Pheng ho hung yaw?"
+  },
+  {
+    "id": 489,
+    "category": "Time & Dates",
+    "english": "Yesterday was Sunday.",
+    "tai_khamti": "Wan wa pen wan Sunday.",
+    "transliteration": "Wan wa pen wan Sunday."
+  },
+  {
+    "id": 490,
+    "category": "Time & Dates",
+    "english": "In the near future.",
+    "tai_khamti": "Ti pheng front pa.",
+    "transliteration": "Ti pheng front pa."
+  },
+  {
+    "id": 491,
+    "category": "Life Advice & Values",
+    "english": "Honesty is important.",
+    "tai_khamti": "Kwam tam pen kaan luang.",
+    "transliteration": "Kwam tam pen kaan luang."
+  },
+  {
+    "id": 492,
+    "category": "Life Advice & Values",
+    "english": "Help those in need.",
+    "tai_khamti": "Choi kwan khaw pa.",
+    "transliteration": "Choi kwan khaw pa."
+  },
+  {
+    "id": 493,
+    "category": "Life Advice & Values",
+    "english": "Kindness matters.",
+    "tai_khamti": "Kwam li pen kaan luang.",
+    "transliteration": "Kwam li pen kaan luang."
+  },
+  {
+    "id": 494,
+    "category": "Life Advice & Values",
+    "english": "Keep learning.",
+    "tai_khamti": "Son lik pawk pa.",
+    "transliteration": "Son lik pawk pa."
+  },
+  {
+    "id": 495,
+    "category": "Life Advice & Values",
+    "english": "Respect everyone.",
+    "tai_khamti": "Chaang phae kwan tang seng.",
+    "transliteration": "Chaang phae kwan tang seng."
+  },
+  {
+    "id": 496,
+    "category": "Life Advice & Values",
+    "english": "Value your time.",
+    "tai_khamti": "Aw pheng pen kaan luang.",
+    "transliteration": "Aw pheng pen kaan luang."
+  },
+  {
+    "id": 497,
+    "category": "Life Advice & Values",
+    "english": "Stay focused.",
+    "tai_khamti": "Phoi ti kaan pa.",
+    "transliteration": "Phoi ti kaan pa."
+  },
+  {
+    "id": 498,
+    "category": "Life Advice & Values",
+    "english": "Always be grateful.",
+    "tai_khamti": "Yin li chawng chawng pa.",
+    "transliteration": "Yin li chawng chawng pa."
+  },
+  {
+    "id": 499,
+    "category": "Life Advice & Values",
+    "english": "Peace starts within.",
+    "tai_khamti": "Kwam yen ma ti chai.",
+    "transliteration": "Kwam yen ma ti chai."
+  },
+  {
+    "id": 500,
+    "category": "Life Advice & Values",
+    "english": "Do good deeds.",
+    "tai_khamti": "Het kaan li pa.",
+    "transliteration": "Het kaan li pa."
+  }
+]

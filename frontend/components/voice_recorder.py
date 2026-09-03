@@ -13,7 +13,8 @@ def show_voice_recorder():
         if st.button("Convert Speech to Text"):
             with st.spinner("Transcribing..."):
                 result = APIClient.speech_to_text(
-                    audio.getvalue()
+                    audio.getvalue(),
+                    st.session_state.language
                 )
             if result["success"]:
                 st.success("Speech converted successfully!")
@@ -41,6 +42,12 @@ def show_voice_recorder():
                 })
                 st.markdown("### 🤖 AI Response")
                 st.success(answer)
+                print("=" * 60)
+                print("TTS TEXT:")
+                print(answer)
+                print("Length:", len(answer))
+                print("Language:", st.session_state.language)
+                print("=" * 60)
                 with st.spinner("Generating Voice..."):
                     audio_bytes = APIClient.text_to_speech(
                         text=answer,

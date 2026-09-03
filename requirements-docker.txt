@@ -1,0 +1,96 @@
+# FastAPI
+fastapi==0.139.0
+uvicorn==0.50.2
+python-multipart==0.0.32
+
+# Configuration
+pydantic==2.13.4
+pydantic-settings==2.14.2
+python-dotenv==1.2.2
+
+# Database
+pymongo==4.17.0
+motor==3.7.1
+
+# LangChain / Ollama
+langchain==1.3.11
+langchain-classic==1.0.8
+langchain-community==0.4.2
+langchain-core==1.4.8
+langchain-huggingface==1.2.2
+langchain-ollama==1.1.0
+langchain-text-splitters==1.1.2
+langgraph==1.2.8
+langgraph-checkpoint==4.1.1
+langgraph-prebuilt==1.1.0
+langgraph-sdk==0.4.2
+langsmith==0.9.8
+ollama==0.6.2
+
+# RAG / Embeddings
+sentence-transformers==5.6.0
+faiss-cpu==1.14.3
+rank-bm25==0.2.2
+scikit-learn==1.7.2
+
+# Hugging Face
+transformers==4.46.1
+huggingface-hub==0.36.2
+tokenizers==0.20.3
+safetensors==0.8.0
+sentencepiece==0.2.1
+accelerate==1.14.0
+peft==0.19.1
+
+# Scientific
+numpy==1.26.4
+scipy==1.13.1
+pandas==2.2.3
+
+# Translation
+langdetect==1.0.9
+sacrebleu==2.6.0
+sacremoses==0.1.1
+
+# Speech-to-Text
+faster-whisper==1.2.1
+ctranslate2==4.8.1
+av==17.1.0
+onnxruntime==1.23.2
+
+# TTS - Indic Parler TTS
+parler_tts==0.2.2
+descript-audio-codec==1.0.0
+descript-audiotools @ git+https://github.com/descriptinc/audiotools@348ebf2034ce24e2a91a553e3171cb00c0c71678
+
+# Audio
+soundfile==0.14.0
+librosa==0.10.0
+pydub==0.25.1
+ffmpeg-python==0.2.0
+
+# PDF / Documents
+pypdf==6.14.2
+pdfminer.six==20260107
+pdfplumber==0.11.10
+python-docx==1.2.0
+
+# HTTP
+requests==2.34.2
+httpx==0.28.1
+aiohttp==3.14.1
+orjson==3.11.9
+tenacity==9.1.4
+
+# AWS
+boto3==1.43.42
+
+# Utilities
+PyYAML==6.0.3
+jsonlines==1.2.0
+loguru==0.7.3
+rich==15.0.0
+psutil==7.2.2
+packaging==24.2
+tqdm==4.68.4
+streamlit

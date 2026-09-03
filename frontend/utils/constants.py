@@ -3,7 +3,9 @@ SUPPORTED_LANGUAGES = [
     "tai_khamti",
     "manipuri",
     "monpa",
-    "hindi"
+    "hindi",
+    "naga",
+    "mishmi"
 ]
 APP_NAME ="🌿 Tribal AI Chatbot"
 WELCOME_MESSAGE ="""

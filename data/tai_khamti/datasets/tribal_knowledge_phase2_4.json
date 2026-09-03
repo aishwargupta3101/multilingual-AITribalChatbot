@@ -1,0 +1,302 @@
+[
+  {
+    "instruction": "What is artificial intelligence?",
+    "answer": "Artificial intelligence refers to computer systems designed to perform tasks that typically require human intelligence, such as learning, problem-solving, and reasoning.",
+    "answer_tai_khamti": "ဢေႇဢၢႆႇ (AI) ꩫိူဝ်ႈ ပဵၼ် ၸၢႂ်ႉ ၶွန်ႇပျူႇထႃႇ ဢၼ် ႁဵတ်း ၵၢၼ် ၼင်ႇ ၵူၼ်း ၸၢႂ်ႉ ၵၢၼ် သွၼ် လႄႈ ၵၢၼ် ၶိူိင်ႈ။",
+    "category": "Computer Science & Artificial Intelligence"
+  },
+  {
+    "instruction": "What is machine learning?",
+    "answer": "Machine learning is a subset of artificial intelligence that provides systems the ability to automatically learn and improve from experience without being explicitly programmed.",
+    "answer_tai_khamti": "လွင်ႈ ၸၢၵ်ႈ ႁဵၼ်း ႁူႉ ၼႆႉ ပဵၼ် တွၼ်ႈ ၼိုင်ႈ ၶေႃး ၼႅင်း စၢၵ်ႈ တႅမ်ႈ ဢၼ် ႁဵတ်း ႁႂ်ႈ ၸၢၵ်ႈ ႁဵၼ်း ဢဝ် တီႈ ၵၢၼ် ႁဵတ်း မႃး ေꩫႃႈ တူဝ် မၼ်း။",
+    "category": "Computer Science & Artificial Intelligence"
+  },
+  {
+    "instruction": "What is a neural network?",
+    "answer": "A neural network is a machine learning model inspired by the structure and function of the biological neural networks in human brains.",
+    "answer_tai_khamti": "ၼႅင်း သၢႆ ဢေႃး ၼႆႉ ပဵၼ် ႁၢင်ႈ ၸၢၵ်ႈ ႁဵၼ်း ဢၼ် ဢဝ် ေꩫႃႈ ႁၢင်ႈ ၾႅင်း ဢေႃး ႁူဝ် ၵူၼ်း မႃး ႁဵတ်း။",
+    "category": "Computer Science & Artificial Intelligence"
+  },
+  {
+    "instruction": "What is cloud computing?",
+    "answer": "Cloud computing is the delivery of computing services including servers, storage, databases, and software over the internet.",
+    "answer_tai_khamti": "လွင်ႈ ၶွမ်ႇ ၽိဝ်ႇ တႃႇ မေႃႈ ၾႃႉ ၼႆႉ ပဵၼ် ၵၢၼ် သူင်ႇ ၵၢၼ် ၸၢၵ်ႈ, တီႈ ၵဵပ်း ၶေႃႈ မျိၼ်း, တင်း မႅၼ်း သေႃး ေꩫႃႈ ဢိၼ်ႇ တႃႇ ၼႅတ်ႉ။",
+    "category": "Computer Science & Artificial Intelligence"
+  },
+  {
+    "instruction": "What is cybersecurity?",
+    "answer": "Cybersecurity is the practice of protecting systems, networks, and programs from digital attacks, theft, and damage.",
+    "answer_tai_khamti": "လွင်ႈ ႁႄႉ ၼႅတ်ႉ ၼႆႉ ပဵၼ် ၵၢၼ် ႁႄႉ ၸၢၵ်ႈ, သၢႆ ၼႅတ်ႉ, တင်း မႅၼ်း သေႃး ဢမ်ႇ ႁႂ်ႈ ၵူၼ်း လု လႅဝ် ဢဝ် လႆႈ။",
+    "category": "Computer Science & Artificial Intelligence"
+  },
+  {
+    "instruction": "What is an algorithm?",
+    "answer": "An algorithm is a finite sequence of rigorous instructions used to solve a class of specific problems or perform a computation.",
+    "answer_tai_khamti": "ဢႄႇ လ် ၵူဝ်ႇ ရိ သႅမ်ႇ ၼႆႉ ပဵၼ် သဵၼ်ႈ တၢင်း ၸီႉ ဢၼ် တႅမ်ႈ ဝႆႉ တႃႇ ႁဵတ်း ႁႂ်ႈ ၵၢၼ် ဢၼ် ၼိုင်ႈ တဵမ် သုတ်း။",
+    "category": "Computer Science & Artificial Intelligence"
+  },
+  {
+    "instruction": "What is big data?",
+    "answer": "Big data refers to extremely large datasets that may be analyzed computationally to reveal patterns, trends, and associations.",
+    "answer_tai_khamti": "ၶေႃႈ မျိၼ်း ယႂ်ႇ ၼႆႉ ပဵၼ် ၶေႃႈ မျိၼ်း ၼမ် လိူဝ် ဢၼ် ၸႂ်ႉ ၸၢၵ်ႈ တိူင်း စိေꩫႃႇ တႃႇ ႁၼ် ႁၢင်ႈ တင်း လွင်ႈ ေꩫႃႇ ꩫႃႈ။",
+    "category": "Computer Science & Artificial Intelligence"
+  },
+  {
+    "instruction": "What is deep learning?",
+    "answer": "Deep learning is a class of machine learning algorithms that uses multiple layers of neural networks to extract high-level features from raw input.",
+    "answer_tai_khamti": "လွင်ႈ ႁဵၼ်း ၶေႃး ၼႆႉ ပဵၼ် ၵၢၼ် ၸႂ်ႉ ၼႅင်း သၢႆ ဢေႃး ၼမ် ၸၢင်ႈ တႃႇ စိေꩫႃႇ ၶေႃႈ မျိၼ်း ဢၼ် ယၢပ်ႇ။",
+    "category": "Computer Science & Artificial Intelligence"
+  },
+  {
+    "instruction": "What is natural language processing?",
+    "answer": "Natural language processing is a branch of AI that gives computers the ability to understand, interpret, and generate human language.",
+    "answer_tai_khamti": "ၵၢၼ် ၸၢၵ်ႈ ႁူႉ ၵဝၢမ်း ၼႆႉ ပဵၼ် တွၼ်ႈ AI ဢၼ် ႁဵတ်း ႁႂ်ႈ ၶွမ်ႇ ၽိဝ်ႇ တႃႇ ႁူႉ, တွၼ်ႈ, တင်း တႅမ်ႈ ၵဝၢမ်း ၵူၼ်း လႆႈ။",
+    "category": "Computer Science & Artificial Intelligence"
+  },
+  {
+    "instruction": "What is computer vision?",
+    "answer": "Computer vision is a field of artificial intelligence that enables computers and systems to derive meaningful information from digital images and videos.",
+    "answer_tai_khamti": "လွင်ႈ ၸၢၵ်ႈ ႁၼ် ၼႆႉ ပဵၼ် တွၼ်ႈ AI ဢၼ် ႁဵတ်း ႁႂ်ႈ ၶွမ်ႇ ၽိဝ်ႇ တႃႇ ႁၼ် တင်း ႁူႉ ၶူဝ်း ေꩫႃႇ ႁၢင်ႈ တင်း ဝီႇ တီႇ ဢူဝ်း။",
+    "category": "Computer Science & Artificial Intelligence"
+  },
+  {
+    "instruction": "What is clean energy transition?",
+    "answer": "Clean energy transition refers to the global shift from fossil-fuel-based energy systems to zero-carbon energy sources like solar and wind.",
+    "answer_tai_khamti": "လွင်ႈ လႅၵ်ႈ ႁႅင်း ၾႆး မေး ၼႆႉ ပဵၼ် ၵၢၼ် လႅၵ်ႈ လၢႆႈ ႁႅင်း တၢင်း ဢမ်ႇ ၸႂ်ႉ ၼမ်ႉ မၢၼ်း သေ ဢဝ် ႁႅင်း လႅတ်ႉ တင်း လမ်း မႃး ၸႂ်ႉ။",
+    "category": "Environment, Geography & Earth Science"
+  },
+  {
+    "instruction": "What is soil conservation?",
+    "answer": "Soil conservation is a set of management practices used to prevent soil erosion and degradation, preserving soil fertility.",
+    "answer_tai_khamti": "လွင်ႈ ႁႄႉ ၼႃႈ လိၼ် ၼႆႉ ပဵၼ် ၵၢၼ် ၽႅၼ် ႁိူၼ်း တႃႇ ႁႄႉ ဢမ်ႇ ႁႂ်ႈ လိၼ် ၶၢႆႉ တင်း လု သေ ႁႄႉ ႁႂ်ႈ လိၼ် ဢွၵ်ႇ မၢၵ်ႇ လႆႈ လီ။",
+    "category": "Environment, Geography & Earth Science"
+  },
+  {
+    "instruction": "What is electric vehicle adoption?",
+    "answer": "Electric vehicle adoption is the transition from internal combustion engine vehicles to battery-powered electric vehicles to reduce transport emissions.",
+    "answer_tai_khamti": "လွင်ႈ ၸႂ်ႉ ၵႃႈ ၾႆး ၾႃႉ ၼႆႉ ပဵၼ် ၵၢၼ် လႅၵ်ႈ ၸႂ်ႉ ၵႃႈ ၾႆး ၾႃႉ တႃႇ လုတ်း ၵႅတ်ႉ ဢွၵ်ႇ လုၵ်ႉ တီႈ ၵႃႈ ၼမ်ႉ မၢၼ်း။",
+    "category": "Environment, Geography & Earth Science"
+  },
+  {
+    "instruction": "What is a carbon sink?",
+    "answer": "A carbon sink is any natural environment, like a forest or ocean, that absorbs more carbon dioxide from the atmosphere than it releases.",
+    "answer_tai_khamti": "တီႈ ၵဵပ်း ၶႃႇ ေၿႃး ꩫိ ၼႆႉ ပဵၼ် တီႈ ေꩫႃႇ တႃႉ မိူၼ် ႁၢၼ်ႉ ໄမႉ တင်း ၼမ်ႉ ပၢင် ေꩫႇ ဢၼ် ႁေႃး ၵႅတ်ႉ ၶႃႇ ေၿႃး ꩫိ ၼမ် လိူဝ် ဢၼ် သူင်ႇ ဢွၵ်ႇ။",
+    "category": "Environment, Geography & Earth Science"
+  },
+  {
+    "instruction": "What is urban heat island effect?",
+    "answer": "The urban heat island effect occurs when urban areas experience higher temperatures than surrounding rural areas due to human activities and infrastructure.",
+    "answer_tai_khamti": "လွင်ႈ ဝဵင်း ဢုၼ်ႇ လိူဝ် ၼႆႉ ပဵၼ် လွင်ႈ ၼႂ်း ဝဵင်း ဢုၼ်ႇ လိူဝ် တီႈ ꩫႃ ေꩫႃႈ ၵေႃႇ ႁိူၼ်း တင်း ၵၢၼ် ႁဵတ်း ၵူၼ်း။",
+    "category": "Environment, Geography & Earth Science"
+  },
+  {
+    "instruction": "What is sustainable water management?",
+    "answer": "Sustainable water management involves managing freshwater resources to meet current human and environmental needs without compromising future supply.",
+    "answer_tai_khamti": "ၵၢၼ် ၽႅၼ် ၼမ်ႉ ယင်း ႁိုင် ၼႆႉ ပဵၼ် ၵၢၼ် ႁၢၼ်ႉ ၼမ်ႉ မေး တႃႇ ၸႂ်ႉ တီႈ မိူဝ်ႈ လဵဝ် သေ ဢမ်ႇ ႁႂ်ႈ ၼမ်ႉ ၶၢဝ်း ၼႃႈ လုတ်း။",
+    "category": "Environment, Geography & Earth Science"
+  },
+  {
+    "instruction": "What is natural resource depletion?",
+    "answer": "Natural resource depletion occurs when non-renewable or renewable resources are consumed faster than their natural rate of recovery.",
+    "answer_tai_khamti": "လွင်ႈ ၶူဝ်း ေꩫႃႇ တႃႉ သုတ်း ၼႆႉ ပဵၼ် လွင်ႈ ဢဝ် ၶူဝ်း ေꩫႃႇ တႃႉ မႃး ၸႂ်ႉ ဝႆး လိူဝ် ဢၼ် ေꩫႃႇ တႃႉ ႁဵတ်း ၶိုၼ်း လႆႈ။",
+    "category": "Environment, Geography & Earth Science"
+  },
+  {
+    "instruction": "What is ecological restoration?",
+    "answer": "Ecological restoration is the process of assisting the recovery of an ecosystem that has been degraded, damaged, or destroyed.",
+    "answer_tai_khamti": "လွင်ႈ မႄး ႁိူၼ်း ယူႇ သဝ်း ၼႆႉ ပဵၼ် ၵၢၼ် ၸွႆႈ ႁႂ်ႈ ႁိူၼ်း ယူႇ သဝ်း ဢၼ် လု လႅဝ် မႃး လီ ၶိုၼ်း မိူၼ် မိူဝ်ႈ ၵေႃး။",
+    "category": "Environment, Geography & Earth Science"
+  },
+  {
+    "instruction": "What is sustainable urban planning?",
+    "answer": "Sustainable urban planning designs cities to promote environmental health, social equity, and economic viability through efficient land use and transit.",
+    "answer_tai_khamti": "ၵၢၼ် ၽႅၼ် ဝဵင်း ယင်း ႁိုင် ၼႆႉ ပဵၼ် ၵၢၼ် ၽႅၼ် ဝဵင်း တႃႇ ႁႂ်ႈ ႁိူၼ်း ယူႇ သဝ်း လီ, ၵူၼ်း ယူႇ သဝ်း ညီႇ ဢေႃး, တင်း ၵၢၼ် မၢၵ်ႈ မျိၼ်း လီ။",
+    "category": "Environment, Geography & Earth Science"
+  },
+  {
+    "instruction": "What is climate resilience?",
+    "answer": "Climate resilience is the capacity of a social or ecological system to absorb shocks and adapt to changes caused by climate hazards.",
+    "answer_tai_khamti": "လွင်ႈ ႁၢင်ႈ ႁႅၼ်း ၾႃႉ ရေႃး တူႇ ၼႆႉ ပဵၼ် ႁႅင်း ဢၼ် ၵူၼ်း တင်း ႁိူၼ်း ယူႇ သဝ်း ၶၢမ်ႇ လႆႈ တၢင်း လု လုၵ်ႉ တီႈ ၾႃႉ ရေႃး တူႇ လႅၵ်ႈ လၢႆႈ။",
+    "category": "Environment, Geography & Earth Science"
+  },
+  {
+    "instruction": "What is reinforcement learning?",
+    "answer": "Reinforcement learning is a machine learning training method based on rewarding desired behaviors and punishing undesired ones through trial and error.",
+    "answer_tai_khamti": "လွင်ႈ ႁဵၼ်း ႁႅင်း ၸွႆႈ ၼႆႉ ပဵၼ် ၵၢၼ် သင်ႇ ၸၢၵ်ႈ ႁဵၼ်း ဢၼ် ဢဝ် တၢင်း ပၼ် ဆု တင်း အပြစ် မႃး ၸီႉ တိူင်း ၵၢၼ် ႁဵတ်း။",
+    "category": "Computer Science & Artificial Intelligence"
+  },
+  {
+    "instruction": "What is a large language model?",
+    "answer": "A large language model is a deep learning algorithm trained on massive text datasets to understand, summarize, and generate human-like text.",
+    "answer_tai_khamti": "ႁၢင်ႈ ၵဝၢမ်း ယႂ်ႇ ၼႆႉ ပဵၼ် ဢႄႇ လ် ၵူဝ်ႇ ရိ သႅမ်ႇ ဢၼ် ႁဵၼ်း ဢဝ် တီႈ လိၵ်ႈ ၼမ် သေ ႁဵတ်း ႁႂ်ႈ ႁူႉ, ယိူၼ်း, တင်း တႅမ်ႈ ၵဝၢမ်း မိူၼ် ၵူၼ်း လႆႈ။",
+    "category": "Computer Science & Artificial Intelligence"
+  },
+  {
+    "instruction": "What is generative AI?",
+    "answer": "Generative AI refers to artificial intelligence systems capable of creating new content such as text, images, audio, and synthetic data based on learned patterns.",
+    "answer_tai_khamti": "AI ဢွၵ်ႇ ၶူဝ်း ၼႆႉ ပဵၼ် ၼႅင်း စၢၵ်ႈ တႅမ်ႈ ဢၼ် ၸၢင်ႈ ႁဵတ်း ဢွၵ်ႇ ႁၢင်ႈ, လိၵ်ႈ, သဵင်, တင်း ၶေႃႈ မျိၼ်း မႂ်ႇ။",
+    "category": "Computer Science & Artificial Intelligence"
+  },
+  {
+    "instruction": "What is quantum computing?",
+    "answer": "Quantum computing is a rapidly-emerging technology that harnesses the laws of quantum mechanics to solve problems too complex for classical computers.",
+    "answer_tai_khamti": "လွင်ႈ ၶွမ်ႇ ၽိဝ်ႇ တႃႇ ၵွၼ်း တမ်ႇ ၼႆႉ ပဵၼ် ၼႅင်း ဢၼ် ၸႂ်ႉ ႁႅင်း ၵွၼ်း တမ်ႇ တႃႇ တွၼ်ႈ ၵၢၼ် ဢၼ် ယၢပ်ႇ လိူဝ် ၸၢၵ်ႈ ၶွမ်ႇ ၽိဝ်ႇ တႃႇ ပေႃး။",
+    "category": "Computer Science & Artificial Intelligence"
+  },
+  {
+    "instruction": "What is edge computing?",
+    "answer": "Edge computing is a distributed computing paradigm that brings computation and data storage closer to the sources of data to improve response times.",
+    "answer_tai_khamti": "လွင်ႈ ၶွမ်ႇ ၽိဝ်ႇ တႃႇ ႁိမ်း ꩫႃႈ ၼႆႉ ပဵၼ် ၵၢၼ် ဢဝ် တီႈ တွၼ်ႈ ၵၢၼ် တင်း တီႈ ၵဵပ်း ၶေႃႈ မျိၼ်း မႃး ဝႆႉ ႁိမ်း တီႈ ၸႂ်ႉ တႃႇ ႁႂ်ႈ ဝႆး ၶိုၼ်ႈ။",
+    "category": "Computer Science & Artificial Intelligence"
+  },
+  {
+    "instruction": "What is DevOps?",
+    "answer": "DevOps is a set of practices that combines software development and IT operations to shorten the systems development lifecycle and provide continuous delivery.",
+    "answer_tai_khamti": "DevOps ၼႆႉ ပဵၼ် ၵၢၼ် ႁူမ်ႈ ၵၢၼ် တႅမ်ႈ မႅၼ်း သေႃး တင်း ၵၢၼ် ၽႅၼ် ၸၢၵ်ႈ တႃႇ ႁႂ်ႈ ၵၢၼ် ဢွၵ်ႇ မႅၼ်း သေႃး ဝႆး တင်း လီ။",
+    "category": "Computer Science & Artificial Intelligence"
+  },
+  {
+    "instruction": "What is blockchain technology?",
+    "answer": "Blockchain is an advanced database mechanism that allows transparent information sharing within a business network through an immutable ledger.",
+    "answer_tai_khamti": "ၼႅင်း ၿလွၵ်ႉ ၶျဵၼ်း ၼႆႉ ပဵၼ် တီႈ ၵဵပ်း ၶေႃႈ မျိၼ်း ဢၼ် ႁႄႉ ဢမ်ႇ ႁႂ်ႈ ၵူၼ်း လႅၵ်ႈ လၢႆႈ လႆႈ သေ ႁဵတ်း ႁႂ်ႈ ၵၢၼ် ၸႂ်ႉ ႁူမ်ႈ ၵၼ် လႅင်း လီ။",
+    "category": "Computer Science & Artificial Intelligence"
+  },
+  {
+    "instruction": "What is computer networking?",
+    "answer": "Computer networking refers to interconnected computing devices that can exchange data and share resources with each other using data communication protocols.",
+    "answer_tai_khamti": "လွင်ႈ ၼႅင်း ၶွမ်ႇ ၽိဝ်ႇ တႃႇ ၼႆႉ ပဵၼ် ၵၢၼ် ဢဝ် ၸၢၵ်ႈ ၶွမ်ႇ ၽိဝ်ႇ တႃႇ မႃး သေႃး ၵၼ် တႃႇ သူင်ႇ ၶေႃႈ မျိၼ်း တင်း ၸႂ်ႉ ၶူဝ်း ႁူမ်ႈ ၵၼ်။",
+    "category": "Computer Science & Artificial Intelligence"
+  },
+  {
+    "instruction": "What is an application programming interface (API)?",
+    "answer": "An API is a set of rules and protocols that allows different software applications to communicate and interact with one another.",
+    "answer_tai_khamti": "API ၼႆႉ ပဵၼ် ပိူင် တင်း သဵၼ်ႈ တၢင်း ဢၼ် ႁဵတ်း ႁႂ်ႈ မႅၼ်း သေႃး ဢၼ် ဢမ်ႇ မိူၼ် ၵၼ် ဢူး ၵဝၢမ်း တင်း ႁဵတ်း ၵၢၼ် ႁူမ်ႈ ၵၼ် လႆႈ။",
+    "category": "Computer Science & Artificial Intelligence"
+  },
+  {
+    "instruction": "What is data mining?",
+    "answer": "Data mining is the process of uncovering patterns and other valuable information from large datasets using statistical and machine learning techniques.",
+    "answer_tai_khamti": "လွင်ႈ ၶတ်း ၶေႃႈ မျိၼ်း ၼႆႉ ပဵၼ် ၵၢၼ် ႁႃ ႁၢင်ႈ တင်း ၶေႃႈ မျိၼ်း ဢၼ် မီး တၢင်း ၵႃႈ ၼႂ်း ၶေႃႈ မျိၼ်း ယႂ်ႇ ေꩫႃႈ ၼႅင်း တွၼ်း စိေꩫႃႇ။",
+    "category": "Computer Science & Artificial Intelligence"
+  },
+  {
+    "instruction": "What is the immune system?",
+    "answer": "The immune system is a complex network of biological structures and processes that protects an organism against disease and pathogens.",
+    "answer_tai_khamti": "ပိူင် ႁႄႉ ႁႅင်း ၼႆႉ ပဵၼ် ၼႅင်း သၢႆ တူဝ် ဢၼ် ႁႄႉ ဢမ်ႇ ႁႂ်ႈ ၸိူဝ်ႉ ၼၢဝ် တင်း ဢႃႇ မႃႇ တူဝ် ၶဝ်ႈ မႃး ႁဵတ်း ႁႂ်ႈ ၶိူဝ်း တူဝ် လု။",
+    "category": "Health & Medical Science"
+  },
+  {
+    "instruction": "What is a vaccine?",
+    "answer": "A vaccine is a biological preparation that provides active acquired immunity to a particular infectious or malignant disease.",
+    "answer_tai_khamti": "ယႃႇ ႁႄႉ ၼႆႉ ပဵၼ် ယႃႇ ဢၼ် ႁဵတ်း ႁႂ်ႈ တူဝ် ႁဝ်း မီး ႁႅင်း ႁႄႉ ၸိူဝ်ႉ ၼၢဝ် ဢၼ် ၼိုင်ႈ ေꩫႃႈ တူဝ် မၼ်း။",
+    "category": "Health & Medical Science"
+  },
+  {
+    "instruction": "What is blood pressure?",
+    "answer": "Blood pressure is the force exerted by circulating blood against the walls of the body's arteries.",
+    "answer_tai_khamti": "ႁႅင်း ဢိၼ် ၼမ်ႉ လိူတ်ႈ ၼႆႉ ပဵၼ် ႁႅင်း ဢၼ် ၼမ်ႉ လိူတ်ႈ ဢိၼ် ေꩫႃႇ ႁိူၼ်း သၢႆ လိူတ်ႈ တူဝ်။",
+    "category": "Health & Medical Science"
+  },
+  {
+    "instruction": "What is antibiotic resistance?",
+    "answer": "Antibiotic resistance occurs when bacteria evolve mechanisms that protect them from the effects of antimicrobial drugs.",
+    "answer_tai_khamti": "လွင်ႈ ၸိူဝ်ႉ ၼၢဝ် ၶၢမ်ႇ ယႃႇ ၼႆႉ ပဵၼ် လွင်ႈ ၸိူဝ်ႉ ၼၢဝ် လႅၵ်ႈ လၢႆႈ သေ ၶၢမ်ႇ လႆႈ ယႃႇ ဢၼ် ၵျေႃး ၸိူဝ်ႉ ၼၢဝ်။",
+    "category": "Health & Medical Science"
+  },
+  {
+    "instruction": "What is DNA?",
+    "answer": "DNA, or deoxyribonucleic acid, is the molecule that carries genetic instructions for the development, functioning, growth, and reproduction of all organisms.",
+    "answer_tai_khamti": "ဒီအန်အေ ၼႆႉ ပဵၼ် ၸိူဝ်ႉ ၵႅၼ် ဢၼ် တၢင်ႇ ၶေႃႈ ၸီႉ တႃႇ ၵၢၼ် ယႂ်ႇ, ၵၢၼ် ႁဵတ်း, တင်း ၵၢၼ် ဢွၵ်ႇ လူၵ်ႈ ၶိူဝ်း တူဝ်။",
+    "category": "Health & Medical Science"
+  },
+  {
+    "instruction": "What is insulin?",
+    "answer": "Insulin is a hormone created by the pancreas that allows your body to use sugar from carbohydrates for energy or to store glucose for future use.",
+    "answer_tai_khamti": "ဢိၼ်း သူႇ လိၼ်း ၼႆႉ ပဵၼ် ယႃႇ ႁေႃး ေမႃး ဢၼ် ဢွၵ်ႇ တီႈ တပ်း ဢွၼ်ႇ သေ ႁဵတ်း ႁႂ်ႈ တူဝ် ၸႂ်ႉ ၼမ်ႉ တၢၼ်း တႃႇ ႁႅင်း တူဝ်။",
+    "category": "Health & Medical Science"
+  },
+  {
+    "instruction": "What is mental health?",
+    "answer": "Mental health includes emotional, psychological, and social well-being, affecting how we think, feel, and act.",
+    "answer_tai_khamti": "ႁႅင်း ႁူဝ် ၸႂ် ၼႆႉ ႁူမ်ႈ ပႃး လွင်ႈ ၸႂ် လီ, လွင်ႈ ဝူၼ်ႉ လီ, တင်း ၵၢၼ် ယူႇ ႁူမ်ႈ ၵူၼ်း သေ ႁဵတ်း ႁႂ်ႈ ႁဝ်း ဝူၼ်ႉ, ႁူႉ, တင်း ႁဵတ်း။",
+    "category": "Health & Medical Science"
+  },
+  {
+    "instruction": "What is cardiovascular disease?",
+    "answer": "Cardiovascular disease is a general term for conditions affecting the heart or blood vessels, such as stroke or coronary heart disease.",
+    "answer_tai_khamti": "ဢႃႇ မႃႇ ႁူဝ် ၸႂ် တင်း သၢႆ လိူတ်ႈ ၼႆႉ ပဵၼ် ၸိုဝ်ႈ ႁူမ်ႈ တႃႇ ဢႃႇ မႃႇ ဢၼ် ႁဵတ်း ႁႂ်ႈ ႁူဝ် ၸႂ် တင်း သၢႆ လိူတ်ႈ လု။",
+    "category": "Health & Medical Science"
+  },
+  {
+    "instruction": "What are vitamins?",
+    "answer": "Vitamins are organic compounds required by organisms in limited amounts as essential nutrients for proper physiological function.",
+    "answer_tai_khamti": "ဝီႇ တႃႇ မိၼ်း ၼႆႉ ပဵၼ် ၶူဝ်း ဢႃႇ ႁႃႇ ရႃႉ ဢၼ် တူဝ် ႁဝ်း လိုဝ်း တႃႇ ႁဵတ်း ႁႂ်ႈ တူဝ် ယူႇ လီ သႅၼ်ႈ သုၵ်း။",
+    "category": "Health & Medical Science"
+  },
+  {
+    "instruction": "What is metabolism?",
+    "answer": "Metabolism is the complete set of life-sustaining chemical reactions in organisms that convert food into energy and building blocks.",
+    "answer_tai_khamti": "ၵၢၼ် လႅၵ်ႈ ဢႃႇ ႁႃႇ ရႃႉ ၼႆႉ ပဵၼ် ၵၢၼ် ႁဵတ်း တီႈ ၼႂ်း တူဝ် ဢၼ် ဢဝ် ဢႃႇ ႁႃႇ ရႃႉ မႃး ႁဵတ်း ႁႅင်း တူဝ် တင်း တူဝ် ၵေႃႇ။",
+    "category": "Health & Medical Science"
+  },
+  {
+    "instruction": "What is inflammation?",
+    "answer": "Inflammation is a protective response of the body's immune system to injury, infection, or irritation, helping to remove harmful stimuli and initiate healing.",
+    "answer_tai_khamti": "လွင်ႈ တူဝ် ပေႃး ဢုၼ်ႇ ၼႆႉ ပဵၼ် ၵၢၼ် ႁႄႉ ႁႅင်း တူဝ် တႃႇ ႁႄႉ ဢႃႇ မႃႇ တင်း လွင်ႈ လု သေ ႁဵတ်း ႁႂ်ႈ တူဝ် လီ ၶိုၼ်း။",
+    "category": "Health & Medical Science"
+  },
+  {
+    "instruction": "What is an autoimmune disease?",
+    "answer": "An autoimmune disease is a condition in which the body's immune system mistakenly attacks and destroys healthy body tissue.",
+    "answer_tai_khamti": "ဢႃႇ မႃႇ တူဝ် ႁဵတ်း တူဝ် ၼႆႉ ပဵၼ် လွင်ႈ ႁႅင်း ႁႄႉ တူဝ် ၽိူတ်ႇ သေ ၵႂႃႇ ၵျေႃး တူဝ် လီ ၶေႃး ၶေႃး။",
+    "category": "Health & Medical Science"
+  },
+  {
+    "instruction": "What is a pathogen?",
+    "answer": "A pathogen is an organism, such as a bacterium, virus, fungus, or parasite, that can cause disease in a host.",
+    "answer_tai_khamti": "ၸိူဝ်ႉ ဢႃႇ မႃႇ ၼႆႉ ပဵၼ် ၸိူဝ်ႉ ဢွၼ်ႇ မိူၼ် ၿႅၵ်ႉ တီး ရီး ယႃး, ဝၢႆး ရႅတ်ႉ ဢၼ် ႁဵတ်း ႁႂ်ႈ ၵူၼ်း ပဵၼ် ဢႃႇ မႃႇ။",
+    "category": "Health & Medical Science"
+  },
+  {
+    "instruction": "What is the function of red blood cells?",
+    "answer": "Red blood cells transport oxygen from the lungs to the rest of the body and bring carbon dioxide back to the lungs to be exhaled.",
+    "answer_tai_khamti": "ၵၢၼ် ၼမ်ႉ လိူတ်ႈ ၻႅင် ၼႆႉ ပဵၼ် ၵၢၼ် တၢင်ႇ ဢွၵ်ႉ ၸီႇ ၵျိၼ်း တီႈ ပွတ်ႇ ၵႂႃႇ တီႈ တူဝ် တင်း ဢဝ် ၶႃႇ ေၿႃး ꩫိ ပေႃး မႃး တီႈ ပွတ်ႇ။",
+    "category": "Health & Medical Science"
+  },
+  {
+    "instruction": "What is a hormone?",
+    "answer": "A hormone is a chemical messenger produced by endocrine glands that travels through the bloodstream to regulate body functions.",
+    "answer_tai_khamti": "ႁေႃး ေမႃး ၼႆႉ ပဵၼ် ၶႄး မီႇ သူင်ႇ ၵဝၢမ်း ဢၼ် ဢွၵ်ႇ တီႈ ၵလႅၼ်း သေ ၵႂႃႇ ေꩫႃႈ သၢႆ လိူတ်ႈ တႃႇ ၽႅၼ် ၵၢၼ် တူဝ်။",
+    "category": "Health & Medical Science"
+  },
+  {
+    "instruction": "What is epidemiology?",
+    "answer": "Epidemiology is the branch of medicine that deals with the incidence, distribution, and control of diseases in populations.",
+    "answer_tai_khamti": "လွင်ႈ ႁဵၼ်း ဢႃႇ မႃႇ မူႇ ၼႆႉ ပဵၼ် တွၼ်ႈ ယႃႇ ဢၼ် ႁဵၼ်း လွင်ႈ ဢႃႇ မႃႇ ဢွၵ်ႇ, ၽႅဝ်, တင်း ၵၢၼ် ႁမ်ႉ ၼႂ်း မူႇ ၵူၼ်း။",
+    "category": "Health & Medical Science"
+  },
+  {
+    "instruction": "What is homeostasis?",
+    "answer": "Homeostasis is the state of steady internal, physical, and chemical conditions maintained by living systems.",
+    "answer_tai_khamti": "လွင်ႈ တူဝ် ၼိင်ႈ ၼႆႉ ပဵၼ် လွင်ႈ ၼႂ်း တူဝ် ႁႄႉ ဝႆႉ တၢင်း ဢုၼ်ႇ, ၼမ်ႉ, တင်း ၶႄး မီႇ ႁႂ်ႈ ညီႇ ဢေႃး ယူႇ တႃႇ သေႇ။",
+    "category": "Health & Medical Science"
+  },
+  {
+    "instruction": "What is malnutrition?",
+    "answer": "Malnutrition refers to deficiencies, excesses, or imbalances in a person's intake of energy and nutrients.",
+    "answer_tai_khamti": "လွင်ႈ ဢႃႇ ႁႃႇ ရႃႉ ဢမ်ႇ ညီႇ ၼႆႉ ပဵၼ် လွင်ႈ ၵိၼ် ဢႃႇ ႁႃႇ ရႃႉ လုတ်း, ၼမ် လိူဝ်, ဢမ်ႇ ꩫၼ် ဢမ်ႇ ညီႇ ဢေႃး တႃႇ တူဝ်။",
+    "category": "Health & Medical Science"
+  },
+  {
+    "instruction": "What is a clinical trial?",
+    "answer": "A clinical trial is a research study conducted on human participants to evaluate the safety and effectiveness of new medical treatments.",
+    "answer_tai_khamti": "လွင်ႈ ၸၢမ်း ယႃႇ ၼႆႉ ပဵၼ် ၵၢၼ် ႁႃ ႁူႉ ဢၼ် ႁဵတ်း ေꩫႃႈ ၵူၼ်း တႃႇ စိေꩫႃႇ လွင်ႈ လိၼ်း တင်း လွင်ႈ လီ ၶေႃး ယႃႇ မႂ်ႇ။",
+    "category": "Health & Medical Science"
+  },
+  {
+    "instruction": "What is central nervous system?",
+    "answer": "The central nervous system consists of the brain and spinal cord, serving as the primary control center for processing information and directing bodily actions.",
+    "answer_tai_khamti": "ပိူင် သၢႆ ဢေႃး ၵႅၼ် ၼႆႉ ႁူမ်ႈ ပႃး ဢေႃး ႁူဝ် တင်း သၢႆ သၼ် ႁလႅင် သေ ပဵၼ် တီႈ ၽႅၼ် ၵၢၼ် ႁူဝ် တႃႇ တူဝ်။",
+    "category": "Health & Medical Science"
+  }
+]

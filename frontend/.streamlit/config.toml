@@ -7,7 +7,7 @@ font="sans serif"
 [server]
 headless=true
 runOnSave=true
-port=8501
+port=10000
 enableCORS=false
 [browser]
 gatherUsageStats=false

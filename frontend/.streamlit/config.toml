@@ -6,8 +6,9 @@ textColor="#000000"
 font="sans serif"
 [server]
 headless=true
-runOnSave=true
+runOnSave=false
 port=10000
 enableCORS=false
+fileWatcherType="none"
 [browser]
 gatherUsageStats=false

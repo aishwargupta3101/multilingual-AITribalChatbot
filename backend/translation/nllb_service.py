@@ -2,11 +2,6 @@
 NLLB Translation Service
 """
 import logging
-import torch
-from transformers import (
-    AutoTokenizer,
-    AutoModelForSeq2SeqLM
-)
 from backend.config.translation_config import TranslationConfig
 from backend.translation.supported_languages import SUPPORTED_LANGUAGES
 
@@ -22,10 +17,13 @@ class NLLBService:
         self.model = None
 
     def load_model(self):
-        """
-        Load the NLLB model only when translation is actually requested.
-        """
+
         if self.model is None:
+            from transformers import (
+                AutoTokenizer,
+                AutoModelForSeq2SeqLM
+            )
+
             logger.info("Loading NLLB Translation Model...")
             self.tokenizer = AutoTokenizer.from_pretrained(
                 TranslationConfig.MODEL_NAME,

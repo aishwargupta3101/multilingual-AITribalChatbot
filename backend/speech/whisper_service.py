@@ -17,18 +17,14 @@ class WhisperService:
                 device="cpu",
                 compute_type="int8"
             )
-
             print("Whisper Model Loaded Successfully")
 
     def transcribe(self, audio_path: str):
 
-        # Load Whisper only when voice is actually used
         self.load_model()
-
         print("=" * 60)
         print("🎤 USING FASTER WHISPER")
         print("Audio File:", audio_path)
-
         segments, info = self.model.transcribe(
             audio_path,
             beam_size=5,
@@ -50,6 +46,4 @@ class WhisperService:
             "language": info.language,
             "language_probability": info.language_probability
         }
-
-
 whisper_service = WhisperService()

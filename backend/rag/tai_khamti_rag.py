@@ -1,26 +1,36 @@
 from data.tai_khamti.tai_khamti_retriever import TaiKhamtiRetriever
-class TaiKhamtiRAG:
 
+
+class TaiKhamtiRAG:
     def __init__(self, top_k=4):
-        print("=" * 70)
-        print("TAI KHAMTI RAG SYSTEM")
-        print("=" * 70)
-        print("\nInitializing Tai Khamti Retriever...")
-        self.retriever = TaiKhamtiRetriever(
-            top_k=top_k
-        )
         self.top_k = top_k
-        print("Tai Khamti RAG initialized successfully.")
+        self.retriever = None
+
+    def load_retriever(self):
+        """
+        Load Tai Khamti retriever only when it is actually needed.
+        """
+
+        if self.retriever is None:
+            print("=" * 70)
+            print("TAI KHAMTI RAG SYSTEM")
+            print("=" * 70)
+            print("\nInitializing Tai Khamti Retriever...")
+            self.retriever = TaiKhamtiRetriever(
+                top_k=self.top_k
+            )
+            print("Tai Khamti RAG initialized successfully.")
 
     def retrieve(self, question, top_k=None):
+        self.load_retriever()
         if top_k is None:
             top_k = self.top_k
-
         results = self.retriever.search(
             question=question,
             top_k=top_k
         )
         return results
+
     def build_context(
         self,
         question,
@@ -39,6 +49,7 @@ class TaiKhamtiRAG:
             }
         context_parts = []
         sources = []
+
         for result in results:
             if language.lower() in [
                 "tai_khamti",

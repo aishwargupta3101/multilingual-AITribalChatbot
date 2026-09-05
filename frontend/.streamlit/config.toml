@@ -4,11 +4,15 @@ backgroundColor="#F8F9FA"
 secondaryBackgroundColor="#FFFFFF"
 textColor="#000000"
 font="sans serif"
+
 [server]
 headless=true
 runOnSave=false
 port=10000
-enableCORS=false
 fileWatcherType="none"
+enableWebsocketCompression=false
+
 [browser]
+serverAddress="multilingual-aitribalchatbot.onrender.com"
+serverPort=10000
 gatherUsageStats=false

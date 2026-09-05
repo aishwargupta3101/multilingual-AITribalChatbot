@@ -15,18 +15,27 @@ class NLLBService:
     """
     NLLB Translation Service
     """
+
     def __init__(self):
-        logger.info("Loading NLLB Translation Model...")
         self.device = TranslationConfig.DEVICE
-        self.tokenizer = AutoTokenizer.from_pretrained(
-            TranslationConfig.MODEL_NAME,
-            cache_dir=TranslationConfig.MODEL_CACHE_DIR
-        )
-        self.model = AutoModelForSeq2SeqLM.from_pretrained(
-            TranslationConfig.MODEL_NAME,
-            cache_dir=TranslationConfig.MODEL_CACHE_DIR
-        ).to(self.device)
-        logger.info("NLLB Model Loaded Successfully.")
+        self.tokenizer = None
+        self.model = None
+
+    def load_model(self):
+        """
+        Load the NLLB model only when translation is actually requested.
+        """
+        if self.model is None:
+            logger.info("Loading NLLB Translation Model...")
+            self.tokenizer = AutoTokenizer.from_pretrained(
+                TranslationConfig.MODEL_NAME,
+                cache_dir=TranslationConfig.MODEL_CACHE_DIR
+            )
+            self.model = AutoModelForSeq2SeqLM.from_pretrained(
+                TranslationConfig.MODEL_NAME,
+                cache_dir=TranslationConfig.MODEL_CACHE_DIR
+            ).to(self.device)
+            logger.info("NLLB Model Loaded Successfully.")
     def translate(
             self,
             text: str,
@@ -39,6 +48,7 @@ class NLLBService:
         """
         if not text.strip():
             return ""
+        self.load_model()
         source_language = source_language.lower()
         target_language = target_language.lower()
         if source_language == target_language:

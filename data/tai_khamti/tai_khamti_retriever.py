@@ -2,10 +2,9 @@ import json
 from pathlib import Path
 import faiss
 import numpy as np
-from sentence_transformers import SentenceTransformer
-
 
 class TaiKhamtiRetriever:
+
     def __init__(
         self,
         top_k=4,
@@ -21,7 +20,6 @@ class TaiKhamtiRetriever:
             / "faiss_index"
             / "tai_khamti_combined.index"
         )
-
         self.documents_file = (
             base_dir
             / "faiss_index"
@@ -29,38 +27,36 @@ class TaiKhamtiRetriever:
         )
         self.top_k = top_k
         self.similarity_threshold = similarity_threshold
-        print("Loading Tai Khamti embedding model...")
 
-        self.model = SentenceTransformer(
-            "sentence-transformers/all-MiniLM-L6-v2"
-        )
-        print("Embeddings model loaded.")
+        self.model = None
         if not self.index_file.exists():
             raise FileNotFoundError(
                 f"FAISS index not found:\n"
                 f"{self.index_file}"
             )
+
         print("Loading FAISS index...")
+
         self.index = faiss.read_index(
             str(self.index_file)
         )
         print("FAISS index loaded.")
+
         if not self.documents_file.exists():
             raise FileNotFoundError(
                 f"Documents file not found:\n"
                 f"{self.documents_file}"
             )
-
         with open(
             self.documents_file,
             "r",
             encoding="utf-8"
         ) as file:
             self.documents = json.load(file)
-
         print(
             f"Loaded {len(self.documents)} documents."
         )
+
         if self.index.ntotal != len(self.documents):
             raise ValueError(
                 "FAISS index and document count "
@@ -73,21 +69,38 @@ class TaiKhamtiRetriever:
         )
         print("Tai Khamti Retriever ready.")
         print("=" * 70)
+
+    def load_model(self):
+        """
+        Load the embedding model only when it is needed.
+        This prevents the model from consuming RAM during
+        FastAPI startup.
+        """
+
+        if self.model is None:
+            print("Loading Tai Khamti embedding model...")
+            from sentence_transformers import SentenceTransformer
+            self.model = SentenceTransformer(
+                "sentence-transformers/all-MiniLM-L6-v2"
+            )
+            print("Embeddings model loaded.")
+
     def search(
         self,
         question: str,
         top_k=None
     ):
-
         if not question or not question.strip():
             return []
         question = question.strip()
         if top_k is None:
             top_k = self.top_k
+
         top_k = min(
             top_k,
             len(self.documents)
         )
+        self.load_model()
         query_embedding = self.model.encode(
             [question],
             convert_to_numpy=True,
@@ -109,6 +122,7 @@ class TaiKhamtiRetriever:
         ):
             if index_id == -1:
                 continue
+
             score = float(score)
             document = self.documents[
                 int(index_id)
@@ -124,8 +138,12 @@ class TaiKhamtiRetriever:
             )
             print(
                 "ID:",
-                document.get("id", "N/A")
+                document.get(
+                    "id",
+                    "N/A"
+                )
             )
+
             print(
                 "Similarity:",
                 f"{score:.4f}"
@@ -159,6 +177,7 @@ class TaiKhamtiRetriever:
                 )
             )
             print("=" * 70)
+
             if score < self.similarity_threshold:
                 print(
                     f"Rejected: score {score:.4f} "
@@ -166,6 +185,7 @@ class TaiKhamtiRetriever:
                     f"{self.similarity_threshold:.4f}"
                 )
                 continue
+
             results.append(
                 {
                     "score": score,
@@ -181,6 +201,7 @@ class TaiKhamtiRetriever:
                         "english",
                         ""
                     ),
+
                     "tai_khamti": document.get(
                         "tai_khamti",
                         ""
@@ -199,6 +220,7 @@ class TaiKhamtiRetriever:
         )
         print("=" * 70)
         return results
+
     def print_results(
         self,
         question,
@@ -216,11 +238,13 @@ class TaiKhamtiRetriever:
             "Results:",
             len(results)
         )
+
         if not results:
             print(
                 "No relevant results found."
             )
             return
+
         for rank, result in enumerate(
             results,
             start=1
@@ -290,6 +314,7 @@ def main():
         "What are the daily activities of Tai Khamti people?",
         "Tell me about Tai Khamti culture."
     ]
+
     for question in test_questions:
         results = retriever.search(
             question=question,

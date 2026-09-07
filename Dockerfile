@@ -23,4 +23,4 @@ RUN pip install --no-cache-dir -r requirements-docker.txt
 COPY . .
 EXPOSE 8000
 EXPOSE 10000
-CMD ["sh", "-c", "uvicorn backend.main:app --host 0.0.0.0 --port 8000 > /tmp/fastapi.log 2>&1 & exec streamlit run frontend/app.py --server.address 0.0.0.0 --server.port ${PORT:-10000}"]
+CMD ["sh", "-c", "uvicorn backend.main:app --host 0.0.0.0 --port 8000 & API_PID=$!; echo '===== FASTAPI STARTED ====='; sleep 5; if ! kill -0 $API_PID 2>/dev/null; then echo '===== FASTAPI CRASHED ====='; exit 1; fi; echo '===== STARTING STREAMLIT ====='; exec streamlit run frontend/app.py --server.address 0.0.0.0 --server.port ${PORT:-10000}"]

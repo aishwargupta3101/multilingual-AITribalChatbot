@@ -3,14 +3,11 @@ Text-to-Speech Service
 """
 
 import logging
-
 logger = logging.getLogger(__name__)
-
 
 class TTSService:
 
     def __init__(self):
-        # Do not load any model during application startup
         self.model = None
         self.processor = None
 

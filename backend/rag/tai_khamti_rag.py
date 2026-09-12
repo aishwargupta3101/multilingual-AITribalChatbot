@@ -1,102 +1,27 @@
-from data.tai_khamti.tai_khamti_retriever import TaiKhamtiRetriever
+"""
+Tai Khamti RAG Compatibility Wrapper
+-------------------------------------
 
+The actual Tai Khamti RAG implementation lives in:
 
-class TaiKhamtiRAG:
-    def __init__(self, top_k=4):
-        self.top_k = top_k
-        self.retriever = None
+    data/tai_khamti/tai_khamti_rag.py
 
-    def load_retriever(self):
-        """
-        Load Tai Khamti retriever only when it is actually needed.
-        """
+This file exists only for compatibility with older imports such as:
 
-        if self.retriever is None:
-            print("=" * 70)
-            print("TAI KHAMTI RAG SYSTEM")
-            print("=" * 70)
-            print("\nInitializing Tai Khamti Retriever...")
-            self.retriever = TaiKhamtiRetriever(
-                top_k=self.top_k
-            )
-            print("Tai Khamti RAG initialized successfully.")
+    from backend.rag.tai_khamti_rag import tai_khamti_rag
 
-    def retrieve(self, question, top_k=None):
-        self.load_retriever()
-        if top_k is None:
-            top_k = self.top_k
-        results = self.retriever.search(
-            question=question,
-            top_k=top_k
-        )
-        return results
+IMPORTANT:
+- Tai Khamti uses ONLY the Tai Khamti knowledge base.
+- No normal vector database is used here.
+- No fallback to the normal RAG system is performed.
+- The Tai Khamti retriever is loaded lazily.
+"""
 
-    def build_context(
-        self,
-        question,
-        vector_db_path=None,
-        language="english",
-        top_k=None
-    ):
-        results = self.retrieve(
-            question,
-            top_k=top_k
-        )
-        if not results:
-            return {
-                "context": "",
-                "sources": []
-            }
-        context_parts = []
-        sources = []
-
-        for result in results:
-            if language.lower() in [
-                "tai_khamti",
-                "tai khamti"
-            ]:
-                context_parts.append(
-                    f"Category: {result.get('category', 'Unknown')}\n"
-                    f"English: {result.get('english', '')}\n"
-                    f"Tai Khamti: {result.get('tai_khamti', '')}"
-                )
-            else:
-                context_parts.append(
-                    f"Category: {result.get('category', 'Unknown')}\n"
-                    f"English: {result.get('english', '')}"
-                )
-            sources.append(
-                {
-                    "source": "Language knowledge Base",
-                    "chunk": result.get(
-                        "id",
-                        "Unknown"
-                    ),
-                    "id": result.get(
-                        "id",
-                        "Unknown"
-                    ),
-                    "category": result.get(
-                        "category",
-                        "Unknown"
-                    ),
-                    "score": result.get(
-                        "score",
-                        0.0
-                    ),
-                    "similarity": result.get(
-                        "score",
-                        0.0
-                    )
-                }
-            )
-        context = "\n\n".join(
-            context_parts
-        )
-        return {
-            "context": context,
-            "sources": sources
-        }
-tai_khamti_rag = TaiKhamtiRAG(
-    top_k=4
+from data.tai_khamti.tai_khamti_rag import (
+    TaiKhamtiRAG,
+    tai_khamti_rag,
 )
+__all__ = [
+    "TaiKhamtiRAG",
+    "tai_khamti_rag",
+]

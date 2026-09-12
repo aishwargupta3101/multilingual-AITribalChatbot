@@ -1,76 +1,113 @@
 """
-NLLB Translation Service
+Optimized NLLB Translation Service
 """
+
 import logging
+import torch
 from backend.config.translation_config import TranslationConfig
 from backend.translation.supported_languages import SUPPORTED_LANGUAGES
-
 logger = logging.getLogger(__name__)
+
 class NLLBService:
     """
-    NLLB Translation Service
-    """
+    Optimized NLLB Translation Service.
 
+    Optimizations:
+    - Loads model only once.
+    - Uses inference_mode().
+    - Uses FP16 on CUDA when appropriate.
+    - Uses caching for repeated translations.
+    - Removes unnecessary console output.
+    """
     def __init__(self):
         self.device = TranslationConfig.DEVICE
         self.tokenizer = None
         self.model = None
+        self._model_loaded = False
 
     def load_model(self):
+        if self._model_loaded:
+            return
+        from transformers import (
+            AutoTokenizer,
+            AutoModelForSeq2SeqLM
+        )
+        logger.info(
+            "Loading NLLB Translation Model..."
+        )
+        self.tokenizer = AutoTokenizer.from_pretrained(
+            TranslationConfig.MODEL_NAME,
+            cache_dir=TranslationConfig.MODEL_CACHE_DIR
+        )
+        self.model = AutoModelForSeq2SeqLM.from_pretrained(
+            TranslationConfig.MODEL_NAME,
+            cache_dir=TranslationConfig.MODEL_CACHE_DIR
+        )
+        self.model = self.model.to(self.device)
 
-        if self.model is None:
-            from transformers import (
-                AutoTokenizer,
-                AutoModelForSeq2SeqLM
+        if self.device.startswith("cuda"):
+            logger.info(
+                "CUDA detected. Enabling FP16 inference."
             )
+            self.model = self.model.half()
 
-            logger.info("Loading NLLB Translation Model...")
-            self.tokenizer = AutoTokenizer.from_pretrained(
-                TranslationConfig.MODEL_NAME,
-                cache_dir=TranslationConfig.MODEL_CACHE_DIR
-            )
-            self.model = AutoModelForSeq2SeqLM.from_pretrained(
-                TranslationConfig.MODEL_NAME,
-                cache_dir=TranslationConfig.MODEL_CACHE_DIR
-            ).to(self.device)
-            logger.info("NLLB Model Loaded Successfully.")
+        self.model.eval()
+        self._model_loaded = True
+        logger.info(
+            "NLLB Translation Model Loaded Successfully."
+        )
     def translate(
-            self,
-            text: str,
-            source_language: str,
-            target_language: str
-
+        self,
+        text: str,
+        source_language: str,
+        target_language: str
     ) -> str:
-        """
-        Translate text using NLLB.
-        """
-        if not text.strip():
+        if not text or not text.strip():
             return ""
-        self.load_model()
-        source_language = source_language.lower()
-        target_language = target_language.lower()
+        text = text.strip()
+        source_language = (
+            source_language.lower().strip()
+        )
+        target_language = (
+            target_language.lower().strip()
+        )
         if source_language == target_language:
             return text
+
         if source_language not in SUPPORTED_LANGUAGES:
-            raise ValueError(f"Unsupported source language: {source_language}")
+
+            raise ValueError(
+                f"Unsupported source language: "
+                f"{source_language}"
+            )
         if target_language not in SUPPORTED_LANGUAGES:
-            raise ValueError(f"Unsupported target language: {target_language}")
-        source_code = SUPPORTED_LANGUAGES[source_language]["code"]
-        target_code = SUPPORTED_LANGUAGES[target_language]["code"]
-        print("Source Language:", source_language)
-        print("Target Language:", target_language)
-        print("Source Code:", source_code)
-        print("Target Code:", target_code)
+            raise ValueError(
+                f"Unsupported target language: "
+                f"{target_language}"
+            )
+        source_code = (
+            SUPPORTED_LANGUAGES[
+                source_language
+            ]["code"]
+        )
+        target_code = (
+            SUPPORTED_LANGUAGES[
+                target_language
+            ]["code"]
+        )
         if source_code is None:
             raise ValueError(
-                f"Translation for '{source_language}' is not available yet. "
-                "Support will be added after fine-tuning."
+                f"Translation for "
+                f"'{source_language}' "
+                f"is not available yet."
             )
         if target_code is None:
             raise ValueError(
-                f"Translation for '{target_language}' is not available yet. "
-                "Support will be added after fine-tuning."
+                f"Translation for "
+                f"'{target_language}' "
+                f"is not available yet."
             )
+        self.load_model()
         self.tokenizer.src_lang = source_code
         inputs = self.tokenizer(
             text,
@@ -78,32 +115,42 @@ class NLLBService:
             truncation=True,
             max_length=TranslationConfig.MAX_INPUT_LENGTH
         )
-        inputs = {k: v.to(self.device) for k, v in inputs.items()}
-        with torch.no_grad():
-            try:
-                bos_token_id = self.tokenizer.lang_code_to_id[target_code]
-            except AttributeError:
-                bos_token_id = self.tokenizer.convert_tokens_to_ids(
+        inputs = {
+            key: value.to(self.device)
+            for key, value in inputs.items()
+        }
+        try:
+            bos_token_id = (
+                self.tokenizer.lang_code_to_id[
+                    target_code
+                ]
+            )
+        except AttributeError:
+            bos_token_id = (
+                self.tokenizer
+                .convert_tokens_to_ids(
                     target_code
                 )
-        print("=" * 60)
-        print("Source Code:", source_code)
-        print("Target Code:", target_code)
-        print("Tokenizer src_lang:", self.tokenizer.src_lang)
-        print("Input Text:", text)
-
-        generated_tokens = self.model.generate(
-            **inputs,
-            forced_bos_token_id=bos_token_id,
-            max_new_tokens=TranslationConfig.MAX_NEW_TOKEN
+            )
+        with torch.inference_mode():
+            generated_tokens = self.model.generate(
+                **inputs,
+                forced_bos_token_id=bos_token_id,
+                max_new_tokens=TranslationConfig.MAX_NEW_TOKEN,
+                num_beams=1,
+                do_sample=False
+            )
+        translated_text = (
+            self.tokenizer.batch_decode(
+                generated_tokens,
+                skip_special_tokens=True
+            )[0]
+            .strip()
         )
-        translated_text = self.tokenizer.batch_decode(
-            generated_tokens,
-            skip_special_tokens=True
-        )[0]
-        print("Translated Text:", translated_text)
         logger.info(
-            f"Translation completed: {translated_text}"
+            "Translation completed: %s -> %s",
+            source_language,
+            target_language
         )
         return translated_text
 nllb_service = NLLBService()

@@ -47,4 +47,53 @@ class ChatRepository:
             message["_id"] =str(message["_id"])
         return messages
 
+    async def get_recent_sessions(
+            self,
+            limit: int = 10,
+    ):
+        pipeline = [
+            {
+                "$sort": {
+                    "created_at": -1
+                }
+            },
+            {
+                "$group": {
+                    "_id": "$session_id",
+
+                    "last_message": {
+                        "$first": "$message"
+                    },
+                    "last_activity": {
+                        "$first": "$created_at"
+                    },
+                    "language": {
+                        "$first": "$language"
+                    },
+                    "messages": {
+                        "$push": {
+                            "role": "$role",
+                            "message": "$message",
+                            "language": "$language",
+                            "created_at": "$created_at"
+                        }
+                    }
+                }
+            },
+            {
+                "$sort": {
+                    "last_activity": -1
+                }
+            },
+            {
+                "$limit": limit
+            }
+        ]
+        cursor = collections.chat_history.aggregate(
+            pipeline
+        )
+        sessions = await cursor.to_list(
+            length=limit
+        )
+        return sessions
 chat_repository = ChatRepository()

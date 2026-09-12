@@ -1,8 +1,8 @@
 import requests
 
 from api.endpoints import BASE_URL
-
 class APIClient:
+
     @staticmethod
     def get(endpoint):
         response = requests.get(
@@ -11,6 +11,7 @@ class APIClient:
         )
         response.raise_for_status()
         return response.json()
+
     @staticmethod
     def post(endpoint, payload):
         response = requests.post(
@@ -18,13 +19,18 @@ class APIClient:
             json=payload,
             timeout=300
         )
+
         response.raise_for_status()
+
         return response.json()
+
     @staticmethod
-    def upload(endpoint, file, session_id):
-        """
-        Upload a document along with the session ID.
-        """
+    def upload(
+        endpoint,
+        file,
+        session_id,
+        language
+    ):
         files = {
             "file": (
                 file.name,
@@ -33,7 +39,8 @@ class APIClient:
             )
         }
         data = {
-            "session_id": session_id
+            "session_id": session_id,
+            "language": language
         }
         response = requests.post(
             BASE_URL + endpoint,
@@ -45,22 +52,35 @@ class APIClient:
         return response.json()
 
     @staticmethod
-    def upload_audio(endpoint, audio_path):
-        with open(audio_path, "rb") as audio:
+    def upload_audio(
+        endpoint,
+        audio_path,
+        language="english"
+    ):
+        with open(
+            audio_path,
+            "rb"
+        ) as audio:
             files = {
-                "file": (
+                "audio": (
                     "user_audio.wav",
                     audio,
                     "audio/wav"
                 )
             }
+            data = {
+                "language": language
+            }
+
             response = requests.post(
                 BASE_URL + endpoint,
                 files=files,
-                timeout=120
+                data=data,
+                timeout=300
             )
         response.raise_for_status()
         return response.json()
+
     @staticmethod
     def speech_to_text(
         audio_bytes,
@@ -77,13 +97,15 @@ class APIClient:
             "language": language
         }
         response = requests.post(
-            BASE_URL + "/api/v1/speech",
+            BASE_URL + "/api/v1/speech/upload",
             files=files,
             data=data,
-            timeout=120
+            timeout=300
         )
         response.raise_for_status()
+
         return response.json()
+
     @staticmethod
     def chat(
         question,
@@ -102,8 +124,10 @@ class APIClient:
             json=payload,
             timeout=180
         )
+
         response.raise_for_status()
         return response.json()
+
     @staticmethod
     def text_to_speech(
         text,

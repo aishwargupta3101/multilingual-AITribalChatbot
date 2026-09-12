@@ -3,6 +3,7 @@ Language Detection Module
 """
 
 import re
+
 from langdetect import detect, DetectorFactory
 from langdetect.lang_detect_exception import LangDetectException
 DetectorFactory.seed = 0
@@ -14,6 +15,7 @@ class LanguageDetector:
     LANGUAGE_MAPPING = {
         "en": "english",
         "hi": "hindi",
+        "mni": "manipuri",
     }
     TAI_KHAMTI_WORDS = {
         "mi",
@@ -35,51 +37,46 @@ class LanguageDetector:
         "nam",
         "din",
         "li",
-        "yu",
     }
+    TAI_KHAMTI_SCRIPT_PATTERN = re.compile(
+        r"[\u1000-\u109F]"
+    )
+
+    LATIN_WORD_PATTERN = re.compile(
+        r"[a-zA-Z]+"
+    )
     @classmethod
-    def _is_tai_khamti_transliteration(cls, text: str) -> bool:
-        """
-        Detect common Latin-script Tai Khamti transliteration.
-        """
-        words = re.findall(
-            r"[a-zA-Z]+",
+    def _is_tai_khamti_transliteration(
+        cls,
+        text: str
+    ) -> bool:
+        words = cls.LATIN_WORD_PATTERN.findall(
             text.lower()
         )
         if not words:
             return False
-        tai_khamti_matches = sum(
-            1
+        matches = sum(
+            word in cls.TAI_KHAMTI_WORDS
             for word in words
-            if word in cls.TAI_KHAMTI_WORDS
         )
-        if tai_khamti_matches >= 2:
-            return True
-        return False
+        return matches >= 2
 
     @classmethod
-    def _is_tai_khamti_script(cls, text: str) -> bool:
-        """
-        Detect Tai/Shan-style Unicode characters used
-        in the Tai Khamti dataset.
-        """
-        tai_characters = re.findall(
-            r"[\u1000-\u109F]",
+    def _is_tai_khamti_script(
+        cls,
+        text: str
+    ) -> bool:
+        matches = cls.TAI_KHAMTI_SCRIPT_PATTERN.findall(
             text
         )
-        return len(tai_characters) >= 2
+        return len(matches) >= 2
+
     @classmethod
-    def detect_language(cls, text: str) -> str:
-        """
-        Detect the language of the input text.
-
-        Args:
-            text: User input text
-
-        Returns:
-            Language name
-        """
-        if not text or text.strip() == "":
+    def detect_language(
+        cls,
+        text: str
+    ) -> str:
+        if not text or not text.strip():
             return "english"
         text = text.strip()
         if cls._is_tai_khamti_script(text):
@@ -94,3 +91,4 @@ class LanguageDetector:
             )
         except LangDetectException:
             return "english"
+language_detector = LanguageDetector()

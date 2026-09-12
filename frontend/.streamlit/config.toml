@@ -13,6 +13,6 @@ fileWatcherType="none"
 enableWebsocketCompression=false
 
 [browser]
-serverAddress="multilingual-aitribalchatbot.onrender.com"
-serverPort=10000
+serverAddress="localhost"
+serverPort=8501
 gatherUsageStats=false

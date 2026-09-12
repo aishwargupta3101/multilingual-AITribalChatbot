@@ -3,56 +3,77 @@ from langchain_core.messages import (
     SystemMessage,
     AIMessage
 )
-
 from backend.llm.ollama_client import llm
 from backend.llm.prompt import SYSTEM_PROMPT
 from backend.config.logger import logger
 
+
 class LlamaService:
+    def _build_messages(
+        self,
+        conversation,
+        rag_context=None
+    ):
+        """
+        Build messages efficiently.
+
+        Only the recent conversation history is sent
+        to the LLM to reduce input token processing.
+        """
+        messages = [
+            SystemMessage(
+                content=SYSTEM_PROMPT
+            )
+        ]
+        if rag_context and rag_context.strip():
+            rag_message = (
+                "Use the following retrieved knowledge "
+                "when relevant.\n"
+                "Do not invent information that is not "
+                "present in the knowledge.\n\n"
+                "RETRIEVED KNOWLEDGE:\n"
+                f"{rag_context.strip()}\n"
+                "END OF RETRIEVED KNOWLEDGE."
+            )
+            messages.append(
+                SystemMessage(
+                    content=rag_message
+                )
+            )
+        recent_conversation = conversation[-6:]
+
+        for item in recent_conversation:
+            role = item.get("role")
+            content = item.get("content", "").strip()
+            if not content:
+                continue
+            if role == "user":
+                messages.append(
+                    HumanMessage(
+                        content=content
+                    )
+                )
+            elif role == "assistant":
+                messages.append(
+                    AIMessage(
+                        content=content
+                    )
+                )
+        return messages
+
     async def generate_response(
         self,
         conversation,
         rag_context=None
     ):
         try:
-            messages = [
-                SystemMessage(
-                    content=SYSTEM_PROMPT
-                )
-            ]
-            if rag_context and rag_context.strip():
-
-                rag_message = f"""
-You have access to the following retrieved knowledge.
-
-Use this knowledge when it is relevant to the user's question.
-Do not invent information that is not present in the knowledge.
-RETRIEVED KNOWLEDGE:
-{rag_context}
-END OF RETRIEVED KNOWLEDGE.
-"""
-                messages.append(
-                    SystemMessage(
-                        content=rag_message
-                    )
-                )
-            for item in conversation:
-                if item["role"] == "user":
-                    messages.append(
-                        HumanMessage(
-                            content=item["content"]
-                        )
-                    )
-                elif item["role"] == "assistant":
-                    messages.append(
-                        AIMessage(
-                            content=item["content"]
-                        )
-                    )
+            messages = self._build_messages(
+                conversation,
+                rag_context
+            )
             response = await llm.ainvoke(
                 messages
             )
-
             if not response.content:
                 return (
                     "Sorry, I couldn't generate "
@@ -64,48 +85,18 @@ END OF RETRIEVED KNOWLEDGE.
             logger.exception(
                 "Llama generation failed"
             )
-
             return f"AI Error : {str(error)}"
+
     async def stream_response(
         self,
         conversation,
         rag_context=None
     ):
         try:
-            messages = [
-                SystemMessage(
-                    content=SYSTEM_PROMPT
-                )
-            ]
-            if rag_context and rag_context.strip():
-                rag_message = f"""
-You have access to the following retrieved knowledge.
-Use this knowledge when it is relevant to the user's question.
-Do not invent information that is not present in the knowledge.
-
-RETRIEVED KNOWLEDGE:
-{rag_context}
-END OF RETRIEVED KNOWLEDGE.
-"""
-
-                messages.append(
-                    SystemMessage(
-                        content=rag_message
-                    )
-                )
-            for item in conversation:
-                if item["role"] == "user":
-                    messages.append(
-                        HumanMessage(
-                            content=item["content"]
-                        )
-                    )
-                elif item["role"] == "assistant":
-                    messages.append(
-                        AIMessage(
-                            content=item["content"]
-                        )
-                    )
+            messages = self._build_messages(
+                conversation,
+                rag_context
+            )
             async for chunk in llm.astream(
                 messages
             ):
@@ -117,5 +108,4 @@ END OF RETRIEVED KNOWLEDGE.
                 "Llama streaming failed"
             )
             yield f"AI Error : {str(error)}"
-
 llama_service = LlamaService()

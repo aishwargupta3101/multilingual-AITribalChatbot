@@ -4,7 +4,8 @@ from datetime import datetime, timezone
 import requests
 import streamlit as st
 from utils.constants import SUPPORTED_LANGUAGES
-BASE_URL = "http://127.0.0.1:8000"
+import os
+BASE_URL = os.getenv("BACKEND_URL","http://127.0.0.1:8000")
 
 def html_block(html):
     """
@@ -357,7 +358,6 @@ def show_sidebar():
                 SUPPORTED_LANGUAGES[0]
             )
 
-        # Language selector
         with st.popover(
                 f"🌐 {st.session_state.language.replace('_', ' ').title()}",
                 use_container_width=True

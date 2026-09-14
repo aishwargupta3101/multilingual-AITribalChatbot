@@ -24,7 +24,6 @@ def html_block(html):
         unsafe_allow_html=True
     )
 
-
 def get_recent_chats(limit=8):
     try:
         response = requests.get(

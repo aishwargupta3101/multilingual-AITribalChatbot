@@ -94,3 +94,7 @@ psutil==7.2.2
 packaging==24.2
 tqdm==4.68.4
 streamlit
+streamlit-mic-recorder
+
+# Text-to-Speech
+gTTS

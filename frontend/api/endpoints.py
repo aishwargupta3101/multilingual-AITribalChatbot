@@ -1,8 +1,13 @@
-BASE_URL= "http://127.0.0.1:8000"
-HEALTH_ENDPOINT ="/api/v1/health"
-CHAT_ENDPOINT="/api/v1/chat"
-SPEECH_ENDPOINT="/api/v1/speech"
-TRANSLATION_ENDPOINT="/api/v1/translation"
-TTS_ENDPOINT ="/api/v1/tts"
+import os
+
+BASE_URL = os.getenv(
+    "BACKEND_URL",
+    "http://127.0.0.1:8000"
+)
+HEALTH_ENDPOINT = "/api/v1/health"
+CHAT_ENDPOINT = "/api/v1/chat"
+SPEECH_ENDPOINT = "/api/v1/speech"
+TRANSLATION_ENDPOINT = "/api/v1/translation"
+TTS_ENDPOINT = "/api/v1/tts"
 UPLOAD_ENDPOINT = "/api/v1/upload"
-SPEECH_UPLOAD_ENDPOINT="/api/v1/speech/upload"
+SPEECH_UPLOAD_ENDPOINT = "/api/v1/speech/upload"

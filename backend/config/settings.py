@@ -23,6 +23,8 @@ class Settings(BaseSettings):
     UPLOAD_DIR:str
     MAX_FILE_SIZE:int
     ALLOWED_FILE_TYPES:str
+    OLLAMA_BASE_URL: str = "http://127.0.0.1:11434"
+    OLLAMA_PROXY_TOKEN: str = ""
     model_config = SettingsConfigDict(
         env_file=".env",
         case_sensitive=True,

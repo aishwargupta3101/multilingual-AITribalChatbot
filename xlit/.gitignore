@@ -1,0 +1,54 @@
+# VS Code files for those working on multiple tools
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# User Defined
+debug.py
+old*
+test*
+extras*
+*copy
+
+# All these files can be generated from existing py files
+# Ignore the followings to reduce space
+*.csv
+*.json
+
+# For data/corpus
+# Store only these
+# data/transcribed.txt
+# Don't delete the following
+
+# data/corpus/indigenous_words/target.txt
+# data/corpus/exotic_words/target.txt
+# data/corpus/news_subset/target.txt
+# data/corpus/literature_subset/words.txt
+# data/corpus/graph.png
+# data/gc_/*/result
+# data/mt_/*/result
+
+# Don't track below
+data/corpus/*/*/comparison.txt
+data/corpus/*/*/output.txt
+data/corpus/*/target.txt
+data/gc_/*.txt
+data/gc_/*/output.txt
+data/mt_/*.txt
+data/mt_/*/comparison.txt
+data/mt_/*/output.txt
+
+# temp
+temp
+temp/*

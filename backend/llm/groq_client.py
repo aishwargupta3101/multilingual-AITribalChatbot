@@ -72,19 +72,24 @@ class GroqLLM:
         payload = self._payload(messages, stream=True)
         started = time.perf_counter()
         first_token = True
+        yielded_any = False
         try:
-            logger.info("GROQ_STREAM_START | model=%s | key_configured=%s",
-                        self.model, bool(self.api_key))
+            logger.info(
+                "GROQ_STREAM_START | model=%s | key_configured=%s | messages=%s",
+                self.model, bool(self.api_key), len(payload["messages"])
+            )
             async with self.client.stream("POST", GROQ_API_URL, json=payload) as response:
                 logger.info(
                     "GROQ_STREAM_CONNECTED | status_code=%s | model=%s",
-                    response.status_code,
-                    self.model,
+                    response.status_code, self.model
                 )
                 if response.is_error:
                     body = await response.aread()
-                    logger.error("Groq streaming API error %s: %s", response.status_code,
-                                 body.decode("utf-8", errors="replace")[:1000])
+                    logger.error(
+                        "Groq streaming API error %s: %s",
+                        response.status_code,
+                        body.decode("utf-8", errors="replace")[:1000]
+                    )
                 response.raise_for_status()
                 async for line in response.aiter_lines():
                     if not line or not line.startswith("data:"):
@@ -102,10 +107,47 @@ class GroqLLM:
                     content = (choices[0].get("delta") or {}).get("content")
                     if content:
                         if first_token:
-                            logger.info("Hosted LLM first token in %.2f seconds.", time.perf_counter() - started)
+                            logger.info(
+                                "Hosted LLM first token in %.2f seconds.",
+                                time.perf_counter() - started
+                            )
                             first_token = False
+                        yielded_any = True
                         yield AIMessage(content=content)
+            if not yielded_any:
+                raise RuntimeError("Groq streaming completed without returning any text.")
             logger.info("Hosted LLM stream completed in %.2f seconds.", time.perf_counter() - started)
         except Exception:
-            logger.exception("Hosted LLM streaming failed after %.2f seconds.", time.perf_counter() - started)
-            raise
+            logger.exception(
+                "Hosted LLM streaming failed after %.2f seconds.",
+                time.perf_counter() - started
+            )
+            if yielded_any:
+                raise
+            logger.warning("Retrying Groq request without streaming.")
+            try:
+                fallback_payload = dict(payload)
+                fallback_payload["stream"] = False
+                response = await self.client.post(
+                    GROQ_API_URL,
+                    json=fallback_payload
+                )
+                if response.is_error:
+                    logger.error(
+                        "Groq non-streaming fallback API error %s: %s",
+                        response.status_code, response.text[:1000]
+                    )
+                response.raise_for_status()
+                data = response.json()
+                choices = data.get("choices") or []
+                content = ((choices[0].get("message") or {}).get("content") or "") if choices else ""
+                if not content.strip():
+                    raise RuntimeError("Groq non-streaming fallback returned an empty response.")
+                logger.info(
+                    "Groq non-streaming fallback succeeded in %.2f seconds.",
+                    time.perf_counter() - started
+                )
+                yield AIMessage(content=content)
+            except Exception:
+                logger.exception("Groq non-streaming fallback failed.")
+                raise

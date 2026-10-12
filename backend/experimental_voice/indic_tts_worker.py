@@ -115,12 +115,9 @@ def get_synthesizer():
     return _SYNTHESIZER
 
 
-def generate(text: str, script: str, speaker: str, output_path: str):
-    _require_model_files()
 
+def generate(text: str, script: str, speaker: str, output_path: str):
     if script == "meitei_mayek":
-        # Reverse conversion requires the separately installed/provided
-        # mtei2bangla dependency. Do not silently synthesize the wrong script.
         from backend.translation.meitei_script_converter import convert_meitei_to_bengali
         text = convert_meitei_to_bengali(text)
 
@@ -128,44 +125,23 @@ def generate(text: str, script: str, speaker: str, output_path: str):
     if not text:
         raise ValueError("Text is empty after script conversion.")
 
-    try:
-        from TTS.utils.synthesizer import Synthesizer
-    except ImportError as exc:
-        raise RuntimeError(
-            "The Coqui TTS package is not installed in this Python environment."
-        ) from exc
+    synthesizer = get_synthesizer()
 
-    synthesizer = Synthesizer(
-        tts_checkpoint=FASTPITCH_MODEL,
-        tts_config_path=FASTPITCH_CONFIG,
-        tts_speakers_file=SPEAKERS_FILE,
-        vocoder_checkpoint=HIFIGAN_MODEL,
-        vocoder_config=HIFIGAN_CONFIG,
-        use_cuda=False,
-    )
-    wav = synthesizer.tts(text=text, speaker_name=speaker)
+    with _GENERATION_LOCK:
+        wav = synthesizer.tts(text=text, speaker_name=speaker)
+
     audio = np.asarray(wav, dtype=np.float32)
     if audio.size == 0:
         raise RuntimeError("TTS returned empty audio.")
+
     audio = np.clip(audio, -1.0, 1.0)
     audio = (audio * 32767).astype(np.int16)
 
     output = Path(output_path)
     output.parent.mkdir(parents=True, exist_ok=True)
+
     with wave.open(str(output), "wb") as wf:
         wf.setnchannels(1)
         wf.setsampwidth(2)
         wf.setframerate(synthesizer.tts_model.ap.sample_rate)
         wf.writeframes(audio.tobytes())
-
-
-if __name__ == "__main__":
-    if len(sys.argv) != 5:
-        print("Usage: python indic_tts_worker.py <text> <script> <speaker> <output>")
-        sys.exit(1)
-    try:
-        generate(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
-        print("SUCCESS")
-    except Exception as error:
-        print(f"ERROR:{type(error).__name__}: {error}", file=sys.stderr)
-        sys.exit(1)

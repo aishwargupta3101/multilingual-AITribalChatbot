@@ -99,3 +99,4 @@ streamlit-mic-recorder
 
 # Text-to-Speech
 gTTS
+mcp==1.30.0

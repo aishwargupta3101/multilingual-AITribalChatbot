@@ -4,7 +4,11 @@ import wave
 from pathlib import Path
 
 import numpy as np
+import threading
 
+_SYNTHESIZER = None
+_SYNTHESIZER_LOCK = threading.Lock()
+_GENERATION_LOCK = threading.Lock()
 sys.stdout.reconfigure(encoding="utf-8")
 sys.stderr.reconfigure(encoding="utf-8")
 
@@ -90,6 +94,25 @@ def _require_model_files():
             "Manipuri TTS model download did not produce all required files: "
             + "; ".join(missing_files)
         )
+def get_synthesizer():
+    global _SYNTHESIZER
+
+    if _SYNTHESIZER is None:
+        with _SYNTHESIZER_LOCK:
+            if _SYNTHESIZER is None:
+                _require_model_files()
+                from TTS.utils.synthesizer import Synthesizer
+
+                _SYNTHESIZER = Synthesizer(
+                    tts_checkpoint=FASTPITCH_MODEL,
+                    tts_config_path=FASTPITCH_CONFIG,
+                    tts_speakers_file=SPEAKERS_FILE,
+                    vocoder_checkpoint=HIFIGAN_MODEL,
+                    vocoder_config=HIFIGAN_CONFIG,
+                    use_cuda=False,
+                )
+
+    return _SYNTHESIZER
 
 
 def generate(text: str, script: str, speaker: str, output_path: str):

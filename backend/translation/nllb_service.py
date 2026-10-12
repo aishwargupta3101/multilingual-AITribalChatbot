@@ -8,7 +8,8 @@ import ctranslate2
 from transformers import AutoTokenizer
 from backend.config.translation_config import TranslationConfig
 from backend.translation.supported_languages import SUPPORTED_LANGUAGES
-
+import os
+from huggingface_hub import snapshot_download
 logger = logging.getLogger(__name__)
 
 class NLLBService:
@@ -55,6 +56,23 @@ class NLLBService:
             if self._model_loaded:
                 return
             logger.info("Loading CTranslate2 INT8 NLLB model...")
+            model_file = os.path.join(self.model_path, "model.bin")
+            if not os.path.isfile(model_file):
+                hf_token = os.getenv("HF_TOKEN")
+                if not hf_token:
+                    raise RuntimeError(
+                        "HF_TOKEN is required to download the private NLLB model."
+                    )
+                logger.info("Downloading private CTranslate2 NLLB model...")
+                snapshot_download(
+                    repo_id="Ass123456/tribal-nllb-ct2-int8",
+                    local_dir=self.model_path,
+                    token=hf_token,
+                )
+            if not os.path.isfile(model_file):
+                raise FileNotFoundError(
+                    f"CTranslate2 model file is missing: {model_file}"
+                )
             self.tokenizer = AutoTokenizer.from_pretrained(
                 TranslationConfig.MODEL_NAME,
                 cache_dir=TranslationConfig.MODEL_CACHE_DIR

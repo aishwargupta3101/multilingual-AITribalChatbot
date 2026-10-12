@@ -24,9 +24,5 @@ COPY requirements-docker.txt .
 RUN pip install --no-cache-dir -r requirements-docker.txt
 
 COPY . .
-RUN pip install --no-cache-dir "huggingface_hub==0.36.2" && \
-    hf download Ass123456/tribal-nllb-ct2-int8 \
-    --local-dir /app/models/translation/nllb-200-distilled-600M-int8 && \
-    test -s /app/models/translation/nllb-200-distilled-600M-int8/model.bin
 
 CMD ["sh", "-c", "uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-10000}"]

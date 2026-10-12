@@ -2,11 +2,14 @@ import os
 import html
 import uuid
 import streamlit as st
+from markdown_it import MarkdownIt
+from components.response_formatter import format_for_display
 from streamlit_mic_recorder import mic_recorder
 from api.client import APIClient
 from api.endpoints import SPEECH_UPLOAD_ENDPOINT
-
-
+import requests
+import re
+from components.response_formatter import format_for_voice
 def html_block(html_content):
     html_content = " ".join(
         line.strip()
@@ -327,65 +330,180 @@ def show_voice_page():
                         chat_response
                     )
                 return
-            safe_answer = (
-                html.escape(answer)
-                .replace(
-                    "\n",
-                    "<br>"
-                )
+
+            formatted_answer = format_for_display(answer, language)
+            # Normalize translated Markdown that may arrive flattened into one line.
+            formatted_answer = re.sub(
+                r"(?<!\n)[ \t]+(#{1,6})[ \t]*",
+                r"\n\n\1 ",
+                formatted_answer
             )
+            # Remove Markdown bold delimiters from translated text; translation can leave them unmatched.
+            formatted_answer = re.sub(r"\*{2,}", "", formatted_answer)
+            formatted_answer = re.sub(r"(?m)^\s*[-*_]{3,}\s*$", "", formatted_answer)
+            formatted_answer = re.sub(r"\n{3,}", "\n\n", formatted_answer).strip()
+            markdown_renderer = MarkdownIt(
+                "default",
+                {"html": False, "breaks": True}
+            ).enable("table")
+            rendered_answer = markdown_renderer.render(formatted_answer)
             html_block(
                 f"""
+                <style>
+                .voice-ai-response {{
+                    display: block;
+                    width: 100%;
+                    max-width: 100%;
+                    box-sizing: border-box;
+                    font-size: 16px !important;
+                    font-weight: 400 !important;
+                    line-height: 1.65 !important;
+                    overflow-wrap: anywhere;
+                    word-break: normal;
+                }}
+                .voice-ai-response p {{
+                    margin: 0 0 10px 0 !important;
+                    padding: 0 !important;
+                    font-size: 16px !important;
+                    font-weight: 400 !important;
+                    line-height: 1.65 !important;
+                }}
+                .voice-ai-response p:last-child {{ margin-bottom: 0 !important; }}
+                .voice-ai-response h1,
+                .voice-ai-response h2,
+                .voice-ai-response h3,
+                .voice-ai-response h4,
+                .voice-ai-response h5,
+                .voice-ai-response h6 {{
+                    font-size: 18px !important;
+                    font-weight: 600 !important;
+                    line-height: 1.4 !important;
+                    margin: 14px 0 6px 0 !important;
+                    padding: 0 !important;
+                }}
+                .voice-ai-response ul,
+                .voice-ai-response ol {{
+                    padding-left: 24px !important;
+                    margin: 6px 0 10px 0 !important;
+                }}
+                .voice-ai-response li {{
+                    margin: 0 0 5px 0 !important;
+                    padding: 0 !important;
+                    font-size: 16px !important;
+                    font-weight: 400 !important;
+                    line-height: 1.65 !important;
+                }}
+                .voice-ai-response strong {{ font-weight: 600 !important; }}
+                .voice-ai-response table {{ display: block; max-width: 100%; overflow-x: auto; }}
+                </style>
                 <div class="voice-ai-card">
-
                     <div class="voice-ai-header">
-
-                        <div class="voice-ai-icon">
-                            🌿
-                        </div>
-
+                        <div class="voice-ai-icon">🌿</div>
                         <div>
-
-                            <div class="voice-ai-title">
-                                Tribal AI
-                            </div>
-
-                            <div class="voice-ai-language">
-                                {html.escape(language_name)}
-                            </div>
-
+                            <div class="voice-ai-title">Tribal AI</div>
+                            <div class="voice-ai-language">{html.escape(language_name)}</div>
                         </div>
-
                     </div>
-
                     <div class="voice-ai-response">
-                        {safe_answer}
+                        {rendered_answer}
                     </div>
-
                 </div>
                 """
             )
+
             if language not in {
                 "english",
-                "hindi"
+                "hindi",
+                "manipuri",
+                "manipuri_mtei"
             }:
                 st.info(
                     f"Voice output is not currently available "
                     f"for {language_name}."
                 )
-
                 return
 
+            voice_answer = format_for_voice(answer, language)
+
+            if language == "manipuri":
+                voice_answer = re.sub(r"\\([*_#`])", r"\1", voice_answer)
+                voice_answer = re.sub(r"\*{1,2}|_{1,2}", "", voice_answer)
+                voice_answer = re.sub(r"(?m)^\s*#{1,6}\s*", "", voice_answer)
+                voice_answer = re.sub(r"\n{3,}", "\n\n", voice_answer).strip()
             try:
                 with st.spinner(
                     "🔊 Generating voice response..."
                 ):
-                    tts_response = (
-                        APIClient.text_to_speech(
-                            text=answer,
-                            language=language
+                    if language in {
+                        "manipuri",
+                        "manipuri_mtei"
+                    }:
+                        tts_script = (
+                            "meitei_mayek"
+                            if language == "manipuri_mtei"
+                            else "bengali"
                         )
+                        tts_response = (
+                            APIClient.manipuri_text_to_speech(
+                                text=voice_answer,
+                                script=tts_script,
+                                speaker="female"
+                            )
+                        )
+                        audio_format = "audio/wav"
+                    else:
+                        tts_response = (
+                            APIClient.text_to_speech(
+                                text=voice_answer,
+                                language=language
+                            )
+                        )
+                        audio_format = "audio/mp3"
+
+                if not tts_response:
+                    st.warning(
+                        "AI answer was generated, "
+                        "but no audio response was returned."
                     )
+                    return
+
+                st.markdown(
+                    "### 🔊 Tribal AI Voice Response"
+                )
+                st.audio(
+                    tts_response,
+                    format=audio_format
+                )
+
+                if language in {
+                    "manipuri",
+                    "manipuri_mtei"
+                }:
+                    st.download_button(
+                        "⬇️ Download Voice Response",
+                        data=tts_response,
+                        file_name=(
+                            "tribal_ai_manipuri_mtei.wav"
+                            if language == "manipuri_mtei"
+                            else "tribal_ai_manipuri.wav"
+                        ),
+                        mime="audio/wav"
+                    )
+
+                st.success(
+                    "Voice response generated successfully."
+                )
+
+            except requests.exceptions.Timeout:
+                st.error(
+                    "Voice generation timed out. Please try again."
+                )
+
+            except requests.exceptions.RequestException as e:
+                st.error(
+                    f"Voice generation failed: {e}"
+                )
+
             except Exception as e:
                 print("=" * 60)
                 print("TTS ERROR")
@@ -394,23 +512,6 @@ def show_voice_page():
                 st.error(
                     f"Voice response generation failed: {e}"
                 )
-                return
-            if not tts_response:
-                st.warning(
-                    "AI answer was generated, "
-                    "but no audio response was returned."
-                )
-                return
-            st.markdown(
-                "### 🔊 Tribal AI Voice Response"
-            )
-            st.audio(
-                tts_response,
-                format="audio/mp3"
-            )
-            st.success(
-                "Voice response generated successfully."
-            )
     else:
         html_block(
             """

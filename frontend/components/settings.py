@@ -125,6 +125,8 @@ def show_settings():
     if "theme" not in st.session_state:
         st.session_state.theme = "Light"
 
+    previous_theme = st.session_state.theme
+
     selected_theme = st.selectbox(
         "Theme",
         [
@@ -138,7 +140,10 @@ def show_settings():
         ),
         key="settings_theme"
     )
-    st.session_state.theme = selected_theme
+
+    if selected_theme != previous_theme:
+        st.session_state.theme = selected_theme
+        st.rerun()
     html_block(
         """
         <div class="settings-section">

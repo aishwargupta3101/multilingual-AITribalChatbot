@@ -345,6 +345,16 @@ def show_sidebar():
             </div>
             """
         )
+        LANGUAGE_DISPLAY_NAMES = {
+            "english": "English",
+            "hindi": "Hindi",
+            "manipuri": "Manipuri (Bengali Script)",
+            "manipuri_mtei": "Manipuri (Meitei Mayek)",
+            "monpa": "Monpa",
+            "tai_khamti": "Tai Khamti",
+            "naga": "Naga",
+            "mishmi": "Mishmi"
+        }
         if "language" not in st.session_state:
             st.session_state.language = (
                 SUPPORTED_LANGUAGES[0]
@@ -358,23 +368,17 @@ def show_sidebar():
             )
 
         with st.popover(
-                f"🌐 {st.session_state.language.replace('_', ' ').title()}",
+                f"🌐 {LANGUAGE_DISPLAY_NAMES.get(st.session_state.language, st.session_state.language.replace('_', ' ').title())}",
                 use_container_width=True
         ):
-            st.markdown(
-                "### Select Language"
-            )
+            st.markdown("### Select Language")
             selected_language = st.radio(
                 "Language",
                 SUPPORTED_LANGUAGES,
-                index=SUPPORTED_LANGUAGES.index(
-                    st.session_state.language
+                index=SUPPORTED_LANGUAGES.index(st.session_state.language),
+                format_func=lambda x: LANGUAGE_DISPLAY_NAMES.get(
+                    x, x.replace("_", " ").title()
                 ),
-                format_func=lambda x:
-                x.replace(
-                    "_",
-                    " "
-                ).title(),
                 label_visibility="collapsed",
                 key="conversation_language_radio"
             )
@@ -413,13 +417,9 @@ def show_sidebar():
             )
 
         else:
-            pretty_language = (
-                st.session_state.language
-                .replace(
-                    "_",
-                    " "
-                )
-                .title()
+            pretty_language = LANGUAGE_DISPLAY_NAMES.get(
+                st.session_state.language,
+                st.session_state.language.replace("_", " ").title()
             )
             html_block(
                 f"""

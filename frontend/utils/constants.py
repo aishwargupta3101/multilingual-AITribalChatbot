@@ -2,6 +2,7 @@ SUPPORTED_LANGUAGES = [
     "english",
     "tai_khamti",
     "manipuri",
+    "manipuri_mtei",
     "monpa",
     "hindi",
     "naga",

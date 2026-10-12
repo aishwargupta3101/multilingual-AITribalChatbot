@@ -1,4 +1,3 @@
-
 import streamlit as st
 
 
@@ -90,7 +89,7 @@ def apply_custom_css():
 
             font-weight: 750;
 
-            color: #f3f8f4;
+            color: #193526;
 
             letter-spacing: -0.2px;
         }
@@ -102,7 +101,7 @@ def apply_custom_css():
 
             line-height: 1.3;
 
-            color: #9eb4a5;
+            color: #60766a;
 
             letter-spacing: 0.15px;
         }
@@ -2843,12 +2842,12 @@ def apply_custom_css():
 
         /* Status */
         section[data-testid="stSidebar"] .sidebar-status {
-            color: #abc0b1 !important;
+            color: #4f765d !important;
         }
-
+        
         section[data-testid="stSidebar"] .sidebar-status span,
         section[data-testid="stSidebar"] .sidebar-status div {
-            color: #abc0b1 !important;
+            color: #4f765d !important;
         }
 
 
@@ -3125,22 +3124,17 @@ def apply_custom_css():
             font-size: 20px !important;
         }
 
-        section[data-testid="stSidebar"] .brand-title {
-            color: #f4f8f5 !important;
-
+         section[data-testid="stSidebar"] .brand-title {
+            color: #193526 !important;
             font-size: 17px !important;
             font-weight: 700 !important;
         }
-
+        
         section[data-testid="stSidebar"] .brand-subtitle {
-            color: #91aa99 !important;
-
+            color: #60766a !important;
             font-size: 9px !important;
-
             margin-top: 3px !important;
         }
-
-
         /* ---------------------------------------------------------
            ONLINE STATUS
            --------------------------------------------------------- */
@@ -3158,7 +3152,7 @@ def apply_custom_css():
 
             border: none !important;
 
-            color: #8fa999 !important;
+            color:  #4f765d !important;
 
             font-size: 9px !important;
 
@@ -3535,7 +3529,7 @@ def apply_custom_css():
         }
 
         .brand-name {
-            color: #f3f8f5 !important;
+            color: #193526 !important;
 
             font-size: 18px !important;
 
@@ -3549,7 +3543,7 @@ def apply_custom_css():
         .brand-subtitle {
             margin-top: 3px;
 
-            color: #91aa99 !important;
+            color: #60766a !important;
 
             font-size: 9px !important;
 
@@ -3570,7 +3564,7 @@ def apply_custom_css():
 
             margin-top: 7px;
 
-            color: #82a58e !important;
+            color: #4f765d !important;
 
             font-size: 8px !important;
 
@@ -3859,27 +3853,27 @@ def apply_custom_css():
         div[data-baseweb="select"] svg {
             fill: #263d30 !important;
         }
-        
+
                 section[data-testid="stSidebar"] {
             height: 100vh !important;
             overflow: hidden !important;
         }
-        
+
         section[data-testid="stSidebar"] > div {
             height: 100vh !important;
             overflow-y: auto !important;
             overflow-x: hidden !important;
         }
-        
+
         section[data-testid="stSidebar"] .block-container {
             overflow: visible !important;
         }
-        
+
         section[data-testid="stSidebar"] div[data-baseweb="select"] {
             position: relative !important;
             z-index: 10000 !important;
         }
-        
+
 
         /* ---------------------------------------------------------
            LANGUAGE MODE
@@ -4036,27 +4030,31 @@ def apply_custom_css():
         div[data-baseweb="popover"] {
             z-index: 999999 !important;
         }
-        
+
         /* Allow the language list to contain all options */
         div[data-baseweb="popover"] div[data-baseweb="menu"] {
             max-height: 70vh !important;
             overflow-y: auto !important;
             overflow-x: hidden !important;
         }
-        
+
         /* BaseWeb listbox */
         div[data-baseweb="popover"] [role="listbox"] {
             max-height: 70vh !important;
             overflow-y: auto !important;
             overflow-x: hidden !important;
         }
-        
+
         /* Individual language options */
         div[data-baseweb="popover"] [role="option"] {
             min-height: 38px !important;
             white-space: nowrap !important;
         }
-        </style>
+        .tribal-brand,.brand-wrapper{
+        background:transparent!important;
+        box-shadow:none!important;
+        }
+         </style>
         """,
         unsafe_allow_html=True
     )

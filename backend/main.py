@@ -7,7 +7,7 @@ from backend.config.logger import logger
 from backend.config.settings import settings
 from backend.database.connection import mongodb
 from backend.database.indexes import create_indexes
-
+from backend.api.manipuri_tts import router as manipuri_tts_router
 from backend.middleware import (
     LoggingMiddleware,
     TimerMiddleware,
@@ -46,11 +46,11 @@ app.add_middleware(
 app.add_middleware(RequestIDMiddleware)
 app.add_middleware(TimerMiddleware)
 app.add_middleware(LoggingMiddleware)
-
 app.include_router(api_router)
 app.include_router(translation_router)
 app.include_router(speech_router)
 app.include_router(tts_router)
+app.include_router(manipuri_tts_router,prefix="/api/v1")
 app.add_exception_handler(
     Exception,
     generic_exception_handler

@@ -8,16 +8,18 @@ from views.voice import show_voice_page
 from views.history import show_history_page
 from views.settings import show_settings_page
 from utils.session import initialize_session
-
+from utils.professional_ui import apply_professional_ui
 st.set_page_config(
     page_title="Tribal AI Chatbot",
     page_icon="🌿",
     layout="wide",
     initial_sidebar_state="expanded"
 )
-apply_custom_css()
 initialize_session()
+apply_professional_ui()
+apply_custom_css()
 show_sidebar()
+
 page = st.session_state.selected_page
 if page == "🏠 Home":
     show_home()

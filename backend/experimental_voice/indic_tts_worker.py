@@ -25,38 +25,31 @@ HIFIGAN_MODEL = os.getenv("MANIPURI_HIFIGAN_MODEL", "")
 HIFIGAN_CONFIG = os.getenv("MANIPURI_HIFIGAN_CONFIG", "")
 
 
+
 def _require_model_files():
     global FASTPITCH_MODEL, FASTPITCH_CONFIG, SPEAKERS_FILE
     global HIFIGAN_MODEL, HIFIGAN_CONFIG
 
-    paths = {
-        "MANIPURI_FASTPITCH_MODEL": FASTPITCH_MODEL,
-        "MANIPURI_FASTPITCH_CONFIG": FASTPITCH_CONFIG,
-        "MANIPURI_SPEAKERS_FILE": SPEAKERS_FILE,
-        "MANIPURI_HIFIGAN_MODEL": HIFIGAN_MODEL,
-        "MANIPURI_HIFIGAN_CONFIG": HIFIGAN_CONFIG,
+    configured = {
+        "FASTPITCH_MODEL": FASTPITCH_MODEL,
+        "FASTPITCH_CONFIG": FASTPITCH_CONFIG,
+        "SPEAKERS_FILE": SPEAKERS_FILE,
+        "HIFIGAN_MODEL": HIFIGAN_MODEL,
+        "HIFIGAN_CONFIG": HIFIGAN_CONFIG,
     }
-    if all(value and Path(value).is_file() for value in paths.values()):
+
+    if all(value and Path(value).is_file() for value in configured.values()):
         return
 
     repo_id = os.getenv("HF_REPO_ID", "").strip()
     token = os.getenv("HF_TOKEN", "").strip()
     if not repo_id or not token:
-        missing = [name for name, value in paths.items()
-                   if not value or not Path(value).is_file()]
         raise RuntimeError(
-            "Manipuri TTS model files are unavailable and HF_REPO_ID/HF_TOKEN "
-            "are not configured. Missing: " + ", ".join(missing)
+            "Model files are missing and HF_REPO_ID/HF_TOKEN are not configured."
         )
 
-    try:
-        from huggingface_hub import hf_hub_download
-    except ImportError as exc:
-        raise RuntimeError(
-            "huggingface_hub is required to download the private Manipuri TTS models."
-        ) from exc
+    from huggingface_hub import hf_hub_download
 
-    model_dir = PROJECT_ROOT / "manipuri_tts_models"
     files = {
         "FASTPITCH_MODEL": "fastpitch/best_model.pth",
         "FASTPITCH_CONFIG": "fastpitch/config.json",
@@ -64,6 +57,7 @@ def _require_model_files():
         "HIFIGAN_MODEL": "hifigan/best_model.pth",
         "HIFIGAN_CONFIG": "hifigan/config.json",
     }
+
     downloaded = {}
     for key, filename in files.items():
         downloaded[key] = hf_hub_download(
@@ -71,7 +65,6 @@ def _require_model_files():
             filename=filename,
             token=token,
             repo_type="model",
-            local_dir=str(model_dir),
         )
 
     FASTPITCH_MODEL = downloaded["FASTPITCH_MODEL"]
@@ -80,20 +73,6 @@ def _require_model_files():
     HIFIGAN_MODEL = downloaded["HIFIGAN_MODEL"]
     HIFIGAN_CONFIG = downloaded["HIFIGAN_CONFIG"]
 
-    paths = {
-        "MANIPURI_FASTPITCH_MODEL": FASTPITCH_MODEL,
-        "MANIPURI_FASTPITCH_CONFIG": FASTPITCH_CONFIG,
-        "MANIPURI_SPEAKERS_FILE": SPEAKERS_FILE,
-        "MANIPURI_HIFIGAN_MODEL": HIFIGAN_MODEL,
-        "MANIPURI_HIFIGAN_CONFIG": HIFIGAN_CONFIG,
-    }
-    missing_files = [f"{name}={value}" for name, value in paths.items()
-                     if not Path(value).is_file()]
-    if missing_files:
-        raise RuntimeError(
-            "Manipuri TTS model download did not produce all required files: "
-            + "; ".join(missing_files)
-        )
 def get_synthesizer():
     global _SYNTHESIZER
 

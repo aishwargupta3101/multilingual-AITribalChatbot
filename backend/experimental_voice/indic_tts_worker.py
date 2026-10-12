@@ -26,6 +26,7 @@ HIFIGAN_CONFIG = os.getenv("MANIPURI_HIFIGAN_CONFIG", "")
 
 
 
+
 def _require_model_files():
     global FASTPITCH_MODEL, FASTPITCH_CONFIG, SPEAKERS_FILE
     global HIFIGAN_MODEL, HIFIGAN_CONFIG
@@ -38,14 +39,14 @@ def _require_model_files():
         "HIFIGAN_CONFIG": HIFIGAN_CONFIG,
     }
 
-    if all(value and Path(value).is_file() for value in configured.values()):
+    if all(path and Path(path).is_file() for path in configured.values()):
         return
 
     repo_id = os.getenv("HF_REPO_ID", "").strip()
     token = os.getenv("HF_TOKEN", "").strip()
     if not repo_id or not token:
         raise RuntimeError(
-            "Model files are missing and HF_REPO_ID/HF_TOKEN are not configured."
+            "TTS model files are missing. Configure HF_REPO_ID and HF_TOKEN."
         )
 
     from huggingface_hub import hf_hub_download
@@ -65,6 +66,17 @@ def _require_model_files():
             filename=filename,
             token=token,
             repo_type="model",
+        )
+
+    missing = [
+        f"{key}={path}"
+        for key, path in downloaded.items()
+        if not Path(path).is_file()
+    ]
+    if missing:
+        raise RuntimeError(
+            "Hugging Face download completed but files are missing: "
+            + "; ".join(missing)
         )
 
     FASTPITCH_MODEL = downloaded["FASTPITCH_MODEL"]

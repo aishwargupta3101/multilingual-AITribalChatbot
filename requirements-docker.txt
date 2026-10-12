@@ -100,3 +100,4 @@ streamlit-mic-recorder
 # Text-to-Speech
 gTTS
 mcp==1.30.0
+meiteitobangla==1.1.1

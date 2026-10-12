@@ -1,4 +1,3 @@
-
 """
 Manipuri Script Conversion Service
 Bengali Script <-> Meitei Mayek
@@ -10,8 +9,10 @@ from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
+
 class MeiteiScriptConverter:
     """Converts Manipuri text between Bengali script and Meitei Mayek."""
+
     def __init__(self):
         self._bengali_to_meitei = None
         self._meitei_to_bengali = None
@@ -35,15 +36,14 @@ class MeiteiScriptConverter:
     def _load_meitei_to_bengali(self):
         if self._meitei_to_bengali is not None:
             return
-
         try:
-            from mtei2bangla import MeiteiToBengali
-            self._meitei_to_bengali = MeiteiToBengali
+            from mtei2bangla import MeiteitoBangla
+            self._meitei_to_bengali = MeiteitoBangla
             logger.info("Meitei-to-Bengali converter loaded.")
         except ImportError as error:
             logger.exception("Failed to load Meitei-to-Bengali converter.")
             raise ImportError(
-                "Install the Meitei-to-Bengali dependency."
+                "Install the meiteitobangla dependency."
             ) from error
 
     @lru_cache(maxsize=512)
@@ -53,10 +53,7 @@ class MeiteiScriptConverter:
         self._load_bengali_to_meitei()
         converted_words = []
         for word in text.strip().split():
-            has_bengali = any(
-                "\u0980" <= char <= "\u09FF"
-                for char in word
-            )
+            has_bengali = any("\u0980" <= char <= "\u09FF" for char in word)
             if not has_bengali:
                 converted_words.append(word)
                 continue
@@ -64,10 +61,7 @@ class MeiteiScriptConverter:
                 converted = self._bengali_to_meitei.transliterate(word)
                 converted_words.append(converted if converted else word)
             except IndexError:
-                logger.warning(
-                    "XLIT could not convert token; preserving: %s",
-                    word
-                )
+                logger.warning("XLIT could not convert token; preserving: %s", word)
                 converted_words.append(word)
         result = " ".join(converted_words)
         if not result.strip():
@@ -82,16 +76,19 @@ class MeiteiScriptConverter:
         try:
             result = self._meitei_to_bengali.transliterate(text.strip())
             if not result:
-                raise ValueError(
-                    "Meitei-to-Bengali conversion returned empty text."
-                )
+                raise ValueError("Meitei-to-Bengali conversion returned empty text.")
             return result.strip()
         except Exception:
             logger.exception("Meitei-to-Bengali conversion failed.")
             raise
+
+
 meitei_script_converter = MeiteiScriptConverter()
+
 
 def convert_bengali_to_meitei(text: str) -> str:
     return meitei_script_converter.convert_bengali_to_meitei(text)
+
+
 def convert_meitei_to_bengali(text: str) -> str:
     return meitei_script_converter.convert_meitei_to_bengali(text)

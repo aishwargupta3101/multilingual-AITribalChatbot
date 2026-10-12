@@ -73,7 +73,14 @@ class GroqLLM:
         started = time.perf_counter()
         first_token = True
         try:
+            logger.info("GROQ_STREAM_START | model=%s | key_configured=%s",
+                        self.model, bool(self.api_key))
             async with self.client.stream("POST", GROQ_API_URL, json=payload) as response:
+                logger.info(
+                    "GROQ_STREAM_CONNECTED | status_code=%s | model=%s",
+                    response.status_code,
+                    self.model,
+                )
                 if response.is_error:
                     body = await response.aread()
                     logger.error("Groq streaming API error %s: %s", response.status_code,

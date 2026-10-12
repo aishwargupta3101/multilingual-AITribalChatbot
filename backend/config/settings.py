@@ -20,6 +20,7 @@ class Settings(BaseSettings):
     AWS_BUCKET:str
     FRONTEND_URL:str
     CORS_ORIGINS:str
+    LLM_PROVIDER: str = "ollama"
     UPLOAD_DIR:str
     MAX_FILE_SIZE:int
     ALLOWED_FILE_TYPES:str

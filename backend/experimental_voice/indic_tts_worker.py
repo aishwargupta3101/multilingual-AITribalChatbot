@@ -87,6 +87,9 @@ def _require_model_files():
 
 def get_synthesizer():
     global _SYNTHESIZER
+    print("TTS WORKER FILE:", __file__, flush=True)
+    print("TTS SPEAKERS PATH:", repr(SPEAKERS_FILE), flush=True)
+    print("TTS HF REPO SET:", bool(os.getenv("HF_REPO_ID")), flush=True)
 
     if _SYNTHESIZER is None:
         with _SYNTHESIZER_LOCK:

@@ -22,6 +22,9 @@ HIFIGAN_CONFIG = os.getenv("MANIPURI_HIFIGAN_CONFIG", "")
 
 
 def _require_model_files():
+    global FASTPITCH_MODEL, FASTPITCH_CONFIG, SPEAKERS_FILE
+    global HIFIGAN_MODEL, HIFIGAN_CONFIG
+
     paths = {
         "MANIPURI_FASTPITCH_MODEL": FASTPITCH_MODEL,
         "MANIPURI_FASTPITCH_CONFIG": FASTPITCH_CONFIG,
@@ -29,16 +32,62 @@ def _require_model_files():
         "MANIPURI_HIFIGAN_MODEL": HIFIGAN_MODEL,
         "MANIPURI_HIFIGAN_CONFIG": HIFIGAN_CONFIG,
     }
-    missing = [name for name, value in paths.items() if not value]
-    if missing:
+    if all(value and Path(value).is_file() for value in paths.values()):
+        return
+
+    repo_id = os.getenv("HF_REPO_ID", "").strip()
+    token = os.getenv("HF_TOKEN", "").strip()
+    if not repo_id or not token:
+        missing = [name for name, value in paths.items()
+                   if not value or not Path(value).is_file()]
         raise RuntimeError(
-            "Manipuri TTS model paths are not configured: " + ", ".join(missing)
+            "Manipuri TTS model files are unavailable and HF_REPO_ID/HF_TOKEN "
+            "are not configured. Missing: " + ", ".join(missing)
         )
+
+    try:
+        from huggingface_hub import hf_hub_download
+    except ImportError as exc:
+        raise RuntimeError(
+            "huggingface_hub is required to download the private Manipuri TTS models."
+        ) from exc
+
+    model_dir = PROJECT_ROOT / "manipuri_tts_models"
+    files = {
+        "FASTPITCH_MODEL": "fastpitch/best_model.pth",
+        "FASTPITCH_CONFIG": "fastpitch/config.json",
+        "SPEAKERS_FILE": "fastpitch/speakers.pth",
+        "HIFIGAN_MODEL": "hifigan/best_model.pth",
+        "HIFIGAN_CONFIG": "hifigan/config.json",
+    }
+    downloaded = {}
+    for key, filename in files.items():
+        downloaded[key] = hf_hub_download(
+            repo_id=repo_id,
+            filename=filename,
+            token=token,
+            repo_type="model",
+            local_dir=str(model_dir),
+        )
+
+    FASTPITCH_MODEL = downloaded["FASTPITCH_MODEL"]
+    FASTPITCH_CONFIG = downloaded["FASTPITCH_CONFIG"]
+    SPEAKERS_FILE = downloaded["SPEAKERS_FILE"]
+    HIFIGAN_MODEL = downloaded["HIFIGAN_MODEL"]
+    HIFIGAN_CONFIG = downloaded["HIFIGAN_CONFIG"]
+
+    paths = {
+        "MANIPURI_FASTPITCH_MODEL": FASTPITCH_MODEL,
+        "MANIPURI_FASTPITCH_CONFIG": FASTPITCH_CONFIG,
+        "MANIPURI_SPEAKERS_FILE": SPEAKERS_FILE,
+        "MANIPURI_HIFIGAN_MODEL": HIFIGAN_MODEL,
+        "MANIPURI_HIFIGAN_CONFIG": HIFIGAN_CONFIG,
+    }
     missing_files = [f"{name}={value}" for name, value in paths.items()
                      if not Path(value).is_file()]
     if missing_files:
         raise RuntimeError(
-            "Manipuri TTS model files are missing in this environment: "
+            "Manipuri TTS model download did not produce all required files: "
             + "; ".join(missing_files)
         )
 

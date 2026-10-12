@@ -1,30 +1,31 @@
+
+import json
 import os
 import sys
+import tempfile
+import threading
 import wave
 from pathlib import Path
-
 import numpy as np
-import threading
 
 _SYNTHESIZER = None
 _SYNTHESIZER_LOCK = threading.Lock()
 _GENERATION_LOCK = threading.Lock()
-sys.stdout.reconfigure(encoding="utf-8")
-sys.stderr.reconfigure(encoding="utf-8")
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8")
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-# Configure these as Render environment variables to paths where the model files
-# are actually present. Windows paths will not work in the Linux container.
-FASTPITCH_MODEL = os.getenv("MANIPURI_FASTPITCH_MODEL", "")
-FASTPITCH_CONFIG = os.getenv("MANIPURI_FASTPITCH_CONFIG", "")
-SPEAKERS_FILE = os.getenv("MANIPURI_SPEAKERS_FILE", "")
-HIFIGAN_MODEL = os.getenv("MANIPURI_HIFIGAN_MODEL", "")
-HIFIGAN_CONFIG = os.getenv("MANIPURI_HIFIGAN_CONFIG", "")
-
-
+FASTPITCH_MODEL = os.getenv("MANIPURI_FASTPITCH_MODEL", "").strip()
+FASTPITCH_CONFIG = os.getenv("MANIPURI_FASTPITCH_CONFIG", "").strip()
+SPEAKERS_FILE = os.getenv("MANIPURI_SPEAKERS_FILE", "").strip()
+HIFIGAN_MODEL = os.getenv("MANIPURI_HIFIGAN_MODEL", "").strip()
+HIFIGAN_CONFIG = os.getenv("MANIPURI_HIFIGAN_CONFIG", "").strip()
 
 
 def _require_model_files():
@@ -32,25 +33,38 @@ def _require_model_files():
     global HIFIGAN_MODEL, HIFIGAN_CONFIG
 
     configured = {
-        "FASTPITCH_MODEL": FASTPITCH_MODEL,
-        "FASTPITCH_CONFIG": FASTPITCH_CONFIG,
-        "SPEAKERS_FILE": SPEAKERS_FILE,
-        "HIFIGAN_MODEL": HIFIGAN_MODEL,
-        "HIFIGAN_CONFIG": HIFIGAN_CONFIG,
+        "MANIPURI_FASTPITCH_MODEL": FASTPITCH_MODEL,
+        "MANIPURI_FASTPITCH_CONFIG": FASTPITCH_CONFIG,
+        "MANIPURI_SPEAKERS_FILE": SPEAKERS_FILE,
+        "MANIPURI_HIFIGAN_MODEL": HIFIGAN_MODEL,
+        "MANIPURI_HIFIGAN_CONFIG": HIFIGAN_CONFIG,
     }
 
-    if all(path and Path(path).is_file() for path in configured.values()):
+    if all(value and Path(value).is_file() for value in configured.values()):
         return
 
     repo_id = os.getenv("HF_REPO_ID", "").strip()
     token = os.getenv("HF_TOKEN", "").strip()
+
     if not repo_id or not token:
+        missing = [
+            name for name, value in configured.items()
+            if not value or not Path(value).is_file()
+        ]
         raise RuntimeError(
-            "TTS model files are missing. Configure HF_REPO_ID and HF_TOKEN."
+            "Manipuri TTS model files are unavailable. Configure valid model "
+            "paths or HF_REPO_ID and HF_TOKEN. Missing: "
+            + ", ".join(missing)
         )
 
-    from huggingface_hub import hf_hub_download
+    try:
+        from huggingface_hub import hf_hub_download
+    except ImportError as exc:
+        raise RuntimeError(
+            "huggingface_hub is required to download the private Manipuri TTS models."
+        ) from exc
 
+    model_dir = PROJECT_ROOT / "manipuri_tts_models"
     files = {
         "FASTPITCH_MODEL": "fastpitch/best_model.pth",
         "FASTPITCH_CONFIG": "fastpitch/config.json",
@@ -66,17 +80,7 @@ def _require_model_files():
             filename=filename,
             token=token,
             repo_type="model",
-        )
-
-    missing = [
-        f"{key}={path}"
-        for key, path in downloaded.items()
-        if not Path(path).is_file()
-    ]
-    if missing:
-        raise RuntimeError(
-            "Hugging Face download completed but files are missing: "
-            + "; ".join(missing)
+            local_dir=str(model_dir),
         )
 
     FASTPITCH_MODEL = downloaded["FASTPITCH_MODEL"]
@@ -85,11 +89,57 @@ def _require_model_files():
     HIFIGAN_MODEL = downloaded["HIFIGAN_MODEL"]
     HIFIGAN_CONFIG = downloaded["HIFIGAN_CONFIG"]
 
+    resolved = {
+        "MANIPURI_FASTPITCH_MODEL": FASTPITCH_MODEL,
+        "MANIPURI_FASTPITCH_CONFIG": FASTPITCH_CONFIG,
+        "MANIPURI_SPEAKERS_FILE": SPEAKERS_FILE,
+        "MANIPURI_HIFIGAN_MODEL": HIFIGAN_MODEL,
+        "MANIPURI_HIFIGAN_CONFIG": HIFIGAN_CONFIG,
+    }
+
+    missing = [
+        f"{name}={value}"
+        for name, value in resolved.items()
+        if not value or not Path(value).is_file()
+    ]
+
+    if missing:
+        raise RuntimeError(
+            "Manipuri TTS model download did not produce all required files: "
+            + "; ".join(missing)
+        )
+
+
+def _make_runtime_fastpitch_config():
+    config_path = Path(FASTPITCH_CONFIG).resolve()
+    speakers_path = str(Path(SPEAKERS_FILE).resolve())
+
+    with config_path.open("r", encoding="utf-8") as file:
+        config = json.load(file)
+
+    # Replace stale training-machine paths with the actual downloaded file.
+    config["speakers_file"] = speakers_path
+
+    model_args = config.get("model_args")
+    if isinstance(model_args, dict):
+        model_args["speakers_file"] = speakers_path
+
+    # Keep the original Hugging Face config unchanged.
+    runtime_dir = Path(tempfile.gettempdir()) / "manipuri_tts_runtime"
+    runtime_dir.mkdir(parents=True, exist_ok=True)
+
+    runtime_config = runtime_dir / f"fastpitch-{os.getpid()}-config.json"
+    temporary_config = runtime_config.with_suffix(".tmp")
+
+    with temporary_config.open("w", encoding="utf-8") as file:
+        json.dump(config, file, ensure_ascii=False)
+
+    temporary_config.replace(runtime_config)
+    return str(runtime_config)
+
+
 def get_synthesizer():
     global _SYNTHESIZER
-    print("TTS WORKER FILE:", __file__, flush=True)
-    print("TTS SPEAKERS PATH:", repr(SPEAKERS_FILE), flush=True)
-    print("TTS HF REPO SET:", bool(os.getenv("HF_REPO_ID")), flush=True)
 
     if _SYNTHESIZER is None:
         with _SYNTHESIZER_LOCK:
@@ -97,9 +147,11 @@ def get_synthesizer():
                 _require_model_files()
                 from TTS.utils.synthesizer import Synthesizer
 
+                runtime_config = _make_runtime_fastpitch_config()
+
                 _SYNTHESIZER = Synthesizer(
                     tts_checkpoint=FASTPITCH_MODEL,
-                    tts_config_path=FASTPITCH_CONFIG,
+                    tts_config_path=runtime_config,
                     tts_speakers_file=SPEAKERS_FILE,
                     vocoder_checkpoint=HIFIGAN_MODEL,
                     vocoder_config=HIFIGAN_CONFIG,
@@ -109,10 +161,14 @@ def get_synthesizer():
     return _SYNTHESIZER
 
 
-
 def generate(text: str, script: str, speaker: str, output_path: str):
+    if not text or not text.strip():
+        raise ValueError("Manipuri TTS text is empty.")
+
     if script == "meitei_mayek":
-        from backend.translation.meitei_script_converter import convert_meitei_to_bengali
+        from backend.translation.meitei_script_converter import (
+            convert_meitei_to_bengali,
+        )
         text = convert_meitei_to_bengali(text)
 
     text = text.replace("।", "").strip()
@@ -134,8 +190,8 @@ def generate(text: str, script: str, speaker: str, output_path: str):
     output = Path(output_path)
     output.parent.mkdir(parents=True, exist_ok=True)
 
-    with wave.open(str(output), "wb") as wf:
-        wf.setnchannels(1)
-        wf.setsampwidth(2)
-        wf.setframerate(synthesizer.tts_model.ap.sample_rate)
-        wf.writeframes(audio.tobytes())
+    with wave.open(str(output), "wb") as file:
+        file.setnchannels(1)
+        file.setsampwidth(2)
+        file.setframerate(synthesizer.tts_model.ap.sample_rate)
+        file.writeframes(audio.tobytes())

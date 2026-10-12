@@ -160,72 +160,67 @@ class APIClient:
         except requests.RequestException as e:
             logger.exception("TTS request failed: %s", e)
             return None
+
     @staticmethod
     def manipuri_text_to_speech(
         text: str,
         script: str = "bengali",
         speaker: str = "female"
     ):
-        """Generate Manipuri speech using AI4Bharat."""
+        """Generate Manipuri speech and return WAV bytes."""
+        if not text or not text.strip():
+            raise ValueError("Manipuri TTS text is empty.")
+
+        url = f"{BASE_URL}/api/v1/manipuri-tts"
         try:
-            if not text or not text.strip():
-                logger.error("Manipuri TTS skipped: empty text.")
-                return None
             response = requests.post(
-                f"{BASE_URL}/api/v1/manipuri-tts",
+                url,
                 json={
                     "text": text.strip(),
                     "script": script,
                     "speaker": speaker
                 },
-                timeout=300
+                timeout=(15, 300)
             )
-            logger.info(
-                "Manipuri TTS HTTP Status: %s",
-                response.status_code
-            )
-            logger.info(
-                "Manipuri TTS Content-Type: %s",
-                response.headers.get("Content-Type")
-            )
-            response.raise_for_status()
-            content_type = response.headers.get(
-                "Content-Type",
-                ""
-            ).lower()
-            if "audio/wav" not in content_type:
+            content_type = response.headers.get("Content-Type", "").lower()
+
+            if not response.ok:
+                try:
+                    detail = response.json().get("detail", response.text)
+                except ValueError:
+                    detail = response.text
                 logger.error(
-                    "Manipuri TTS did not return WAV. "
-                    "Content-Type: %s",
-                    content_type
+                    "Manipuri TTS failed: HTTP %s: %s",
+                    response.status_code,
+                    str(detail)[:2000]
                 )
-                return None
+                raise RuntimeError(
+                    f"Manipuri TTS API returned HTTP "
+                    f"{response.status_code}: {str(detail)[:1000]}"
+                )
+
+            if "audio/wav" not in content_type and "audio/x-wav" not in content_type:
+                raise RuntimeError(
+                    f"Expected WAV audio, received Content-Type: "
+                    f"{content_type or 'missing'}"
+                )
+
             audio_bytes = response.content
             if not audio_bytes:
-                logger.error(
-                    "Manipuri TTS returned empty audio."
-                )
-                return None
-            logger.info(
-                "Manipuri TTS audio retrieved: %s bytes",
-                len(audio_bytes)
-            )
+                raise RuntimeError("Manipuri TTS returned an empty audio file.")
+
+            if not audio_bytes.startswith(b"RIFF") or audio_bytes[8:12] != b"WAVE":
+                raise RuntimeError("Manipuli TTS response is not a valid WAV file.")
+
+            logger.info("Manipuri TTS audio retrieved: %s bytes", len(audio_bytes))
             return audio_bytes
-        except requests.HTTPError as e:
-            logger.exception(
-                "Manipuri TTS HTTP error: %s | Response: %s",
-                e,
-                e.response.text[:2000]
-                if e.response is not None
-                else "No response"
-            )
-            return None
-        except requests.RequestException as e:
-            logger.exception(
-                "Manipuri TTS request failed: %s",
-                e
-            )
-            return None
+
+        except requests.Timeout as exc:
+            logger.exception("Manipuri TTS timed out.")
+            raise RuntimeError("Manipuri TTS timed out after waiting for the backend.") from exc
+        except requests.RequestException as exc:
+            logger.exception("Manipuri TTS request failed.")
+            raise RuntimeError(f"Could not reach Manipuri TTS backend: {exc}") from exc
 
     @staticmethod
     def chat(

@@ -5,19 +5,36 @@ import re
 from components.response_formatter import format_for_display
 
 def normalize_assistant_markdown(content):
-    """Repair common Markdown layout damage from translated responses."""
+    """Normalize Markdown layout while preserving the answer wording."""
     content = str(content or "").replace("\r\n", "\n").replace("\r", "\n")
-    # Repair literal line-break escape sequences returned by some voice paths.
     content = content.replace("\\n", "\n")
-    # Put Markdown headings on their own lines.
-    content = re.sub(r"(?m)(?<!^)\s*(#{1,6}\s+)", r"\n\n\1", content)
-    content = re.sub(r"\*\*\s+", "**", content)
-    content = re.sub(r"\s+\*\*", "**", content)
-    content = re.sub(r"(\*\*[^*\n]+?\*\*)(?=[^\s.,!?;:。！？、)\]}])", r"\1 ", content)
-    # Separate list markers and numbered items that have been flattened.
-    content = re.sub(r"(?m)(?<!^)\s+([-*]\s+)", r"\n\1", content)
-    content = re.sub(r"(?m)^([-*])(?=\*\*)", r"\1 ", content)
-    content = re.sub(r"(?m)^(\d+[.)])(?=\*\*)", r"\1 ", content)
+
+    # Repair Markdown headings missing the required space after #.
+    content = re.sub(r"(?m)^(#{1,6})(?=[^#\s])", r"\1 ", content)
+
+    # Separate known section labels when a model joins the label to its text.
+    content = re.sub(
+        r"(?i)\b(Definition|Explanation|Examples|"
+        r"Applications\s*/\s*Importance|Summary|Key Concepts)"
+        r"(?=[A-Z])",
+        r"\1\n\n",
+        content,
+    )
+
+    # Keep a readable space after a closing bold span if the next word
+    # was accidentally concatenated (e.g. **Robotics**that).
+    content = re.sub(
+        r"(\*\*[^*\n]+?\*\*)(?=[A-Za-z0-9])",
+        r"\1 ",
+        content,
+    )
+
+    # Split flattened bullet/numbered items onto separate lines.
+    content = re.sub(r"(?m)(?<!^)\s+([-*+]\s+)", r"\n\1", content)
+    content = re.sub(r"(?m)(?<!^)\s+(\d+[.)]\s+)", r"\n\1", content)
+
+    # Normalize excess blank lines without collapsing intentional paragraphs.
+    content = re.sub(r"\n{3,}", "\n\n", content)
     return content.strip()
 
 def html_block(content):
@@ -129,6 +146,7 @@ def apply_message_ui():
             color: #166534;
             line-height: 1.3;
             margin: 0.55rem 0 0.25rem !important;
+            padding: 0 !important;
         }
         .assistant-message h1:first-child,
         .assistant-message h2:first-child,
@@ -139,13 +157,25 @@ def apply_message_ui():
         .assistant-message h1 { font-size: 1.35rem; }
         .assistant-message h2 { font-size: 1.2rem; }
         .assistant-message h3 { font-size: 1.05rem; }
-        .assistant-message p { margin: 0.2rem 0 0.35rem !important; }
+        .assistant-message p {
+            margin: 0.25rem 0 0.4rem !important;
+            padding: 0 !important;
+        }
         .assistant-message ul,
         .assistant-message ol {
-            padding-left: 1.4rem;
+            padding-left: 1.4rem !important;
             margin: 0.2rem 0 0.4rem !important;
         }
-        .assistant-message li { margin: 0.08rem 0 !important; }
+        .assistant-message li {
+            margin: 0.08rem 0 !important;
+            padding: 0 !important;
+        }
+        .assistant-message h1 + p,
+        .assistant-message h2 + p,
+        .assistant-message h3 + p,
+        .assistant-message h4 + p {
+            margin-top: 0.15rem !important;
+        }
         .assistant-message > :first-child { margin-top: 0; }
         .assistant-message > :last-child { margin-bottom: 0; }
         .assistant-message table {

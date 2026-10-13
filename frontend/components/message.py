@@ -127,19 +127,27 @@ def apply_message_ui():
         .assistant-message h3,
         .assistant-message h4 {
             color: #166534;
-            line-height: 1.35;
-            margin: 0.9rem 0 0.5rem;
+            line-height: 1.3;
+            margin: 0.7rem 0 0.35rem;
+        }
+        .assistant-message h1:first-child,
+        .assistant-message h2:first-child,
+        .assistant-message h3:first-child,
+        .assistant-message h4:first-child {
+            margin-top: 0;
         }
         .assistant-message h1 { font-size: 1.35rem; }
         .assistant-message h2 { font-size: 1.2rem; }
         .assistant-message h3 { font-size: 1.05rem; }
-        .assistant-message p { margin: 0.45rem 0 0.75rem; }
+        .assistant-message p { margin: 0.3rem 0 0.45rem; }
         .assistant-message ul,
         .assistant-message ol {
-            padding-left: 1.5rem;
-            margin: 0.4rem 0 0.8rem;
+            padding-left: 1.4rem;
+            margin: 0.25rem 0 0.5rem;
         }
-        .assistant-message li { margin: 0.2rem 0; }
+        .assistant-message li { margin: 0.12rem 0; }
+        .assistant-message > :first-child { margin-top: 0; }
+        .assistant-message > :last-child { margin-bottom: 0; }
         .assistant-message table {
             display: block;
             max-width: 100%;

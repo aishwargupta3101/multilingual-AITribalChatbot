@@ -11,9 +11,9 @@ def normalize_assistant_markdown(content):
     content = content.replace("\\n", "\n")
     # Put Markdown headings on their own lines.
     content = re.sub(r"(?m)(?<!^)\s*(#{1,6}\s+)", r"\n\n\1", content)
-    # Repair spaces inserted just inside bold markers by translation.
     content = re.sub(r"\*\*\s+", "**", content)
     content = re.sub(r"\s+\*\*", "**", content)
+    content = re.sub(r"(\*\*[^*\n]+?\*\*)(?=[^\s.,!?;:。！？、)\]}])", r"\1 ", content)
     # Separate list markers and numbered items that have been flattened.
     content = re.sub(r"(?m)(?<!^)\s+([-*]\s+)", r"\n\1", content)
     content = re.sub(r"(?m)^([-*])(?=\*\*)", r"\1 ", content)
@@ -128,7 +128,7 @@ def apply_message_ui():
         .assistant-message h4 {
             color: #166534;
             line-height: 1.3;
-            margin: 0.7rem 0 0.35rem;
+            margin: 0.55rem 0 0.25rem !important;
         }
         .assistant-message h1:first-child,
         .assistant-message h2:first-child,
@@ -139,13 +139,13 @@ def apply_message_ui():
         .assistant-message h1 { font-size: 1.35rem; }
         .assistant-message h2 { font-size: 1.2rem; }
         .assistant-message h3 { font-size: 1.05rem; }
-        .assistant-message p { margin: 0.3rem 0 0.45rem; }
+        .assistant-message p { margin: 0.2rem 0 0.35rem !important; }
         .assistant-message ul,
         .assistant-message ol {
             padding-left: 1.4rem;
-            margin: 0.25rem 0 0.5rem;
+            margin: 0.2rem 0 0.4rem !important;
         }
-        .assistant-message li { margin: 0.12rem 0; }
+        .assistant-message li { margin: 0.08rem 0 !important; }
         .assistant-message > :first-child { margin-top: 0; }
         .assistant-message > :last-child { margin-bottom: 0; }
         .assistant-message table {

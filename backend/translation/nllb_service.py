@@ -129,12 +129,15 @@ class NLLBService:
         with self._translation_lock:
             source_tokens = self._encode_source(text, source_code)
             target_prefix = self._target_prefix(target_code)
-
+            # Conservative decoding for low-resource Manipuri translation.
+            # A smaller beam and repetition controls reduce degenerate loops.
             results = self.translator.translate_batch(
                 [source_tokens],
                 target_prefix=[target_prefix],
-                beam_size=1,
-                max_decoding_length=min(160, TranslationConfig.MAX_NEW_TOKEN),
+                beam_size=2,
+                max_decoding_length=min(180, TranslationConfig.MAX_NEW_TOKEN),
+                repetition_penalty=1.1,
+                no_repeat_ngram_size=3,
                 return_scores=False
             )
             hypothesis = results[0].hypotheses[0]
@@ -214,6 +217,9 @@ class NLLBService:
         if source_language == target_language:
             return text
         try:
+            # The existing NLLB tokenizer truncates at MAX_INPUT_LENGTH. For
+            # long English -> Manipuri Bengali-script responses, translate
+            # smaller pieces so later sentences are not silently discarded.
             if source_language == "english" and target_language == "manipuri":
                 chunks = self._split_long_text(text, max_chars=320)
                 if len(chunks) > 1:

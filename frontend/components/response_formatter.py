@@ -1,6 +1,6 @@
 """
-Language-agnostic formatting helpers for Tribal AI responses.
-Presentation only: does not translate, summarize, or intentionally remove content.
+Language-agnostic response formatting helpers for Tribal AI Chatbot.
+Presentation-only: does not translate, summarize, or intentionally remove content.
 """
 import re
 from typing import Optional
@@ -32,60 +32,8 @@ def _repair_heading_spacing(text: str) -> str:
         output.append(line)
     return "\n".join(output)
 
-def _split_flat_paragraphs(text: str) -> str:
-    """Add paragraph breaks to long flattened prose, leaving Markdown structures alone."""
-    output = []
-    in_fence = False
-    for line in text.split("\n"):
-        stripped = line.strip()
-        if stripped.startswith(("```", "~~~")):
-            in_fence = not in_fence
-            output.append(line)
-            continue
-        structural = (
-            not stripped or in_fence
-            or re.match(r"^#{1,6}\s", stripped)
-            or re.match(r"^(?:[-*+]|\d+[.)])\s+", stripped)
-            or stripped.startswith((">", "|"))
-        )
-        if structural:
-            output.append(line.rstrip())
-            continue
-        # Only split a flattened line if it is long enough to benefit from paragraphs.
-        if len(stripped) >= 320:
-            sentences = re.split(r"(?<=[.!?।॥。！？])\s+", stripped)
-            if len(sentences) >= 4:
-                for i in range(0, len(sentences), 2):
-                    paragraph = " ".join(part.strip() for part in sentences[i:i + 2] if part.strip())
-                    if paragraph:
-                        output.append(paragraph)
-                        if i + 2 < len(sentences):
-                            output.append("")
-                continue
-        output.append(line.rstrip())
-    return "\n".join(output)
-
-def _plain_manipuri_format(text: str) -> str:
-    """Remove Markdown syntax from Manipuri output while preserving its wording."""
-    text = re.sub(r"\\([*_`#])", r"\1", text)
-    output = []
-    for line in text.split("\n"):
-        line = line.strip()
-        line = re.sub(r"^(?:\s*#{1,6}\s*)+", "", line)
-        line = re.sub(r"^\s*(?:[-*+]\s+|\d+[.)]\s+)", "", line)
-        line = re.sub(r"(\*\*|__)(.*?)\1", r"\2", line)
-        line = re.sub(r"(?<!\*)\*(?!\*)(.*?)\*(?!\*)", r"\1", line)
-        line = re.sub(r"(?<!_)_(?!_)(.*?)_(?!_)", r"\1", line)
-        line = re.sub(r"`([^`]*)`", r"\1", line)
-        line = line.replace("**", "").replace("__", "").replace("\\*", "")
-        output.append(line)
-    text = "\n".join(output)
-    text = re.sub(r"[ \t]{2,}", " ", text)
-    text = re.sub(r"\n{3,}", "\n\n", text)
-    return text.strip()
-
 def format_response(text: str, language: Optional[str] = None) -> str:
-    """Normalize response layout; show Manipuri scripts as simple plain text."""
+    """Normalize Markdown layout for English, Hindi, Manipuri, Tai Khamti, and other languages."""
     if text is None:
         return ""
     if not isinstance(text, str):
@@ -93,10 +41,21 @@ def format_response(text: str, language: Optional[str] = None) -> str:
     text = text.replace("\r\n", "\n").replace("\r", "\n")
     text = text.replace("\u2028", "\n").replace("\ufeff", "").replace("\u200b", "")
     text = text.replace("\u00a0", " ")
-    if normalize_language(language) in {"manipuri", "manipuri_mtei"}:
-        return _plain_manipuri_format(text)
     text = _repair_heading_spacing(text)
-    text = _split_flat_paragraphs(text)
+    lines, output, in_fence = text.split("\n"), [], False
+    for line in lines:
+        stripped = line.lstrip()
+        if stripped.startswith(("```", "~~~")):
+            in_fence = not in_fence
+            output.append(line.rstrip())
+            continue
+        if not in_fence:
+            # Put headings, bullets and numbered items on their own lines
+            # when a model/translation has flattened Markdown into a paragraph.
+            line = re.sub(r"\s+(?=#{1,6}\s)", "\n\n", line)
+            line = re.sub(r"(?<=[.!?。！？])\s+(?=(?:[-*+]|\d+[.)])\s+)", "\n", line)
+        output.append(line.rstrip())
+    text = "\n".join(output)
     text = re.sub(r"\n{3,}", "\n\n", text)
     return text.strip()
 
@@ -125,3 +84,16 @@ def format_for_voice(text: str, language: Optional[str] = None) -> str:
             line = re.sub(r"`([^`]*)`", r"\1", line)
         output.append(line)
     return re.sub(r"\n{3,}", "\n\n", "\n".join(output)).strip()
+
+if __name__ == "__main__":
+    examples = [
+        ("english", "##Artificial Intelligence\n\nAI is **useful**.\n- Example one"),
+        ("hindi", "##कृत्रिम बुद्धिमत्ता\n\nAI उपयोगी है।\n- पहला उदाहरण"),
+        ("manipuri", "##ꯃꯤꯇꯩ\n\nꯃꯁꯤ **ꯐꯖꯩ**।"),
+        ("manipuri_mtei", "##ꯃꯤꯇꯩ\n\nꯃꯁꯤ ꯐꯖꯩ।"),
+        ("tai_khamti", "##Example\n\nA paragraph.\n1. First item"),
+    ]
+    for language, sample in examples:
+        print(f"--- {language} ---")
+        print(format_response(sample, language))
+        print("[TTS]", format_for_voice(sample, language))

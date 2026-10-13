@@ -3,6 +3,7 @@ from api.client import APIClient
 from api.endpoints import CHAT_ENDPOINT
 from components.message import render_message
 from components.image_gallery import render_images
+from components.response_formatter import format_for_display
 
 def get_language():
     return st.session_state.get("language", "english")
@@ -76,9 +77,8 @@ def ask_ai_stream(question, placeholder):
         if event_type == "token":
             token = event.get("content", "")
             answer_parts.append(token)
-            placeholder.markdown(
-                "".join(answer_parts) + "▌"
-            )
+            preview = format_for_display("".join(answer_parts), get_language())
+            placeholder.markdown(preview + " ▌")
         elif event_type == "complete":
             final_response = event.get("data")
         elif event_type == "error":

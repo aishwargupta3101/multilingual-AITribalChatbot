@@ -11,15 +11,9 @@ def normalize_assistant_markdown(content):
     content = content.replace("\\n", "\n")
     # Put Markdown headings on their own lines.
     content = re.sub(r"(?m)(?<!^)\s*(#{1,6}\s+)", r"\n\n\1", content)
-    # Unescape Markdown markers that arrive literally escaped (e.g. \\*\\*text\\*\\*).
-    content = re.sub(r"\\([*_#`])", r"\1", content)
     # Repair spaces inserted just inside bold markers by translation.
     content = re.sub(r"\*\*\s+", "**", content)
     content = re.sub(r"\s+\*\*", "**", content)
-    # Restore line breaks when headings or numbered sections were flattened together.
-    content = re.sub(r"(?<!\n)\s+(#{1,6}\s+)", r"\n\n\1", content)
-    content = re.sub(r"(?<=[.!?])\s+(?=(?:\d+[.)])\s+\*?\*?[A-Z])", r"\n\n", content)
-    content = re.sub(r"(?<!\n)\s+(?=\d+[.)]\s+\*?\*?[A-Z][^\n]{1,70}(?:\*\*)?\s)", r"\n\n", content)
     # Separate list markers and numbered items that have been flattened.
     content = re.sub(r"(?m)(?<!^)\s+([-*]\s+)", r"\n\1", content)
     content = re.sub(r"(?m)^([-*])(?=\*\*)", r"\1 ", content)

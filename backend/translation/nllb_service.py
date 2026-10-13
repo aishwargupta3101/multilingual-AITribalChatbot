@@ -129,12 +129,12 @@ class NLLBService:
         with self._translation_lock:
             source_tokens = self._encode_source(text, source_code)
             target_prefix = self._target_prefix(target_code)
-            # Beam search is less greedy than beam_size=1 and may improve low-resource output.
+
             results = self.translator.translate_batch(
                 [source_tokens],
                 target_prefix=[target_prefix],
-                beam_size=4,
-                max_decoding_length=TranslationConfig.MAX_NEW_TOKEN,
+                beam_size=1,
+                max_decoding_length=min(160, TranslationConfig.MAX_NEW_TOKEN),
                 return_scores=False
             )
             hypothesis = results[0].hypotheses[0]
@@ -214,9 +214,6 @@ class NLLBService:
         if source_language == target_language:
             return text
         try:
-            # The existing NLLB tokenizer truncates at MAX_INPUT_LENGTH. For
-            # long English -> Manipuri Bengali-script responses, translate
-            # smaller pieces so later sentences are not silently discarded.
             if source_language == "english" and target_language == "manipuri":
                 chunks = self._split_long_text(text, max_chars=320)
                 if len(chunks) > 1:

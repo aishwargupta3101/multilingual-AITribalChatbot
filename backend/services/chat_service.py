@@ -1,4 +1,5 @@
 from datetime import datetime
+import re
 import time
 import json
 from pathlib import Path
@@ -13,6 +14,46 @@ from backend.llm.llama_service import llama_service
 from backend.rag.rag_service import rag_service
 from data.tai_khamti.tai_khamti_rag import tai_khamti_rag
 from backend.services.translation_service import translation_service
+from backend.tools.realtime_intent import detect_realtime_intent
+from backend.tools.realtime_tools import get_weather, get_current_time
+
+def _extract_weather_place(question: str) -> str | None:
+    """Extract a simple city/place phrase from common English weather questions."""
+    text = question.strip().rstrip("?.! ")
+    patterns = [
+        r"\bweather\s+(?:in|at|for|of)\s+(.+)$",
+        r"\btemperature\s+(?:in|at|for|of)\s+(.+)$",
+        r"\bforecast\s+(?:in|for|of)\s+(.+)$",
+        r"\b(?:will it rain|is it raining)\s+in\s+(.+)$",
+        r"\bhow(?:'s| is) the weather in\s+(.+)$",
+    ]
+    for pattern in patterns:
+        match = re.search(pattern, text, flags=re.IGNORECASE)
+        if match:
+            place = re.sub(r"\b(?:today|tomorrow|right now|currently|please)\b", "", match.group(1), flags=re.IGNORECASE)
+            place = place.strip(" ,?.!")
+            return place or None
+    return None
+
+
+def _weather_description(code) -> str:
+    """Translate common WMO weather codes into a short English description."""
+    try:
+        code = int(code)
+    except (TypeError, ValueError):
+        return "conditions unavailable"
+    descriptions = {
+        0: "clear sky", 1: "mainly clear", 2: "partly cloudy", 3: "overcast",
+        45: "fog", 48: "depositing rime fog",
+        51: "light drizzle", 53: "moderate drizzle", 55: "dense drizzle",
+        61: "slight rain", 63: "moderate rain", 65: "heavy rain",
+        71: "slight snow", 73: "moderate snow", 75: "heavy snow",
+        80: "slight rain showers", 81: "moderate rain showers", 82: "violent rain showers",
+        95: "thunderstorm", 96: "thunderstorm with light hail", 99: "thunderstorm with heavy hail",
+    }
+    return descriptions.get(code, "conditions unavailable")
+
+
 class ChatService:
     MAX_LLM_CONTEXT_CHARS = 5000
     LANGUAGE_VECTOR_DBS = {
@@ -448,7 +489,82 @@ RESPONSE STYLE:
         logger.info(
             f"PERFORMANCE | Retrieval/MCP: {retrieval_elapsed:.2f} seconds"
         )
-        if is_tai_khamti:
+        # Real-time tools provide the factual answer; skip LLM generation for these requests.
+        realtime_intent = detect_realtime_intent(original_question)
+        if realtime_intent:
+            try:
+                if realtime_intent == "weather":
+                    place = _extract_weather_place(original_question)
+                    if not place:
+                        answer = (
+                            "Which city or town should I check the current weather for? "
+                            "For example: weather in Delhi."
+                        )
+                    else:
+                        weather = await get_weather(place)
+                        current = weather.get("current", {})
+                        units = weather.get("units", {})
+                        temp = current.get("temperature_2m")
+                        feels = current.get("apparent_temperature")
+                        humidity = current.get("relative_humidity_2m")
+                        wind = current.get("wind_speed_10m")
+                        precipitation = current.get("precipitation")
+                        description = _weather_description(current.get("weather_code"))
+                        parts = [f"Current weather in {weather.get('place', place)}"]
+                        if weather.get("country"):
+                            parts[-1] += f", {weather['country']}"
+                        parts[-1] += ":"
+                        if temp is not None:
+                            parts.append(f"- Temperature: {temp} {units.get('temperature_2m', '°C')}")
+                        parts.append(f"- Conditions: {description}")
+                        if feels is not None:
+                            parts.append(f"- Feels like: {feels} {units.get('apparent_temperature', '°C')}")
+                        if humidity is not None:
+                            parts.append(f"- Relative humidity: {humidity}{units.get('relative_humidity_2m', '%')}")
+                        if wind is not None:
+                            parts.append(f"- Wind speed: {wind} {units.get('wind_speed_10m', 'km/h')}")
+                        if precipitation is not None:
+                            parts.append(f"- Precipitation: {precipitation} {units.get('precipitation', 'mm')}")
+                        parts.append("Source: Open-Meteo.")
+                        answer = "\n".join(parts)
+                    answer_source = "realtime_weather"
+                else:
+                    clock = get_current_time("Asia/Kolkata")
+                    if realtime_intent == "time":
+                        answer = f"Current time in India (Asia/Kolkata): {clock['time']} on {clock['date']}."
+                    else:
+                        answer = f"Today's date in India (Asia/Kolkata) is {clock['date']}."
+                    answer_source = "realtime_clock"
+                logger.info("Real-time intent handled | Intent: %s", realtime_intent)
+            except Exception:
+                logger.exception("Real-time lookup failed | Intent: %s", realtime_intent)
+                answer = (
+                    "Sorry, I couldn't retrieve the live information right now. "
+                    "Please try again in a moment."
+                )
+                answer_source = f"realtime_{realtime_intent}_error"
+
+            # Streaming requests are translated here because the normal final-answer
+            # translation path only runs for non-streaming requests. For non-streaming
+            # requests, let the existing final-answer translation block translate once.
+            if selected_language not in {"english", "tai_khamti"} and on_token is not None:
+                try:
+                    translated = translation_service.translate_response(
+                        text=answer,
+                        target_language=selected_language,
+                        source_language="english",
+                    )
+                    if translated and translated.strip():
+                        answer = translated
+                except Exception:
+                    logger.exception("Real-time stream translation failed.")
+            if on_token is not None:
+                await on_token(answer)
+
+        if realtime_intent:
+            # Keep the source assigned by the real-time handler above.
+            pass
+        elif is_tai_khamti and not answer:
             if retrieval_failed or not context:
                 answer = (
                     "Sorry, I could not find sufficient information "

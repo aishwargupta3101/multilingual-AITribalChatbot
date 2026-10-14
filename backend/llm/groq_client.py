@@ -20,6 +20,26 @@ def _convert_messages(messages: List[BaseMessage]) -> List[Dict[str, str]]:
             converted.append({"role": role, "content": content})
     return converted
 
+def _extract_message_text(message: Any) -> str:
+    """Extract text from standard and block-based OpenAI-compatible responses."""
+    if not isinstance(message, dict):
+        return ""
+    content = message.get("content")
+    if isinstance(content, str):
+        return content.strip()
+    if isinstance(content, list):
+        parts = []
+        for item in content:
+            if isinstance(item, str):
+                parts.append(item)
+            elif isinstance(item, dict):
+                text = item.get("text")
+                if isinstance(text, str):
+                    parts.append(text)
+        return "".join(parts).strip()
+    return ""
+
+
 class GroqLLM:
     """Hosted client with the same ainvoke/astream interface used by the current LlamaService."""
     def __init__(self):
@@ -59,7 +79,9 @@ class GroqLLM:
                 logger.error("Groq API error %s: %s", response.status_code, response.text[:1000])
             response.raise_for_status()
             data = response.json()
-            content = data["choices"][0]["message"].get("content") or ""
+            choices = data.get("choices") or []
+            message = choices[0].get("message") or {} if choices else {}
+            content = _extract_message_text(message)
             if not content.strip():
                 raise RuntimeError("Groq returned an empty response.")
             logger.info("Hosted LLM request completed in %.2f seconds.", time.perf_counter() - started)
@@ -140,9 +162,33 @@ class GroqLLM:
                 response.raise_for_status()
                 data = response.json()
                 choices = data.get("choices") or []
-                content = ((choices[0].get("message") or {}).get("content") or "") if choices else ""
-                if not content.strip():
-                    raise RuntimeError("Groq non-streaming fallback returned an empty response.")
+                message = (choices[0].get("message") or {}) if choices else {}
+                content = _extract_message_text(message)
+                if not content:
+                    finish_reason = choices[0].get("finish_reason") if choices else None
+                    logger.warning(
+                        "Groq fallback returned empty text | finish_reason=%s | choice_count=%s | response_keys=%s",
+                        finish_reason, len(choices), sorted(data.keys()) if isinstance(data, dict) else []
+                    )
+                    retry_payload = dict(fallback_payload)
+                    retry_payload["max_completion_tokens"] = max(self.max_tokens, 1024)
+                    retry_response = await self.client.post(GROQ_API_URL, json=retry_payload)
+                    if retry_response.is_error:
+                        logger.error(
+                            "Groq empty-response retry API error %s: %s",
+                            retry_response.status_code, retry_response.text[:1000]
+                        )
+                    retry_response.raise_for_status()
+                    retry_data = retry_response.json()
+                    retry_choices = retry_data.get("choices") or []
+                    retry_message = (retry_choices[0].get("message") or {}) if retry_choices else {}
+                    content = _extract_message_text(retry_message)
+                    if not content:
+                        retry_reason = retry_choices[0].get("finish_reason") if retry_choices else None
+                        raise RuntimeError(
+                            "Groq returned no text after the non-streaming retry "
+                            f"(finish_reason={retry_reason!r}, choices={len(retry_choices)})."
+                        )
                 logger.info(
                     "Groq non-streaming fallback succeeded in %.2f seconds.",
                     time.perf_counter() - started

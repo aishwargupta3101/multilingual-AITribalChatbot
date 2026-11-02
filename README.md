@@ -1,295 +1,158 @@
-# 🌿 Tribal AI Chatbot
-> Breaking language barriers by enabling tribal communities to communicate with AI in their native languages.
-![Python](https://img.shields.io/badge/Python-3.11-blue)
-![FastAPI](https://img.shields.io/badge/FastAPI-Backend-green)
-![Streamlit](https://img.shields.io/badge/Streamlit-Frontend-red)
-![MongoDB](https://img.shields.io/badge/Database-MongoDB-darkgreen)
-![Docker](https://img.shields.io/badge/Docker-Container-blue)
-![AWS](https://img.shields.io/badge/Deployment-AWS-orange)
-![License](https://img.shields.io/badge/License-MIT-yellow)
 
-# 📖 Overview
-**Tribal AI Chatbot** is an AI-powered multilingual conversational assistant designed specifically for tribal communities in India. The chatbot enables users to communicate naturally through **speech or text** in their native language.
-The system automatically converts speech to text, translates it into the language understood by the Large Language Model (LLM), retrieves relevant knowledge using Retrieval-Augmented Generation (RAG), generates intelligent responses, translates them back into the user's language, and finally converts the response into natural speech.
-The goal is to bridge the digital language divide and provide easy access to education, healthcare information, government schemes, agriculture support, and general knowledge.
+# 🌿 Multilingual Tribal AI Chatbot & Language Lab
 
+An AI-powered multilingual chatbot designed to improve access to information and language technology for tribal and underserved communities. The platform combines conversational AI, document-based question answering, speech recognition, translation, and text-to-speech capabilities.
 
-# 🎯 Objectives
-- Support tribal languages
-- Voice-to-Voice conversations
-- Accurate multilingual translation
-- AI-powered question answering
-- Retrieval-Augmented Generation (RAG)
-- Easy-to-use interface
-- Scalable backend architecture
+## ✨ Features
 
-# 🌍 Supported Languages
-## Current Release
+- **Multilingual Conversational AI:** Generate context-aware responses using Large Language Models.
+- **Retrieval-Augmented Generation (RAG):** Retrieve relevant information from knowledge bases using semantic search.
+- **Voice Interaction:** Convert speech to text and generate spoken responses.
+- **Translation:** Integrate multilingual translation workflows for supported languages.
+- **Document Question Answering:** Upload documents and ask questions about their content.
+- **Conversation History:** Manage chat sessions and retain conversation history.
+- **Web Search Integration:** Access current information through web search tools using the Model Context Protocol (MCP).
+- **Language Information APIs:** Retrieve supported language metadata and service health information.
 
-- English
-- Hindi
-- Manipuri
-- Monpa
-- Tai Khamti
+## 🛠️ Tech Stack
 
-### Future Expansion
-- Bhili
-- Ho
-- Kurukh
-- Khasi
-- Mizo
-- Bodo
-- Oraon
-- More Indian tribal languages
+| Category | Technologies |
+|---|---|
+| Programming Language | Python |
+| LLM | Llama 3 |
+| AI Framework | LangChain |
+| Backend | FastAPI, REST APIs |
+| Frontend | Streamlit |
+| Vector Search | FAISS |
+| Database | MongoDB |
+| Speech-to-Text | Faster-Whisper |
+| Translation & Text-to-Speech | Meta SeamlessM4T, IndicTrans |
+| Web Search Integration | Model Context Protocol (MCP) |
+| Tools | Git, GitHub, Docker |
 
-# 🚀 Features
+## 🏗️ Architecture
 
-## 🎤 Speech-to-Text
-
-- Record voice
-- Automatic speech recognition
-- Noise tolerant transcription
-
-**Model**
--  Faster-Whisper
-
-## 🌐 Language Translation
-
-- Tribal Language → English
-- English → Tribal Language
-
-**Model**
-- Meta SeamlessM4T
-
-## 🤖 AI Assistant
-
-- Conversational AI
-- Context-aware responses
-- Memory support
-- Multi-turn conversations
-
-**LLM**
-- Llama 3
-
-
-## 📚 Retrieval-Augmented Generation (RAG)
-
-The chatbot retrieves relevant documents before generating responses.
-
-Knowledge sources can include:
-- Government schemes
-- Healthcare
-- Agriculture
-- Education
-- Local information
-- Tribal documentation
-
-
-## 🔊 Text-to-Speech
-
-- Natural voice generation
-- Response spoken in the user's native language
-
-**Model**
-- XTTS Service (Current implementation uses SeamlessM4T for English and Hindi)
-- Planned: Fine-tuned XTTS v2 for Manipuri, Monpa and Tai Khamti
-
-## 💾 Chat History
-
-- Store conversations
-- Retrieve previous chats
-- User session management
-
-Database:
-
-- MongoDB
-
-# 🏗️ System Architecture
-
-```
+```text
 User
-   │
-   ▼
-Speech Input
-   │
-   ▼
-Faster-Whisper
-(Speech-to-Text)
-   │
-   ▼
-Meta NLLB
-(Translation)
-   │
-   ▼
-Llama 3
-   │
-   ▼
-LangChain
-   │
-   ▼
-Hybrid RAG
-(FAISS + BM25)
-   │
-   ▼
-Generated Response
-   │
-   ▼
-Meta NLLB
-(Optional Translation)
-   │
-   ▼
-XTTS Service
-(Currently SeamlessM4T)
-   │
-   ▼
-Voice Output
+ │
+ ▼
+Streamlit Frontend
+ │
+ ▼
+FastAPI Backend
+ │
+ ├── LLM Conversation Service (Llama 3)
+ ├── RAG Retrieval (LangChain + FAISS)
+ ├── Speech-to-Text (Faster-Whisper)
+ ├── Translation & Text-to-Speech
+ ├── MongoDB (Chat History)
+ └── MCP Web Search Integration
 ```
 
----
+## 🚀 Getting Started
 
-# 🛠️ Technology Stack
+### Prerequisites
 
-| Component       | Technology                           |
-| --------------- | ------------------------------------ |
-| Frontend        | Streamlit                            |
-| Backend         | FastAPI                              |
-| LLM             | Llama 3                              |
-| Speech-to-Text  | Faster-Whisper                       |
-| Translation     | Meta NLLB-200                        |
-| Text-to-Speech  | XTTS Service (Temporary SeamlessM4T) |
-| Framework       | LangChain                            |
-| Vector Database | FAISS                                |
-| Database        | MongoDB                              |
-| Deployment      | Docker                               |
-| Cloud           | AWS                                  |
+- Python 3.11
+- Git
+- [Ollama](https://ollama.com/) installed
+- MongoDB instance
+- FFmpeg installed for audio processing
 
-
-
-# 📂 Project Structure
-
-```
-tribal-ai-chatbot/
-│
-├── backend/
-│   ├── api/
-│   ├── services/
-│   ├── models/
-│   ├── database/
-│   └── main.py
-│
-├── frontend/
-│   ├── pages/
-│   ├── components/
-│   └── app.py
-│
-├── rag/
-│   ├── embeddings/
-│   ├── vector_store/
-│   └── documents/
-│
-├── models/
-│
-├── docker/
-│
-├── tests/
-│
-├── requirements.txt
-│
-├── Dockerfile
-│
-└── README.md
-```
-
----
-
-# ⚙️ Installation
-
-## Clone Repository
+### Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/tribal-ai-chatbot.git
-
-cd tribal-ai-chatbot
+git clone <YOUR_REPOSITORY_URL>
+cd <YOUR_REPOSITORY_NAME>
 ```
 
-
-## Create Virtual Environment
+### Create a Virtual Environment
 
 ```bash
-python -m venv venv
+python -m venv .venv
 ```
 
-Activate
+Activate it:
 
-Windows
-
+**Windows**
 ```bash
-venv\Scripts\activate
+.venv\Scripts\activate
 ```
 
-Linux / Mac
-
+**Linux / macOS**
 ```bash
-source venv/bin/activate
+source .venv/bin/activate
 ```
 
----
-
-## Install Dependencies
+### Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
+### Configure Environment Variables
 
-## Run Backend
+Create a `.env` file in the project root:
 
-```bash
-uvicorn backend.main:app --reload
+```env
+OLLAMA_BASE_URL=http://localhost:11434
+MONGODB_URI=your_mongodb_connection_string
 ```
 
----
+Add any additional API keys required by your configured services. Do not commit secrets or credentials.
 
-## Run Frontend
+### Run the Application
 
-```bash
-streamlit run frontend/app.py
-```
-
----
-
-# 🐳 Docker
-
-Build
+Start the FastAPI backend:
 
 ```bash
-docker build -t tribal-chatbot .
+uvicorn backend.main:app --host 127.0.0.1 --port 8000
 ```
 
-Run
+Start the Streamlit frontend in a separate terminal:
 
 ```bash
-docker run -p 8000:8000 tribal-chatbot
+streamlit run app.py
 ```
 
-# ☁️ AWS Deployment
+> Replace `app.py` with the actual Streamlit entry-point file in your repository.
 
-The application can be deployed using:
+## 📁 Project Structure
 
-- AWS EC2
-- Docker
-- Nginx
-- MongoDB Atlas
+```text
+.
+├── backend/
+│   └── main.py
+├── frontend/
+├── tests/
+├── requirements.txt
+├── Dockerfile
+├── docker-compose.yml
+└── README.md
+```
 
+> Update this structure to match the current repository layout.
 
+## 🧪 Testing
 
+Run the project tests with:
 
+```bash
+python -m pytest
+```
 
-Generative AI Developer
+## 🔒 Security
 
----
+- Keep API keys and database credentials in environment variables.
+- Never commit `.env` files or private datasets.
+- Review uploaded documents and user data handling before deployment.
 
-## ⭐ Support
+## 👨‍💻 Author
 
-If you like this project, consider giving it a **Star ⭐** on GitHub.
+**Aishwar Gupta**  
+AI Intern | Generative AI & Multilingual Applications  
+[LinkedIn](https://www.linkedin.com/in/aishwar-gupta3101/) · [GitHub](https://github.com/aishwargupta3101)
+
+## 📄 License
+
+Add a license file if you intend to distribute or open-source this project.

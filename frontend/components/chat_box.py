@@ -1,7 +1,8 @@
 import streamlit as st
+import re
 from api.client import APIClient
 from api.endpoints import CHAT_ENDPOINT
-from components.message import render_message
+from components.message import render_message, normalize_assistant_markdown
 from components.image_gallery import render_images
 from components.response_formatter import format_for_display
 
@@ -11,10 +12,23 @@ def get_language():
 def get_language_name(language):
     return language.replace("_", " ").title()
 
+
+def _queue_prompt(prompt):
+    """Queue a suggested starter question for the normal chat pipeline."""
+    st.session_state["pending_prompt"] = prompt
+
+
 def ask_ai(question):
     """
     Send a question to the backend and safely process its response.
     """
+    # SANTALI_UNIFIED_CHAT_ROUTING: route Santali-output chat through the shared translation -> chat -> Santali path.
+    if get_language().strip().lower() == "santali":
+        from api.santali_chat_bridge import ask_santali_question
+        return ask_santali_question(
+            question=question,
+            session_id=st.session_state.session_id,
+        )
     try:
         response = APIClient.chat(
             question=question,
@@ -64,6 +78,20 @@ def ask_ai(question):
         print("================================\n")
         raise
 
+def _requires_verified_response(question):
+    """Use complete-response mode for math/programming so malformed partial tokens aren't shown."""
+    q = (question or "").lower()
+    cues = (
+        "three sum", "two sum", "leetcode", "write code", "write a program",
+        "debug", "fix this code", "implement", "algorithm", "time complexity",
+        "space complexity", "code in python", "code in java", "code in c++",
+        "calculate", "solve", "equation", "arithmetic", "percentage",
+        "probability", "integral", "derivative", "simplify", "evaluate",
+        "what is the value", "math", "mathematics",
+    )
+    return any(cue in q for cue in cues) or bool(re.search(r"\d\s*[+\-*/%]\s*\d", q))
+
+
 def ask_ai_stream(question, placeholder):
     """Stream an English response and return the final chat data."""
     answer_parts = []
@@ -77,7 +105,7 @@ def ask_ai_stream(question, placeholder):
         if event_type == "token":
             token = event.get("content", "")
             answer_parts.append(token)
-            preview = format_for_display("".join(answer_parts), get_language())
+            preview = format_for_display(normalize_assistant_markdown("".join(answer_parts)), get_language())
             placeholder.markdown(preview + " ▌")
         elif event_type == "complete":
             final_response = event.get("data")
@@ -169,53 +197,65 @@ def regenerate_answer(message_index):
     st.rerun()
 
 def apply_chat_box_ui():
+    """Apply the shared light-mint workspace theme to the chat page."""
     st.markdown(
         """
         <style>
-        .chat-toolbar-label {
-            font-size: 0.82rem;
-            font-weight: 600;
-            color: #6b7280;
-            letter-spacing: 0.02em;
-            padding: 0.45rem 0;
+        :root { color-scheme: light; }
+        [data-testid="stAppViewContainer"],
+        [data-testid="stMain"],
+        [data-testid="stMainBlockContainer"] { background: #f3faf5 !important; }
+        [data-testid="stHeader"], [data-testid="stToolbar"],
+        [data-testid="stDecoration"] { background: #f3faf5 !important; }
+        [data-testid="stMainBlockContainer"] {
+            max-width: 1180px; padding-top: 1.5rem; padding-bottom: 2.5rem;
         }
-        .chat-toolbar-label::before {
-            content: "●";
-            color: #22c55e;
-            font-size: 0.65rem;
-            margin-right: 0.45rem;
-            vertical-align: 1px;
+        [data-testid="stAppViewContainer"] {
+            background-image: radial-gradient(ellipse at 8% 0%, rgba(187,232,202,.32), transparent 36%),
+                              radial-gradient(ellipse at 95% 10%, rgba(211,239,220,.28), transparent 32%) !important;
         }
-        div[data-testid="stDownloadButton"] > button,
-        div[data-testid="stButton"] > button {
-            border-radius: 10px !important;
-            min-height: 38px !important;
-            font-size: 0.82rem !important;
-            font-weight: 600 !important;
-            transition: all 0.18s ease !important;
+        .tribal-welcome {
+            padding: 1.55rem 1.7rem 1.35rem; border: 1px solid rgba(22,101,52,.14);
+            border-radius: 22px; background: linear-gradient(135deg,#e8f7ed 0%,#fff 78%);
+            box-shadow: 0 8px 28px rgba(25,75,45,.045); margin: .25rem 0 1.25rem;
         }
-        div[data-testid="stDownloadButton"] > button {
-            border: 1px solid rgba(100, 116, 139, 0.22) !important;
-            background: rgba(255, 255, 255, 0.72) !important;
+        .tribal-eyebrow { color:#267548; font-size:.74rem; font-weight:750; letter-spacing:.1em; text-transform:uppercase; margin-bottom:.5rem; }
+        .tribal-welcome h2 { color:#173b28; font-size:clamp(1.55rem,3vw,2.15rem); line-height:1.18; margin:0 0 .6rem; }
+        .tribal-welcome p { color:#52665a; font-size:.96rem; line-height:1.65; margin:0; max-width:780px; }
+        .tribal-starters-label { font-size:.78rem; font-weight:750; letter-spacing:.08em; color:#587064; margin:.25rem 0 .65rem; }
+        div[data-testid="stButton"] > button, div[data-testid="stDownloadButton"] > button {
+            border-radius:12px !important; min-height:40px !important; font-weight:600 !important; transition:all .18s ease !important;
         }
-        div[data-testid="stDownloadButton"] > button:hover {
-            transform: translateY(-1px);
-            border-color: rgba(34, 197, 94, 0.45) !important;
+        div[data-testid="stButton"] button[kind="secondary"] {
+            border:1px solid rgba(75,115,88,.18) !important; background:rgba(255,255,255,.88) !important;
+            color:#284b36 !important; text-align:left; white-space:normal; min-height:3.45rem;
+            box-shadow:0 3px 12px rgba(25,75,45,.025);
         }
-        .chat-actions-divider {
-            height: 1px;
-            background: rgba(100, 116, 139, 0.12);
-            margin: 0.45rem 0 0.8rem;
+        div[data-testid="stButton"] button[kind="secondary"]:hover {
+            border-color:#68b987 !important; color:#17643a !important; background:#f0faf3 !important; transform:translateY(-1px);
         }
-        @media (max-width: 768px) {
-            .chat-toolbar-label {
-                font-size: 0.76rem;
-            }
-            div[data-testid="stDownloadButton"] > button,
-            div[data-testid="stButton"] > button {
-                min-height: 34px !important;
-                font-size: 0.76rem !important;
-            }
+        div[data-testid="stDownloadButton"] > button { border:1px solid rgba(75,115,88,.2) !important; background:rgba(255,255,255,.88) !important; color:#284b36 !important; }
+        div[data-testid="stDownloadButton"] > button:hover { border-color:rgba(34,140,78,.5) !important; transform:translateY(-1px); }
+        .chat-toolbar-label { font-size:.82rem; font-weight:700; color:#52705e; letter-spacing:.025em; padding:.45rem 0; }
+        .chat-toolbar-label::before { content:"●"; color:#2b9a59; font-size:.65rem; margin-right:.45rem; vertical-align:1px; }
+        .chat-actions-divider { height:1px; background:rgba(76,112,87,.13); margin:.45rem 0 .8rem; }
+        [data-testid="stChatInput"] {
+            border:1px solid rgba(66,125,83,.22) !important; border-radius:18px !important;
+            background:rgba(255,255,255,.96) !important; box-shadow:0 8px 26px rgba(28,82,47,.07) !important;
+        }
+        [data-testid="stChatInput"] textarea { color:#203b2b !important; }
+        [data-testid="stChatInput"] textarea::placeholder { color:#829488 !important; }
+        [data-testid="stChatInput"]:focus-within { border-color:#69b985 !important; box-shadow:0 0 0 3px rgba(105,185,133,.13),0 8px 26px rgba(28,82,47,.07) !important; }
+        [data-testid="stChatMessage"] {
+            border:1px solid rgba(76,112,87,.12); border-radius:18px; padding:.85rem 1rem;
+            background:rgba(255,255,255,.88); box-shadow:0 4px 16px rgba(28,82,47,.035);
+        }
+        [data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-user"]) { background:#e9f7ed; border-color:rgba(48,135,78,.16); }
+        @media (max-width:768px) {
+            [data-testid="stMainBlockContainer"] { padding:1rem .8rem 2rem; }
+            .tribal-welcome { padding:1.2rem 1.1rem; border-radius:18px; }
+            .chat-toolbar-label { font-size:.76rem; }
+            div[data-testid="stButton"] > button, div[data-testid="stDownloadButton"] > button { min-height:36px !important; font-size:.78rem !important; }
         }
         </style>
         """,
@@ -230,6 +270,74 @@ def show_chat_box():
         st.session_state.messages = []
     if "voice_text" not in st.session_state:
         st.session_state.voice_text = ""
+
+    # Startup-friendly empty state: explain the product and help first-time users begin.
+    if not st.session_state.messages:
+        st.markdown(
+            """
+            <style>
+            .tribal-welcome {
+                padding: 1.35rem 1.4rem 1.15rem;
+                border: 1px solid rgba(22, 101, 52, 0.16);
+                border-radius: 18px;
+                background: linear-gradient(135deg, rgba(240, 253, 244, 0.95), rgba(255,255,255,0.98) 72%);
+                margin: 0.25rem 0 1.1rem;
+            }
+            .tribal-eyebrow {
+                color: #166534; font-size: 0.76rem; font-weight: 750;
+                letter-spacing: 0.09em; text-transform: uppercase; margin-bottom: 0.45rem;
+            }
+            .tribal-welcome h2 {
+                color: #163b28; font-size: clamp(1.45rem, 3vw, 2rem);
+                line-height: 1.18; margin: 0 0 0.55rem 0;
+            }
+            .tribal-welcome p {
+                color: #475569; font-size: 0.98rem; line-height: 1.6;
+                margin: 0; max-width: 760px;
+            }
+            .tribal-starters-label {
+                font-size: 0.82rem; font-weight: 700; color: #475569;
+                margin: 0.25rem 0 0.55rem;
+            }
+            div[data-testid="stButton"] button[kind="secondary"] {
+                border: 1px solid rgba(100,116,139,0.22);
+                background: rgba(255,255,255,0.92);
+                text-align: left;
+                white-space: normal;
+                min-height: 3.3rem;
+            }
+            div[data-testid="stButton"] button[kind="secondary"]:hover {
+                border-color: #16a34a;
+                color: #166534;
+                background: #f0fdf4;
+            }
+            </style>
+            <section class="tribal-welcome">
+                <div class="tribal-eyebrow">Multilingual learning assistant</div>
+                <h2>Learn in the language that feels like home.</h2>
+                <p>Ask questions, explore learning materials, and get step-by-step explanations. Choose your reply language and start with a suggested question below.</p>
+            </section>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.markdown('<div class="tribal-starters-label">TRY ASKING</div>', unsafe_allow_html=True)
+        starter_prompts = [
+            ("📘", "Explain a difficult topic simply", "Explain artificial intelligence in simple words with three examples."),
+            ("🧠", "Help me prepare for an exam", "Create five practice questions on an important topic and include the answers."),
+            ("🌐", "Translate and explain a concept", "Explain why language translation is useful in education, with examples."),
+            ("🔎", "Ask about tribal knowledge", "Explain how local and traditional knowledge can be preserved using digital tools."),
+        ]
+        starter_cols = st.columns(2)
+        for starter_index, (starter_icon, starter_title, starter_question) in enumerate(starter_prompts):
+            with starter_cols[starter_index % 2]:
+                if st.button(
+                    f"{starter_icon}  {starter_title}",
+                    key=f"tribal_starter_{starter_index}",
+                    use_container_width=True,
+                ):
+                    _queue_prompt(starter_question)
+                    st.rerun()
+
     if st.session_state.messages:
         col1, col2 = st.columns([5, 1])
         with col1:
@@ -266,6 +374,17 @@ def show_chat_box():
         )
         if role == "assistant":
             render_images(images)
+            if str(message.get("language", "")).lower() == "santali":
+                santali_audio_key = f"santali_tts_audio_{index}"
+                if st.button("🔊 Speak Santali answer", key=f"santali_tts_button_{index}"):
+                    try:
+                        from api.santali_tts import synthesize_santali_wav
+                        with st.spinner("Generating Santali speech..."):
+                            st.session_state[santali_audio_key] = synthesize_santali_wav(content)
+                    except Exception as tts_error:
+                        st.error(f"Santali speech generation failed: {type(tts_error).__name__}: {tts_error}")
+                if st.session_state.get(santali_audio_key):
+                    st.audio(st.session_state[santali_audio_key], format="audio/wav")
             st.markdown(
                 '<div class="chat-actions-divider"></div>',
                 unsafe_allow_html=True
@@ -289,9 +408,21 @@ def show_chat_box():
                     ):
                         regenerate_answer(index)
     voice_text = st.session_state.get("voice_text", "")
-    user_input = st.chat_input(
-        "Ask something about tribal knowledge..."
-    )
+    # SANTALI_UNIFIED_INPUT_GUIDANCE: Santali is the reply language.
+    if get_language().strip().lower() == "santali":
+        st.caption("Reply language: Santali (Ol Chiki). Type your question in English or Ol Chiki; answers are returned in Santali.")
+    # ChatGPT-style plus menu. This is additive; the existing chat_input and
+    # ask_ai / ask_ai_stream processing pipeline remain unchanged.
+    from components.attachment_menu import render_plus_menu
+    composer_col_plus, composer_col_hint = st.columns([0.55, 9.45], vertical_alignment="bottom")
+    with composer_col_plus:
+        render_plus_menu()
+    with composer_col_hint:
+        user_input = st.chat_input(
+            "Ask a question, request an explanation, or explore a topic..."
+        )
+    if not user_input:
+        user_input = st.session_state.pop("pending_prompt", "")
     if not user_input and voice_text:
         user_input = voice_text
         st.session_state.voice_text = ""
@@ -313,7 +444,10 @@ def show_chat_box():
     )
     with st.spinner("🌿 Tribal AI is thinking..."):
         try:
-            if current_language in {"english", "hindi", "manipuri", "manipuri_mtei"}:
+            if (
+                current_language in {"english", "hindi", "manipuri", "manipuri_mtei"}
+                and not _requires_verified_response(user_input)
+            ):
                 with st.chat_message("assistant"):
                     response_placeholder = st.empty()
                     result = ask_ai_stream(
@@ -321,6 +455,8 @@ def show_chat_box():
                         response_placeholder,
                     )
             else:
+                # Math/code responses are returned only after backend validation,
+                # cleanup, and any repair attempt have completed.
                 result = ask_ai(user_input)
             answer = result["answer"]
             detected_language = result["detected_language"]

@@ -1,172 +1,103 @@
 import streamlit as st
-def html_block(html):
-    """
-    Render HTML safely in Streamlit.
 
-    Converts multiline HTML into a single line so that
-    Streamlit does not interpret the HTML as a code block.
-    """
-    html = " ".join(
-        line.strip()
-        for line in html.splitlines()
-        if line.strip()
-    )
-    st.markdown(
-        html,
-        unsafe_allow_html=True
-    )
 
-def feature_card(
-    number,
-    icon,
-    title,
-    description
-):
-    html_block(
-        f"""
-        <div class="feature-card">
-            <div class="card-number">{number}</div>
-            <div class="feature-icon">{icon}</div>
-            <div class="feature-title">{title}</div>
-            <div class="feature-text">{description}</div>
-            <div class="card-arrow">→</div>
-        </div>
-        """
-    )
+def _navigate(page: str):
+    """Keep the sidebar radio and app page state in sync."""
+    st.session_state["main_navigation"] = page
+    st.session_state["selected_page"] = page
+
+
+def _open_chat():
+    _navigate("💬 Chat")
+
+
+def _open_voice():
+    _navigate("🎤 Voice")
+
+
+def _open_documents():
+    _navigate("📄 Documents")
+
 
 def show_home():
-    language = st.session_state.get(
-        "language",
-        "english"
-    )
-    language_name = (
-        language
-        .replace("_", " ")
-        .title()
-    )
-    html_block(
-        f"""
-        <div class="hero-section">
-            <div class="hero-glow hero-glow-one"></div>
-            <div class="hero-glow hero-glow-two"></div>
-            <div class="hero-badge">
-                🌿 &nbsp; INTELLIGENT • MULTILINGUAL • CULTURAL
-            </div>
-            <div class="hero-title">
-                Explore Knowledge.<br>
-                <span>Preserve Culture.</span>
-            </div
-            <div class="hero-description">
-                A multilingual AI assistant designed to connect
-                people with tribal knowledge, culture, languages,
-                traditions and modern information.
-            </div>
-            <div class="hero-language">
-                🌐 &nbsp; {language_name} Mode
-            </div>
-        </div>
-        """
-    )
-    html_block(
-        """
-        <div class="section-heading">
-            <div class="section-eyebrow">
-                WHAT YOU CAN DO
-            </div>
-            <div class="section-title">
-                One assistant. Many possibilities.
-            </div>
-            <div class="section-description">
-                Explore knowledge, ask questions, work with documents
-                and communicate naturally with Tribal AI.
-            </div>
+    """Dark, green-accented Tribal AI landing page inspired by the supplied reference."""
+    language = str(st.session_state.get("language", "english")).replace("_", " ").title()
 
-        </div>
-        """
+    st.markdown(
+        f"""
+        <section class="ta-home-hero">
+            <div class="ta-eyebrow"><span class="ta-live-dot"></span> INTELLIGENT&nbsp; · &nbsp;MULTILINGUAL&nbsp; · &nbsp;CULTURAL</div>
+            <div class="ta-brand-mark">🌿</div>
+            <p class="ta-brand-name">TRIBAL AI</p>
+            <h1 class="ta-home-title">How can I help you <span>today?</span></h1>
+            <p class="ta-home-subtitle">
+                Your multilingual knowledge assistant for community stories, culture,
+                traditions, learning, and everyday questions.
+            </p>
+            <div class="ta-language-pill">🌐 &nbsp; Current language <strong>{language}</strong></div>
+        </section>
+        """,
+        unsafe_allow_html=True,
     )
-    col1, col2, col3 = st.columns(3)
+
+    st.markdown('<div class="ta-section-label">START EXPLORING</div>', unsafe_allow_html=True)
+
+    col1, col2, col3 = st.columns(3, gap="medium")
     with col1:
-        feature_card(
-            "01",
-            "🌿",
-            "Explore Knowledge",
-            "Discover tribal culture, traditions, languages "
-            "and community knowledge."
+        st.markdown(
+            """
+            <div class="ta-feature-card">
+                <div class="ta-feature-icon">▦</div>
+                <div class="ta-feature-title">Explore knowledge</div>
+                <p class="ta-feature-description">Discover tribal culture, traditions, community stories, and local knowledge.</p>
+                <div class="ta-feature-tag">LEARN & DISCOVER</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
         )
+        st.button("Explore with Tribal AI  ↗", key="home_chat_button", type="primary",
+                  use_container_width=True, on_click=_open_chat)
     with col2:
-        feature_card(
-            "02",
-            "💬",
-            "Ask Anything",
-            "Ask questions naturally and receive clear "
-            "AI-powered answers."
+        st.markdown(
+            """
+            <div class="ta-feature-card">
+                <div class="ta-feature-icon">✳</div>
+                <div class="ta-feature-title">Ask a question</div>
+                <p class="ta-feature-description">Get helpful answers in your selected language with a simple conversation.</p>
+                <div class="ta-feature-tag">CHAT ASSISTANT</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
         )
+        st.button("Start a conversation  ↗", key="home_voice_button",
+                  use_container_width=True, on_click=_open_chat)
     with col3:
-        feature_card(
-            "03",
-            "🎤",
-            "Use Your Voice",
-            "Speak naturally using voice interaction "
-            "with the AI assistant."
+        st.markdown(
+            """
+            <div class="ta-feature-card">
+                <div class="ta-feature-icon">◉</div>
+                <div class="ta-feature-title">Use your voice</div>
+                <p class="ta-feature-description">Speak naturally and explore voice-based multilingual assistance.</p>
+                <div class="ta-feature-tag">VOICE ASSISTANT</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
         )
-    col4, col5, col6 = st.columns(3)
-    with col4:
-        feature_card(
-            "04",
-            "📄",
-            "Upload Documents",
-            "Add your own knowledge documents and use "
-            "them during conversations."
-        )
-    with col5:
-        feature_card(
-            "05",
-            "🌐",
-            "Multiple Languages",
-            "Switch between supported languages while "
-            "keeping the conversation natural."
-        )
-    with col6:
-        feature_card(
-            "06",
-            "🖼️",
-            "Visual Discovery",
-            "Find relevant images to better understand "
-            "places, people, culture and topics."
-        )
-    html_block(
+        st.button("Open voice assistant  ↗", key="home_documents_button",
+                  use_container_width=True, on_click=_open_voice)
+
+    st.markdown(
         """
-        <div class="home-cta">
-            <div class="home-cta-icon">
-                🌱
-            </div>
-            <div class="home-cta-content">
-                <div class="home-cta-title">
-                    Ready to explore?
-                </div>
-                <div class="home-cta-text">
-                    Start a conversation and discover
-                    knowledge with Tribal AI.
-                </div>
-            </div>
-            <div class="home-cta-arrow">
-                →
-            </div>
+        <div class="ta-home-bottom">
+            <div class="ta-bottom-rule"></div>
+            <span>🌿 &nbsp; TRIBAL AI</span>
+            <span>Preserving knowledge · Connecting cultures</span>
+            <span class="ta-bottom-status"><span class="ta-live-dot"></span> SYSTEM READY</span>
         </div>
-        """
+        """,
+        unsafe_allow_html=True,
     )
-    html_block(
-        """
-        <div class="home-footer">
-            <div>
-                🌿 Tribal AI
-            </div>
-            <div>
-                Preserving Knowledge • Connecting Cultures
-            </div>
-            <div>
-                v1.0.0
-            </div>
-        </div>
-        """
-    )
+
+
+if __name__ == "__main__":
+    show_home()

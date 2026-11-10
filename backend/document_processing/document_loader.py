@@ -7,6 +7,21 @@ from backend.document_processing.txt_loader import TXTLoader
 class DocumentLoader:
 
     @staticmethod
+    def load_preserving_structure(file_path: str) -> str:
+        """Extract text while preserving existing line and paragraph breaks."""
+        extension = Path(file_path).suffix.lower()
+
+        if extension == ".pdf":
+            text = PDFLoader.load(file_path)
+        elif extension == ".docx":
+            text = DOCXLoader.load(file_path)
+        elif extension == ".txt":
+            text = TXTLoader.load(file_path)
+        else:
+            raise ValueError(f"Unsupported file type: {extension}")
+        return text.strip()
+
+    @staticmethod
     def load(file_path: str):
         extension = (
             Path(file_path)

@@ -2844,7 +2844,7 @@ def apply_custom_css():
         section[data-testid="stSidebar"] .sidebar-status {
             color: #4f765d !important;
         }
-        
+
         section[data-testid="stSidebar"] .sidebar-status span,
         section[data-testid="stSidebar"] .sidebar-status div {
             color: #4f765d !important;
@@ -3129,7 +3129,7 @@ def apply_custom_css():
             font-size: 17px !important;
             font-weight: 700 !important;
         }
-        
+
         section[data-testid="stSidebar"] .brand-subtitle {
             color: #60766a !important;
             font-size: 9px !important;
@@ -4054,7 +4054,641 @@ def apply_custom_css():
         background:transparent!important;
         box-shadow:none!important;
         }
-         </style>
+
+        /* ============================================================
+           TRIBAL AI — FINAL DARK REFERENCE THEME
+           Original CSS above is preserved; these rules intentionally override it.
+           ============================================================ */
+        :root {
+            --ta-bg: #050907;
+            --ta-panel: #101713;
+            --ta-panel-raised: #171f1a;
+            --ta-green: #42d879;
+            --ta-green-deep: #147642;
+            --ta-text: #f0f5f1;
+            --ta-muted: #a7b6ab;
+            --ta-border: #293a2e;
+        }
+        html, body, .stApp, [data-testid="stAppViewContainer"],
+        [data-testid="stMain"], .main {
+            background: var(--ta-bg) !important;
+            color: var(--ta-text) !important;
+        }
+        header[data-testid="stHeader"] {
+            background: rgba(5,9,7,.92) !important;
+        }
+        .main .block-container {
+            width: 100% !important;
+            max-width: 1380px !important;
+            padding: 1.6rem clamp(1rem, 4vw, 3.5rem) 2.6rem !important;
+            margin: 0 auto !important;
+        }
+        .main p, .main li, .main label,
+        .main [data-testid="stMarkdownContainer"],
+        .main [data-testid="stMarkdownContainer"] p,
+        .main [data-testid="stWidgetLabel"] p {
+            color: var(--ta-text);
+        }
+
+        /* Hero area: compact, centered, and never wider than the viewport */
+        .ta-home-hero {
+            position: relative;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: clamp(1.4rem, 4vw, 3rem) 1rem 2.2rem;
+            text-align: center;
+            border: 1px solid rgba(71, 134, 89, .22);
+            border-radius: 24px;
+            background:
+                radial-gradient(ellipse at 50% 0%, rgba(24, 109, 53, .25), transparent 58%),
+                linear-gradient(145deg, #0d1710 0%, #070b08 72%);
+            box-shadow: 0 18px 70px rgba(0,0,0,.22), inset 0 1px rgba(255,255,255,.025);
+            overflow: hidden;
+        }
+        .ta-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: .35rem;
+            color: #9acbab !important;
+            font-size: .68rem;
+            font-weight: 800;
+            letter-spacing: .16em;
+            line-height: 1.8;
+        }
+        .ta-live-dot {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            flex: 0 0 7px;
+            border-radius: 50%;
+            background: var(--ta-green);
+            box-shadow: 0 0 12px rgba(66,216,121,.55);
+        }
+        .ta-brand-mark {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            margin: 1.4rem auto .55rem;
+            border: 1px solid #28583a;
+            border-radius: 15px;
+            background: linear-gradient(145deg, #183d27, #0c2114);
+            font-size: 1.5rem;
+            box-shadow: 0 0 28px rgba(45, 176, 91, .10);
+        }
+        .ta-brand-name {
+            margin: 0 !important;
+            color: #dceee1 !important;
+            font-size: .73rem !important;
+            font-weight: 800 !important;
+            letter-spacing: .2em;
+        }
+        .ta-home-title {
+            max-width: 850px;
+            margin: 1.15rem auto .85rem !important;
+            color: #f4f8f4 !important;
+            font-size: clamp(2.1rem, 4.5vw, 4rem) !important;
+            line-height: 1.08 !important;
+            letter-spacing: -.045em !important;
+            font-weight: 800 !important;
+            overflow-wrap: break-word !important;
+            word-break: normal !important;
+        }
+        .ta-home-title span {
+            color: var(--ta-green) !important;
+        }
+        .ta-home-subtitle {
+            max-width: 640px;
+            margin: 0 auto 1.2rem !important;
+            color: #b5c3b8 !important;
+            font-size: clamp(.9rem, 1.5vw, 1.05rem) !important;
+            line-height: 1.8 !important;
+        }
+        .ta-language-pill {
+            display: inline-flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: .25rem;
+            max-width: 100%;
+            padding: .62rem 1rem;
+            border: 1px solid #2a4933;
+            border-radius: 999px;
+            background: #0b1a10;
+            color: #b9cbbd !important;
+            font-size: .8rem;
+        }
+        .ta-language-pill strong {
+            color: #81e8a4 !important;
+            font-weight: 750;
+        }
+
+        .ta-section-label {
+            margin: 1.7rem auto .85rem;
+            max-width: 960px;
+            color: #9ab5a0 !important;
+            font-size: .69rem;
+            font-weight: 800;
+            letter-spacing: .18em;
+        }
+        .ta-feature-card {
+            display: flex;
+            flex-direction: column;
+            min-height: 218px;
+            height: 100%;
+            padding: 1.25rem;
+            border: 1px solid #293b2e;
+            border-radius: 17px;
+            background:
+                radial-gradient(ellipse at 100% 0%, rgba(26, 89, 43, .16), transparent 58%),
+                linear-gradient(150deg, #121a14, #0b100c);
+            box-shadow: 0 12px 30px rgba(0,0,0,.14);
+            transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+        }
+        .ta-feature-card:hover {
+            transform: translateY(-3px);
+            border-color: #39734a;
+            box-shadow: 0 16px 35px rgba(0,0,0,.24);
+        }
+        .ta-feature-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            margin-bottom: 1rem;
+            border: 1px solid #285b39;
+            border-radius: 12px;
+            background: #102a19;
+            color: #56e48a !important;
+            font-size: 1.3rem;
+        }
+        .ta-feature-title {
+            margin-bottom: .5rem;
+            color: #edf5ef !important;
+            font-size: 1.02rem;
+            font-weight: 750;
+            line-height: 1.35;
+        }
+        .ta-feature-description {
+            margin: 0 0 1rem !important;
+            color: #b0beb4 !important;
+            font-size: .85rem !important;
+            line-height: 1.7 !important;
+        }
+        .ta-feature-tag {
+            margin-top: auto;
+            color: #6fbd88 !important;
+            font-size: .62rem;
+            font-weight: 800;
+            letter-spacing: .13em;
+        }
+        .main .stButton > button {
+            width: 100%;
+            min-height: 2.8rem !important;
+            border: 1px solid #31543a !important;
+            border-radius: 10px !important;
+            background: #101a13 !important;
+            color: #e9f5ec !important;
+            font-weight: 650 !important;
+            transition: transform .15s ease, background .15s ease, border-color .15s ease;
+        }
+        .main .stButton > button:hover {
+            background: #16291b !important;
+            border-color: #4ca867 !important;
+            color: #ffffff !important;
+            transform: translateY(-1px);
+        }
+        .main .stButton > button[kind="primary"] {
+            background: #20864b !important;
+            border-color: #20864b !important;
+            color: #ffffff !important;
+        }
+        .main .stButton > button[kind="primary"]:hover {
+            background: #2ca85e !important;
+            border-color: #2ca85e !important;
+        }
+        .ta-home-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: .75rem;
+            max-width: 960px;
+            margin: 2.2rem auto 0;
+            color: #819388 !important;
+            font-size: .68rem;
+            letter-spacing: .035em;
+        }
+        .ta-bottom-rule {
+            flex-basis: 100%;
+            height: 1px;
+            margin-bottom: .25rem;
+            background: #25332a;
+        }
+        .ta-bottom-status {
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            color: #9bcbaa !important;
+            font-size: .63rem;
+            font-weight: 800;
+            letter-spacing: .1em;
+        }
+
+        /* Sidebar: near-black green with clear labels and restrained active state */
+        section[data-testid="stSidebar"],
+        section[data-testid="stSidebar"] > div {
+            background: #0a1510 !important;
+            border-right: 1px solid #20392a !important;
+        }
+        section[data-testid="stSidebar"] .block-container {
+            padding: 1.15rem .9rem 1rem !important;
+            max-width: 100% !important;
+        }
+        section[data-testid="stSidebar"] p,
+        section[data-testid="stSidebar"] span,
+        section[data-testid="stSidebar"] label,
+        section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"],
+        section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p,
+        section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] h1,
+        section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] h2,
+        section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] h3,
+        section[data-testid="stSidebar"] [data-testid="stRadio"] label,
+        section[data-testid="stSidebar"] [data-testid="stWidgetLabel"] p,
+        section[data-testid="stSidebar"] [data-testid="stCaptionContainer"] {
+            color: #dce9df !important;
+        }
+        section[data-testid="stSidebar"] .tribal-brand .brand-name {
+            color: #f0f7f1 !important;
+            font-weight: 800 !important;
+        }
+        section[data-testid="stSidebar"] .brand-subtitle,
+        section[data-testid="stSidebar"] .no-chats {
+            color: #9fb2a4 !important;
+        }
+        section[data-testid="stSidebar"] .sidebar-section-title {
+            color: #69c987 !important;
+            font-size: .66rem !important;
+            font-weight: 800 !important;
+            letter-spacing: .14em !important;
+        }
+        section[data-testid="stSidebar"] .online-badge {
+            color: #8bdba3 !important;
+        }
+        section[data-testid="stSidebar"] [data-testid="stRadio"] > div {
+            gap: .22rem !important;
+        }
+        section[data-testid="stSidebar"] [data-testid="stRadio"] label {
+            padding: .42rem .55rem !important;
+            border: 1px solid transparent !important;
+            border-radius: 9px !important;
+            transition: background .15s ease, border-color .15s ease;
+        }
+        section[data-testid="stSidebar"] [data-testid="stRadio"] label:hover {
+            background: #14251a !important;
+            border-color: #2b4934 !important;
+        }
+        section[data-testid="stSidebar"] [data-testid="stRadio"] label p,
+        section[data-testid="stSidebar"] [data-testid="stRadio"] label span {
+            color: #dce9df !important;
+            font-size: .88rem !important;
+        }
+        section[data-testid="stSidebar"] [data-testid="stRadio"] input:checked + div {
+            background: #1a3b27 !important;
+            border-color: #2f7045 !important;
+        }
+        section[data-testid="stSidebar"] .stButton > button {
+            min-height: 2.65rem !important;
+            background: #eaf5ed !important;
+            border: 1px solid #d3e7d8 !important;
+            color: #163a25 !important;
+            border-radius: 10px !important;
+            font-weight: 700 !important;
+        }
+        section[data-testid="stSidebar"] .stButton > button:hover {
+            background: #d7f0df !important;
+            border-color: #a9d9b7 !important;
+        }
+        section[data-testid="stSidebar"] [data-baseweb="select"] > div {
+            background: #f7fbf8 !important;
+            border-color: #cbded0 !important;
+            border-radius: 9px !important;
+        }
+        section[data-testid="stSidebar"] [data-baseweb="select"] input,
+        section[data-testid="stSidebar"] [data-baseweb="select"] div,
+        section[data-testid="stSidebar"] [data-baseweb="select"] span {
+            color: #183329 !important;
+        }
+        section[data-testid="stSidebar"] hr,
+        section[data-testid="stSidebar"] .sidebar-divider {
+            border-color: #243d2d !important;
+            background-color: #243d2d !important;
+        }
+
+        /* Inputs and dropdowns: always readable regardless of app theme */
+        .main input, .main textarea,
+        .main [data-baseweb="input"] input,
+        .main [data-baseweb="textarea"] textarea {
+            background: #f8fbf9 !important;
+            color: #172a1e !important;
+            caret-color: #20864b !important;
+            border-color: #cbded0 !important;
+        }
+        .main input::placeholder, .main textarea::placeholder {
+            color: #65766a !important;
+            opacity: 1 !important;
+        }
+        div[data-baseweb="popover"] {
+            z-index: 999999 !important;
+        }
+        div[data-baseweb="popover"] [role="option"] {
+            color: #172a1e !important;
+        }
+
+        @media (max-width: 800px) {
+            .main .block-container {
+                padding: 1rem .8rem 2rem !important;
+            }
+            .ta-home-hero {
+                padding: 1.35rem .85rem 1.5rem;
+                border-radius: 18px;
+            }
+            .ta-home-title {
+                font-size: clamp(2rem, 8vw, 3rem) !important;
+                letter-spacing: -.04em !important;
+            }
+            .ta-home-subtitle {
+                font-size: .92rem !important;
+            }
+            .ta-feature-card {
+                min-height: 160px;
+                padding: 1rem;
+            }
+            .ta-home-bottom {
+                justify-content: center;
+                text-align: center;
+            }
+        }
+
+
+        /* ============================================================
+           FINAL VISUAL POLISH — consistent, inviting Tribal AI UI
+           These rules are additive; all existing stylesheet content remains.
+           ============================================================ */
+        :root {
+            --tribal-bg: #070b08;
+            --tribal-panel: #101812;
+            --tribal-panel-raised: #152219;
+            --tribal-border: #2a4030;
+            --tribal-green: #49d982;
+            --tribal-text: #f0f6f1;
+            --tribal-muted: #a9b9ad;
+        }
+
+        /* Consistent main canvas and more balanced page width */
+        html, body, .stApp, [data-testid="stAppViewContainer"],
+        [data-testid="stMain"], .main {
+            background: var(--tribal-bg) !important;
+            color: var(--tribal-text) !important;
+        }
+        .main .block-container {
+            max-width: 1360px !important;
+            padding: 1.25rem clamp(1rem, 3.5vw, 3rem) 2.5rem !important;
+        }
+        .main h1, .main h2, .main h3, .main h4 {
+            color: #f2f7f3 !important;
+            letter-spacing: -.025em;
+        }
+        .main p, .main li, .main label,
+        .main [data-testid="stMarkdownContainer"],
+        .main [data-testid="stMarkdownContainer"] p,
+        .main [data-testid="stWidgetLabel"] p {
+            color: #d0ddd3;
+        }
+        .main [data-testid="stCaptionContainer"] {
+            color: #9eafa2 !important;
+        }
+
+        /* Avoid pale/light cards that clash with the dark green identity */
+        .main [data-testid="stVerticalBlockBorderWrapper"],
+        .main [data-testid="stExpander"],
+        .main [data-testid="stForm"],
+        .main [data-testid="stMetric"] {
+            background: #101812 !important;
+            border-color: #2a4030 !important;
+            border-radius: 14px !important;
+        }
+        .main [data-testid="stAlert"] {
+            background: #112117 !important;
+            color: #e7f2e9 !important;
+            border: 1px solid #31583b !important;
+            border-radius: 12px !important;
+        }
+
+        /* Buttons throughout the app: dark by default, bright green primary */
+        .main .stButton > button,
+        .main .stDownloadButton > button,
+        .main [data-testid="stFormSubmitButton"] > button {
+            min-height: 2.65rem !important;
+            border-radius: 11px !important;
+            border: 1px solid #35513c !important;
+            background: linear-gradient(145deg, #17241a, #101812) !important;
+            color: #edf6ef !important;
+            font-weight: 650 !important;
+            box-shadow: 0 4px 14px rgba(0,0,0,.12) !important;
+            transition: background .16s ease, border-color .16s ease, transform .16s ease !important;
+        }
+        .main .stButton > button:hover,
+        .main .stDownloadButton > button:hover,
+        .main [data-testid="stFormSubmitButton"] > button:hover {
+            background: #1b3021 !important;
+            border-color: #4d9d64 !important;
+            color: #ffffff !important;
+            transform: translateY(-1px);
+        }
+        .main .stButton > button[kind="primary"],
+        .main [data-testid="stFormSubmitButton"] > button[kind="primary"] {
+            background: linear-gradient(135deg, #2eaf62, #168247) !important;
+            border-color: #37bd6d !important;
+            color: #ffffff !important;
+            box-shadow: 0 6px 18px rgba(30, 151, 76, .18) !important;
+        }
+        .main .stButton > button[kind="primary"]:hover {
+            background: linear-gradient(135deg, #3acb75, #1d9952) !important;
+        }
+
+        /* Sidebar: readable labels and dark recent-conversation buttons */
+        section[data-testid="stSidebar"],
+        section[data-testid="stSidebar"] > div {
+            background: #0a1510 !important;
+            border-right: 1px solid #24402d !important;
+        }
+        section[data-testid="stSidebar"] .block-container {
+            padding: 1.1rem .85rem 1rem !important;
+        }
+        section[data-testid="stSidebar"] p,
+        section[data-testid="stSidebar"] span,
+        section[data-testid="stSidebar"] label,
+        section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"],
+        section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p,
+        section[data-testid="stSidebar"] [data-testid="stWidgetLabel"] p,
+        section[data-testid="stSidebar"] [data-testid="stCaptionContainer"] {
+            color: #dbe9de !important;
+        }
+        section[data-testid="stSidebar"] .stButton > button {
+            background: #132219 !important;
+            border: 1px solid #2a4331 !important;
+            color: #e5f1e8 !important;
+            -webkit-text-fill-color: #e5f1e8 !important;
+            box-shadow: none !important;
+        }
+        section[data-testid="stSidebar"] .stButton > button p,
+        section[data-testid="stSidebar"] .stButton > button span,
+        section[data-testid="stSidebar"] .stButton > button div {
+            color: #e5f1e8 !important;
+            -webkit-text-fill-color: #e5f1e8 !important;
+            opacity: 1 !important;
+        }
+        section[data-testid="stSidebar"] .stButton > button:hover {
+            background: #1a3423 !important;
+            border-color: #3b8050 !important;
+        }
+        section[data-testid="stSidebar"] [data-baseweb="select"] > div {
+            background: #f4faf6 !important;
+            border-color: #c9ded0 !important;
+            border-radius: 10px !important;
+        }
+        section[data-testid="stSidebar"] [data-baseweb="select"] input,
+        section[data-testid="stSidebar"] [data-baseweb="select"] div,
+        section[data-testid="stSidebar"] [data-baseweb="select"] span {
+            color: #173b27 !important;
+        }
+
+        /* Tabs: active state clearly visible, inactive labels not black */
+        .main [data-baseweb="tab-list"] {
+            gap: .35rem !important;
+            border-bottom: 1px solid #273b2c !important;
+        }
+        .main [data-baseweb="tab"] {
+            color: #b9cbbd !important;
+            background: transparent !important;
+            border-radius: 9px 9px 0 0 !important;
+        }
+        .main [data-baseweb="tab"] p,
+        .main [data-baseweb="tab"] span {
+            color: #b9cbbd !important;
+        }
+        .main [data-baseweb="tab"][aria-selected="true"] {
+            background: #132319 !important;
+            border-bottom: 2px solid #49d982 !important;
+        }
+        .main [data-baseweb="tab"][aria-selected="true"] p,
+        .main [data-baseweb="tab"][aria-selected="true"] span {
+            color: #71e69a !important;
+        }
+
+        /* Inputs: consistent dark surfaces, clear focus ring, readable placeholder */
+        .main input, .main textarea,
+        .main [data-baseweb="input"] input,
+        .main [data-baseweb="textarea"] textarea,
+        .main [data-testid="stChatInput"] textarea {
+            background: #101812 !important;
+            color: #f0f6f1 !important;
+            caret-color: #49d982 !important;
+            border-color: #334d39 !important;
+        }
+        .main input::placeholder, .main textarea::placeholder,
+        .main [data-testid="stChatInput"] textarea::placeholder {
+            color: #91a497 !important;
+            opacity: 1 !important;
+        }
+        .main input:focus, .main textarea:focus {
+            border-color: #49b86d !important;
+            box-shadow: 0 0 0 1px #49b86d !important;
+        }
+        .main [data-baseweb="select"] > div {
+            background: #111b14 !important;
+            border-color: #334d39 !important;
+            border-radius: 10px !important;
+        }
+        .main [data-baseweb="select"] input,
+        .main [data-baseweb="select"] div,
+        .main [data-baseweb="select"] span {
+            color: #e8f2ea !important;
+        }
+        div[data-baseweb="popover"] {
+            z-index: 999999 !important;
+        }
+        div[data-baseweb="popover"] [role="option"] {
+            color: #172a1e !important;
+        }
+
+        /* Chat messages: replace stark white bubbles with soft, layered surfaces */
+        [data-testid="stChatMessage"] {
+            background: #111a14 !important;
+            border: 1px solid #2b4030 !important;
+            border-radius: 18px !important;
+            padding: 1rem 1.1rem !important;
+            margin: .75rem 0 !important;
+            box-shadow: 0 7px 22px rgba(0,0,0,.14) !important;
+        }
+        [data-testid="stChatMessage"] p,
+        [data-testid="stChatMessage"] li,
+        [data-testid="stChatMessage"] [data-testid="stMarkdownContainer"] {
+            color: #eaf3ec !important;
+            line-height: 1.75 !important;
+        }
+        [data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-user"]),
+        [data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) {
+            background: linear-gradient(135deg, #173c27, #12301f) !important;
+            border-color: #2c6940 !important;
+        }
+        [data-testid="stChatMessage"] code {
+            color: #d8f8e0 !important;
+            background: #09100b !important;
+            border: 1px solid #2b4030 !important;
+            border-radius: 6px !important;
+        }
+        [data-testid="stChatInput"] {
+            background: #111a14 !important;
+            border: 1px solid #36523d !important;
+            border-radius: 17px !important;
+            box-shadow: 0 8px 28px rgba(0,0,0,.2) !important;
+        }
+        [data-testid="stChatInput"] button {
+            background: #218b4d !important;
+            border: 1px solid #218b4d !important;
+            color: white !important;
+            border-radius: 10px !important;
+        }
+
+        /* Existing custom chat_box message markup: common class-name coverage */
+        .chat-message, .message, .message-container, .assistant-message,
+        .bot-message, .ai-message, .chat-bubble {
+            color: #eaf3ec !important;
+        }
+        .assistant-message, .bot-message, .ai-message, .message.assistant,
+        .message.bot, .message.ai {
+            background: #111a14 !important;
+            border: 1px solid #2b4030 !important;
+            border-radius: 16px !important;
+        }
+        .user-message, .message.user, .chat-bubble.user {
+            background: #173c27 !important;
+            border: 1px solid #2c6940 !important;
+            color: #f2f8f3 !important;
+            border-radius: 16px !important;
+        }
+
+        @media (max-width: 760px) {
+            .main .block-container { padding: .9rem .75rem 1.7rem !important; }
+            [data-testid="stChatMessage"] { padding: .85rem !important; }
+        }
+
+        </style>
         """,
         unsafe_allow_html=True
     )

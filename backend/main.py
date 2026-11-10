@@ -13,15 +13,24 @@ from backend.middleware import (
     TimerMiddleware,
     RequestIDMiddleware
 )
+from backend.routes.presentation_router import router as presentation_router
+from backend.routes.education_router import router as education_router
+from backend.routes.education_lesson_router import (
+    router as education_lesson_router,
+)
+from backend.tribal_languages.indian_language_router import router as indian_language_router
+from backend.tribal_languages.gondi_language_router import router as gondi_language_router
 from backend.exceptions import (
     TribalAIException,
     tribal_exception_handler,
     generic_exception_handler,
 )
+from backend.tribal_languages.santali_onnx_router import router as santali_onnx_stt_router
 from backend.speech.speech_router import router as speech_router
 from backend.tts.tts_router import router as tts_router
-
-
+from backend.tribal_languages.router import router as tribal_language_lab_router
+from backend.tribal_languages.santali_language_router import router as santali_language_router
+from backend.tribal_languages.santali_router import router as santali_experimental_router
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("Starting Tribal AI Chatbot Backend...")
@@ -50,7 +59,17 @@ app.include_router(api_router)
 app.include_router(translation_router)
 app.include_router(speech_router)
 app.include_router(tts_router)
+app.include_router(education_lesson_router)
+app.include_router(education_router)
+app.include_router(presentation_router)
+app.include_router(indian_language_router)
+app.include_router(gondi_language_router)
+app.include_router(santali_onnx_stt_router)
 app.include_router(manipuri_tts_router,prefix="/api/v1")
+app.include_router(tribal_language_lab_router)
+app.include_router(santali_onnx_stt_router)
+app.include_router(santali_language_router)
+app.include_router(santali_experimental_router)
 app.add_exception_handler(
     Exception,
     generic_exception_handler

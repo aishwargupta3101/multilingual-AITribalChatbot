@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "default_enabled": false,
+  "languages": {
+    "gondi": {
+      "selected_variety_required": true,
+      "candidates": [
+        {"capability": "stt", "model_id": "facebook/mms-1b-all", "language_code": "wsg", "license": "CC-BY-NC-4.0", "status": "research-only", "commercial_use_allowed": false, "source": "https://huggingface.co/facebook/mms-1b-all"},
+        {"capability": "tts", "model_id": "facebook/mms-tts-wsg", "language_code": "wsg", "license": "CC-BY-NC-4.0", "status": "research-only", "commercial_use_allowed": false, "source": "https://huggingface.co/facebook/mms-tts-wsg"},
+        {"capability": "translation", "model_id": null, "language_code": "gon", "license": null, "status": "no-verified-general-model", "commercial_use_allowed": null, "source": "https://huggingface.co/ai4bharat/models"}
+      ]
+    },
+    "santali": {
+      "selected_script": "Ol Chiki (sat_Olck) for IndicTrans2; verify model I/O before enabling",
+      "candidates": [
+        {"capability": "stt", "model_id": "ai4bharat/indic-conformer-600m-multilingual", "language_code": "sat", "license": "MIT", "status": "gated-candidate", "source": "https://huggingface.co/ai4bharat/indic-conformer-600m-multilingual"},
+        {"capability": "translation", "model_id": "ai4bharat/indictrans2-indic-indic-dist-320M", "language_code": "sat_Olck", "license": "MIT", "status": "gated-candidate", "source": "https://huggingface.co/ai4bharat/indictrans2-indic-indic-dist-320M"},
+        {"capability": "tts", "model_id": "ai4bharat/indic-parler-tts", "language_code": "sat", "license": "Apache-2.0", "status": "gated-candidate", "source": "https://huggingface.co/ai4bharat/indic-parler-tts"}
+      ]
+    },
+    "monpa": {
+      "selected_variety_required": true,
+      "verified_model_candidates": [],
+      "note": "Select exact variety and writing system; collect consented native audio/text and validate before using a model. Do not use tbo as a Monpa code (tbo is Tawala).",
+      "known_codes_to_confirm_with_language_owner": {"Tawang Monpa": "twm", "Kalaktang Monpa": "kkf"},
+      "source": "https://glottolog.org/resource/reference/id/500239"
+    }
+  }
+}

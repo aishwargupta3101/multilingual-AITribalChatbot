@@ -1,0 +1,208 @@
+"""Unified voice UI when Santali is selected as the response language.
+
+The user can speak either Santali (Ol Chiki) or English. The selected source
+language determines which existing ASR route is used; both paths then call the
+same chat/translation bridge and return a Santali text answer plus best-effort TTS.
+"""
+from __future__ import annotations
+
+import hashlib
+import os
+import tempfile
+import uuid
+from pathlib import Path
+from typing import Any
+
+import streamlit as st
+from streamlit_mic_recorder import mic_recorder
+
+from api.santali_onnx_client import SantaliOnnxClient
+from api.santali_chat_bridge import ask_santali_question
+from api.santali_tts import synthesize_santali_wav
+from api.client import APIClient
+from api.endpoints import SPEECH_UPLOAD_ENDPOINT
+
+
+def _extract_transcript(response: Any) -> str:
+    """Extract a transcript from the existing English STT response shape."""
+    if not isinstance(response, dict):
+        raise RuntimeError("The existing English speech service returned an invalid response.")
+    if response.get("success") is False:
+        raise RuntimeError(str(response.get("error") or response.get("message") or "English speech recognition failed."))
+
+    data = response.get("data")
+    body = data if isinstance(data, dict) else response
+    for key in ("transcription", "text", "transcript"):
+        value = body.get(key)
+        if isinstance(value, str) and value.strip():
+            return value.strip()
+    raise RuntimeError("The speech service returned no transcript.")
+
+
+def _transcribe_english(audio_bytes: bytes, filename: str) -> dict[str, Any]:
+    """Use the project's already-working speech-upload endpoint for English audio."""
+    suffix = Path(filename or "voice.wav").suffix.lower()
+    if suffix not in {".wav", ".mp3", ".flac", ".ogg", ".m4a", ".webm"}:
+        suffix = ".wav"
+
+    temp_path: str | None = None
+    try:
+        with tempfile.NamedTemporaryFile(prefix="tribal_english_voice_", suffix=suffix, delete=False) as tmp:
+            tmp.write(audio_bytes)
+            temp_path = tmp.name
+        response = APIClient.upload_audio(
+            SPEECH_UPLOAD_ENDPOINT,
+            temp_path,
+            "english",
+        )
+        transcript = _extract_transcript(response)
+        return {"success": True, "text": transcript, "language": "english"}
+    finally:
+        if temp_path and os.path.exists(temp_path):
+            try:
+                os.remove(temp_path)
+            except OSError:
+                pass
+
+
+def _transcribe(audio_bytes: bytes, filename: str, source_language: str) -> dict[str, Any]:
+    if source_language == "santali":
+        return SantaliOnnxClient.transcribe_bytes(audio_bytes, filename)
+    return _transcribe_english(audio_bytes, filename)
+
+
+def _audio_result(audio_bytes: bytes, filename: str, session_id: str, source_language: str) -> None:
+    fingerprint = hashlib.sha256(source_language.encode("utf-8") + b"\0" + audio_bytes).hexdigest()
+    result_key = "santali_voice_result"
+    existing = st.session_state.get(result_key)
+    if not isinstance(existing, dict) or existing.get("fingerprint") != fingerprint:
+        if st.button(
+            "💬 Ask Tribal AI — answer in Santali",
+            type="primary",
+            use_container_width=True,
+            key="santali_process_audio_question",
+        ):
+            try:
+                with st.spinner("Recognizing speech, preparing the chatbot answer in Santali..."):
+                    stt = _transcribe(audio_bytes, filename, source_language)
+                    if not isinstance(stt, dict) or stt.get("success") is False:
+                        detail = stt.get("error", "Speech recognition failed.") if isinstance(stt, dict) else "Invalid speech-recognition response."
+                        raise RuntimeError(detail)
+                    transcript = str(stt.get("text") or stt.get("transcription") or stt.get("transcript") or "").strip()
+                    if not transcript:
+                        raise RuntimeError("Speech recognition returned an empty transcript.")
+
+                    chat = ask_santali_question(
+                        transcript,
+                        session_id,
+                        source_language=source_language,
+                    )
+                    saved = {
+                        "fingerprint": fingerprint,
+                        "transcript": transcript,
+                        "source_language": source_language,
+                        "answer": chat["answer"],
+                        "duration_seconds": stt.get("duration_seconds"),
+                        "english_question": chat.get("english_question", ""),
+                        "english_answer": chat.get("english_answer", ""),
+                        "speech_wav": None,
+                        "speech_error": None,
+                    }
+                    # TTS is best effort; never discard the text answer if it fails.
+                    try:
+                        saved["speech_wav"] = synthesize_santali_wav(saved["answer"])
+                    except Exception as tts_exc:
+                        saved["speech_error"] = f"{type(tts_exc).__name__}: {tts_exc}"
+                    st.session_state[result_key] = saved
+            except Exception as exc:
+                st.error(f"Santali-output voice request failed: {type(exc).__name__}: {exc}")
+
+    existing = st.session_state.get(result_key)
+    if isinstance(existing, dict) and existing.get("fingerprint") == fingerprint:
+        st.success("Question processed.")
+        source_label = "Santali (Ol Chiki)" if source_language == "santali" else "English"
+        st.markdown(f"### You said ({source_label})")
+        st.write(existing.get("transcript", ""))
+        if existing.get("duration_seconds") is not None:
+            st.caption(f"Audio duration: {existing['duration_seconds']} seconds")
+        st.markdown("### Tribal AI answer (Santali · Ol Chiki)")
+        st.write(existing.get("answer", ""))
+        if existing.get("speech_wav"):
+            st.audio(existing["speech_wav"], format="audio/wav")
+        elif existing.get("speech_error"):
+            st.info("The Santali text answer is ready, but speech generation was unavailable: " + existing["speech_error"])
+        if existing.get("english_question"):
+            with st.expander("Show intermediate English question used by the chatbot"):
+                st.write(existing["english_question"])
+        if existing.get("english_answer"):
+            with st.expander("Show intermediate English chatbot answer"):
+                st.write(existing["english_answer"])
+
+
+def show_santali_voice_page(session_id: str | None = None) -> None:
+    if not session_id:
+        session_id = st.session_state.get("session_id") or str(uuid.uuid4())
+        st.session_state["session_id"] = session_id
+
+    st.markdown("## Santali Voice Assistant")
+    st.caption(
+        "Santali is the response language. Speak in Santali (Ol Chiki) or English; "
+        "Tribal AI will process the question and return a Santali answer."
+    )
+    st.info(
+        "Translation and generated speech are machine-produced. The text answer remains available "
+        "if Santali speech generation fails. Language quality still needs broader review."
+    )
+
+    source_label = st.radio(
+        "What language will you speak?",
+        ["Santali (Ol Chiki)", "English"],
+        horizontal=True,
+        key="santali_voice_input_language",
+        help="This chooses the appropriate speech recognizer. The reply language remains Santali.",
+    )
+    source_language = "santali" if source_label == "Santali (Ol Chiki)" else "english"
+
+    mic_tab, upload_tab = st.tabs(["🎙 Speak", "📁 Upload audio"])
+    recorded_bytes: bytes | None = None
+    recorded_name = "santali_microphone.wav" if source_language == "santali" else "english_microphone.wav"
+    with mic_tab:
+        audio = mic_recorder(
+            start_prompt="🎙 Start Recording",
+            stop_prompt="⏹ Stop Recording",
+            just_once=False,
+            use_container_width=True,
+            format="wav",
+            key="santali_unified_mic_recorder",
+        )
+        if isinstance(audio, dict) and audio.get("bytes"):
+            recorded_bytes = audio["bytes"]
+            st.audio(recorded_bytes, format="audio/wav")
+
+    with upload_tab:
+        uploaded = st.file_uploader(
+            "Choose an audio file",
+            type=["mp3", "wav", "flac", "ogg", "m4a", "webm"],
+            key="santali_unified_audio_upload",
+            help="Choose audio that matches the selected spoken input language.",
+        )
+        uploaded_bytes = uploaded.getvalue() if uploaded is not None else b""
+        if uploaded is not None:
+            st.audio(uploaded_bytes)
+
+    if uploaded is not None:
+        audio_bytes = uploaded_bytes
+        filename = uploaded.name
+    elif recorded_bytes:
+        audio_bytes = recorded_bytes
+        filename = recorded_name
+    else:
+        audio_bytes = b""
+        filename = recorded_name
+        st.caption("Record a question or upload a clip. No experimental-mode checkbox is required.")
+
+    if audio_bytes:
+        if len(audio_bytes) > 25 * 1024 * 1024:
+            st.error("Audio exceeds 25 MB. Please use a shorter recording.")
+        else:
+            _audio_result(audio_bytes, filename, session_id, source_language)

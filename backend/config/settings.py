@@ -20,9 +20,25 @@ class Settings(BaseSettings):
     AWS_BUCKET:str
     FRONTEND_URL:str
     CORS_ORIGINS:str
-    LLM_PROVIDER: str = "ollama"
+    LLM_PROVIDER: str = "groq"
     UPLOAD_DIR:str
     MAX_FILE_SIZE:int
+    GROQ_API_KEY: str = ""
+    GROQ_MODEL: str = "openai/gpt-oss-120b"
+    GROQ_MAX_TOKENS: int = 700
+    GROQ_TEMPERATURE: float = 0.3
+    GROQ_TIMEOUT_SECONDS: float = 180.0
+    GROQ_TOP_P: float | None = None
+
+    LLM_FALLBACK_TO_OLLAMA: bool = False
+
+    # Optional Brave Search MCP integration (Groq/Gemini remains the LLM).
+    WEB_SEARCH_ENABLED: bool = True
+    BRAVE_SEARCH_API_KEY: str = ""
+    WEB_SEARCH_MCP_COMMAND: str = "npx"
+    WEB_SEARCH_MCP_ARGS: str = '["-y", "@brave/brave-search-mcp-server"]'
+    WEB_SEARCH_MAX_RESULTS: int = 5
+    WEB_SEARCH_MAX_CONTEXT_CHARS: int = 6000
     ALLOWED_FILE_TYPES:str
     OLLAMA_BASE_URL: str = "http://127.0.0.1:11434"
     OLLAMA_PROXY_TOKEN: str = ""

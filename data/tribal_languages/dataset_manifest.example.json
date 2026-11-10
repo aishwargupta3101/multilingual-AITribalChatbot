@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "notes": "Example only. Replace placeholder values with real, permissioned data before use.",
+  "datasets": [
+    {
+      "dataset_id": "example-santali-001",
+      "language_code": "sat",
+      "audio_path": "audio/santali/example-001.wav",
+      "transcript": "REPLACE_WITH_VERIFIED_TRANSCRIPT",
+      "transcript_language": "sat",
+      "source": "RECORD_DATASET_SOURCE_AND_URL",
+      "license": "RECORD_EXACT_LICENSE",
+      "consent_status": "RECORD_PERMISSION_OR_PUBLIC_DATA_BASIS",
+      "split": "train"
+    }
+  ]
+}

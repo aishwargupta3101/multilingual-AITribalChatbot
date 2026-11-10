@@ -1,3 +1,4 @@
+
 from backend.rag.hybrid_retriever import hybrid_retriever
 from data.tai_khamti.tai_khamti_retriever import TaiKhamtiRetriever
 from backend.llm.llama_service import llama_service
@@ -8,10 +9,13 @@ class RAGService:
         print("=" * 70)
         print("INITIALIZING RAG SERVICE")
         print("=" * 70)
+
         self.tai_khamti_retriever = TaiKhamtiRetriever(
             top_k=4
         )
+
         print("Tai Khamti RAG initialized successfully.")
+
     def build_context(
         self,
         question: str,
@@ -23,11 +27,30 @@ class RAGService:
             print("Vector DB:", vector_db_path)
             print("=" * 70)
 
+            # Retrieve more chunks for broad document requests.
+            broad_document_request = any(
+                phrase in (question or "").lower()
+                for phrase in (
+                    "every question",
+                    "all questions",
+                    "each question",
+                    "entire document",
+                    "whole document",
+                    "all topics",
+                    "explain everything",
+                    "summarize the document",
+                    "summarise the document",
+                )
+            )
+
+            retrieval_k = 10 if broad_document_request else 4
+
             documents = hybrid_retriever.retrieve(
                 question=question,
                 vector_db_path=vector_db_path,
-                k=4
+                k=retrieval_k
             )
+
             if not documents:
                 return {
                     "context": "",
@@ -38,7 +61,9 @@ class RAGService:
                 document.page_content
                 for document in documents
             )
+
             sources = []
+
             for document in documents:
                 sources.append(
                     {
@@ -56,10 +81,13 @@ class RAGService:
                         )
                     }
                 )
+
             return {
                 "context": context,
                 "sources": sources
             }
+
+        # Existing Tai Khamti retrieval logic.
         print("=" * 70)
         print("USING TAI KHAMTI KNOWLEDGE BASE")
         print("Question:", question)
@@ -74,7 +102,9 @@ class RAGService:
             "Tai Khamti results:",
             len(results)
         )
+
         MIN_SIMILARITY = 0.55
+
         results = [
             result
             for result in results
@@ -87,7 +117,6 @@ class RAGService:
         )
 
         if not results:
-
             print(
                 "No relevant Tai Khamti results found."
             )
@@ -112,6 +141,7 @@ class RAGService:
                 f"Category: {result.get('category', 'Unknown')}\n"
                 f"English: {result.get('english', '')}"
             )
+
             sources.append(
                 {
                     "id": result.get(
@@ -130,9 +160,8 @@ class RAGService:
                 }
             )
 
-        context = "\n\n".join(
-            context_parts
-        )
+        context = "\n\n".join(context_parts)
+
         print("=" * 70)
         print("TAI KHAMTI CONTEXT CREATED")
         print("Context length:", len(context))
@@ -154,34 +183,42 @@ class RAGService:
         """
         Generate an answer using RAG context and Llama.
         """
+
         print("=" * 70)
         print("RAG GENERATE ANSWER")
         print("Question:", question)
         print("=" * 70)
+
         if sources is None:
             sources = []
+
         if not context.strip():
             rag_result = self.build_context(
                 question=question,
                 vector_db_path=vector_db_path
             )
+
             context = rag_result.get(
                 "context",
                 ""
             )
+
             sources = rag_result.get(
                 "sources",
                 []
             )
+
         if not context.strip():
             answer = (
                 "I couldn't find that information "
                 "in the Tai Khamti knowledge base."
             )
+
             return {
                 "answer": answer,
                 "sources": []
             }
+
         prompt = f"""
 You are a helpful AI assistant for the Tai Khamti community.
 
@@ -210,18 +247,19 @@ QUESTION:
 
 ANSWER:
 """
+
         conversation = [
             {
                 "role": "user",
                 "content": prompt
             }
         ]
+
         answer = await llama_service.generate_response(
             conversation
         )
 
         if not answer:
-
             answer = (
                 "I couldn't generate an answer."
             )
@@ -230,8 +268,11 @@ ANSWER:
         print("RAG ANSWER GENERATED")
         print("Answer:", answer)
         print("=" * 70)
+
         return {
             "answer": answer,
             "sources": sources
         }
+
+
 rag_service = RAGService()

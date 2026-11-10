@@ -1,19 +1,27 @@
-
 from langchain_core.messages import (
     HumanMessage,
     SystemMessage,
     AIMessage
 )
-from backend.llm.client_factory import llm
+from backend.llm.groq_client import GroqLLM
+llm = GroqLLM()
 from backend.llm.prompt import SYSTEM_PROMPT
+from backend.llm.educational_prompt import EDUCATIONAL_RESPONSE_STYLE
 from backend.config.logger import logger
 
 MAX_HISTORY_MESSAGES = 2
 MAX_RAG_CONTEXT_CHARS = 3000
 
+
 class LlamaService:
     def _build_messages(self, conversation, rag_context=None):
-        messages = [SystemMessage(content=SYSTEM_PROMPT)]
+        # Keep the existing system prompt and add educational formatting
+        # guidance. Existing RAG and conversation-history handling stays intact.
+        combined_system_prompt = (
+            f"{SYSTEM_PROMPT.rstrip()}\n\n"
+            f"{EDUCATIONAL_RESPONSE_STYLE.strip()}"
+        )
+        messages = [SystemMessage(content=combined_system_prompt)]
 
         if rag_context and rag_context.strip():
             rag_context = rag_context.strip()[:MAX_RAG_CONTEXT_CHARS]
@@ -41,8 +49,6 @@ class LlamaService:
 
             if not content:
                 continue
-
-            # Never send previously failed AI responses to the model.
             if role == "assistant" and content.lower().startswith("ai error"):
                 logger.warning("Skipping failed assistant response from history.")
                 continue
@@ -73,7 +79,7 @@ class LlamaService:
             response = await llm.ainvoke(messages)
 
             if not response.content:
-                raise ValueError("Ollama returned an empty response.")
+                raise ValueError("LLM returned an empty response.")
 
             return response.content
 
@@ -92,5 +98,4 @@ class LlamaService:
         except Exception:
             logger.exception("Llama streaming failed.")
             raise
-
 llama_service = LlamaService()

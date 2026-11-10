@@ -16,6 +16,9 @@ def initialize_session():
         st.session_state.theme ="Light"
 
     if "selected_page" not in st.session_state:
-        st.session_state.selected_page ="Home"
+        st.session_state.selected_page = "🏠 Home"
+    elif st.session_state.selected_page in (None, "", "Home"):
+        # Migrate the old internal label to the exact sidebar/router label.
+        st.session_state.selected_page = "🏠 Home"
     if "document_id" not in st.session_state:
         st.session_state.document_id= None

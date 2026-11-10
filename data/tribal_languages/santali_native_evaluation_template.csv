@@ -1,0 +1,5 @@
+test_id,capability,source_language,target_language,input_text,audio_file,reference_text,model_output,review_status,meaning_preserved,script_correct,terminology_correct,pronunciation_intelligibility,consent_confirmed,reviewer_code,notes
+SANTALI-001,stt,santali,santali,,path/to/consented_audio.wav,,,,,,,,,,
+SANTALI-002,translation,english,santali,Hello. What is your name?,,, ,pending,,,,,yes,reviewer-01,Replace with a human-verified Ol Chiki reference; this is only a template row.
+SANTALI-003,translation,santali,english,,,,,pending,,,,,yes,reviewer-01,Use a native-reviewed source sentence and translation.
+SANTALI-004,tts,santali,santali,ᱥᱟᱱᱛᱟᱲᱤ,,,,pending,,,,,yes,reviewer-01,Check generated audio with a Santali speaker; do not treat the placeholder as a validated phrase.

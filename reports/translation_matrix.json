@@ -1,0 +1,181 @@
+{
+  "source_text": "Artificial intelligence is useful.",
+  "results": [
+    {
+      "language": "assamese",
+      "forward": "कृत्ৰिम बुद्धिमत्ता उपयोगी।",
+      "reverse": "Artificial intelligence is useful.",
+      "ok": true,
+      "seconds": 20.41
+    },
+    {
+      "language": "bengali",
+      "forward": "कृत्रिम बुद्धिमत्ता काजे लागे।",
+      "reverse": "Artificial intelligence comes in handy.",
+      "ok": true,
+      "seconds": 15.36
+    },
+    {
+      "language": "bodo",
+      "forward": "आर्टिफिसियेल इन्टेलिजेन्सआ बाहायजाथाव।",
+      "reverse": "Artificial intelligence is useful.",
+      "ok": true,
+      "seconds": 16.2
+    },
+    {
+      "language": "dogri",
+      "forward": "बनावटी बुद्घि फायदेमंद ऐ।",
+      "reverse": "Artificial intelligence is useful.",
+      "ok": true,
+      "seconds": 15.33
+    },
+    {
+      "language": "gujarati",
+      "forward": "आर्टिफिशियल इन्टेलिजन्स उपयोगी छे.",
+      "reverse": "Artificial intelligence is useful.",
+      "ok": true,
+      "seconds": 15.54
+    },
+    {
+      "language": "hindi",
+      "forward": "आर्टिफिशियल इंटेलिजेंस उपयोगी है।",
+      "reverse": "Artificial intelligence is useful.",
+      "ok": true,
+      "seconds": 14.71
+    },
+    {
+      "language": "kannada",
+      "forward": "कृतक बुद्धिमत्तॆ उपयुक्तवागिदॆ.",
+      "reverse": "Artificial intelligence is useful.",
+      "ok": true,
+      "seconds": 14.28
+    },
+    {
+      "language": "kashmiri",
+      "forward": "مصنوعی ذہانت (Artifial बुद्धिमत्ता) چھ اکھ اہم عنصر ۔",
+      "reverse": "Artificial intelligence is a key factor.",
+      "ok": true,
+      "seconds": 17.13
+    },
+    {
+      "language": "kashmiri_deva",
+      "forward": "आर्टिफीसियल इंटेलिजेंस (Artifial बुद्धिमत्ता) ये काफी आसान है।",
+      "reverse": "Artificial intelligence is very simple.",
+      "ok": true,
+      "seconds": 17.15
+    },
+    {
+      "language": "konkani",
+      "forward": "कृत्रीम बुध्दीमत्ता उपेगी पडटा.",
+      "reverse": "Artificial intelligence is useful.",
+      "ok": true,
+      "seconds": 15.06
+    },
+    {
+      "language": "maithili",
+      "forward": "कृत्रिम बुद्धिमत्ता उपयोगी अछि।",
+      "reverse": "Artificial intelligence is useful.",
+      "ok": true,
+      "seconds": 14.53
+    },
+    {
+      "language": "malayalam",
+      "forward": "आർट्टिफिष्यൽ इन्ऱलिजൻस् उपयोगप्रदमाण्.",
+      "reverse": "Artificial intelligence is useful.",
+      "ok": true,
+      "seconds": 16.28
+    },
+    {
+      "language": "manipuri",
+      "forward": "আর্তিফিসিএল ইন্তেলিজেন্স অসি কান্নবা পীরি।",
+      "reverse": "Artificial intelligence is also contributing.",
+      "ok": true,
+      "seconds": 6.15
+    },
+    {
+      "language": "manipuri_mtei",
+      "forward": "ꯑꯥꯔꯇꯤꯐꯤꯁꯤꯑꯦꯜ ꯏꯟꯇꯦꯂꯤꯖꯦꯟꯁ ꯑꯁꯤ ꯀꯥꯟꯅꯩ꯫",
+      "reverse": "not_run",
+      "ok": false,
+      "error": "ImportError: Install the meiteitobangla dependency.",
+      "seconds": 1.87
+    },
+    {
+      "language": "marathi",
+      "forward": "कृत्रिम बुद्धिमत्ता उपयुक्त आहे.",
+      "reverse": "Artificial intelligence is useful.",
+      "ok": true,
+      "seconds": 18.06
+    },
+    {
+      "language": "nepali",
+      "forward": "आर्टिफिसियल इन्टेलिजेन्स उपयोगी छ।",
+      "reverse": "Artificial intelligence is useful.",
+      "ok": true,
+      "seconds": 17.75
+    },
+    {
+      "language": "odia",
+      "forward": "आर्टिफिसिआल इण्टेलिजेन्स उपयोगी।",
+      "reverse": "Artificial intelligence is useful.",
+      "ok": true,
+      "seconds": 17.64
+    },
+    {
+      "language": "punjabi",
+      "forward": "नकली बुੱधी लाभदाइक है।",
+      "reverse": "Artificial intelligence is useful.",
+      "ok": true,
+      "seconds": 16.62
+    },
+    {
+      "language": "sanskrit",
+      "forward": "कृत्रिमबुद्धिः उपयोगी अस्ति।",
+      "reverse": "Artificial intelligence is useful.",
+      "ok": true,
+      "seconds": 16.65
+    },
+    {
+      "language": "santali",
+      "forward": "ᱟᱨᱴᱤᱯᱷᱤᱠᱮᱞ ᱤᱴᱤᱱᱜᱮᱞᱮᱥᱮᱱ ᱫᱚ ᱵᱮᱣᱦᱟᱨᱚᱜᱼᱟ ᱾",
+      "reverse": "Artificial inhalation is used.",
+      "ok": true,
+      "seconds": 16.69
+    },
+    {
+      "language": "sindhi",
+      "forward": "مصنوعی ذہانت ڪارآمد آھی",
+      "reverse": "Artificial intelligence is useful.",
+      "ok": true,
+      "seconds": 17.0
+    },
+    {
+      "language": "sindhi_deva",
+      "forward": "आर्टीफीशल इंटेलीजेंस कारगर आहे।",
+      "reverse": "Artificial intelligence is useful.",
+      "ok": true,
+      "seconds": 16.6
+    },
+    {
+      "language": "tamil",
+      "forward": "चॆयऱ्कै नुण्णऱिवु पयऩुळ्ळताक इरुक्कुम्.",
+      "reverse": "Artificial intelligence can be useful.",
+      "ok": true,
+      "seconds": 16.29
+    },
+    {
+      "language": "telugu",
+      "forward": "आर्टिफिषियल् इंटॆलिजॆन्स् उपयोगपडुतुंदि.",
+      "reverse": "Artificial intelligence can be useful.",
+      "ok": true,
+      "seconds": 28.2
+    },
+    {
+      "language": "urdu",
+      "forward": "مصنوعی ذہانت مفید ہے ۔",
+      "reverse": "Artificial intelligence is useful.",
+      "ok": true,
+      "seconds": 72.82
+    }
+  ]
+}

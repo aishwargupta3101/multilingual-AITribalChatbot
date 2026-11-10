@@ -3,9 +3,10 @@ import os
 import time
 from typing import Any, Dict, List
 import httpx
+import asyncio
 from langchain_core.messages import AIMessage, BaseMessage
 from backend.config.logger import logger
-
+from backend.config.settings import settings
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 def _convert_messages(messages: List[BaseMessage]) -> List[Dict[str, str]]:
@@ -39,23 +40,31 @@ def _extract_message_text(message: Any) -> str:
         return "".join(parts).strip()
     return ""
 
-
 class GroqLLM:
-    """Hosted client with the same ainvoke/astream interface used by the current LlamaService."""
-    def __init__(self):
-        self.api_key = os.getenv("GROQ_API_KEY", "").strip()
-        self.model = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile").strip()
-        self.timeout = float(os.getenv("GROQ_TIMEOUT_SECONDS", "180"))
-        self.temperature = float(os.getenv("GROQ_TEMPERATURE", "0.3"))
-        self.max_tokens = int(os.getenv("GROQ_MAX_TOKENS", "700"))
-        self.top_p = os.getenv("GROQ_TOP_P", "").strip()
+    def __init__(self, api_key: str | None = None):
+        self.api_key = (
+                api_key or settings.GROQ_API_KEY
+        ).strip()
+
+        self.model = settings.GROQ_MODEL.strip()
+        self.timeout = settings.GROQ_TIMEOUT_SECONDS
+        self.temperature = settings.GROQ_TEMPERATURE
+        self.max_tokens = settings.GROQ_MAX_TOKENS
+        self.top_p = (
+            str(settings.GROQ_TOP_P)
+            if settings.GROQ_TOP_P is not None
+            else ""
+        )
         if not self.api_key:
-            raise RuntimeError("LLM_PROVIDER=groq but GROQ_API_KEY is missing. Add it to your private .env or set LLM_PROVIDER=ollama.")
+            raise RuntimeError("Groq API key is missing.")
+
         self.client = httpx.AsyncClient(
             timeout=httpx.Timeout(self.timeout, connect=20.0),
-            headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}
+            headers={
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json",
+            },
         )
-
     def _payload(self, messages, stream=False) -> Dict[str, Any]:
         payload = {
             "model": self.model,
@@ -71,24 +80,89 @@ class GroqLLM:
     async def ainvoke(self, messages):
         payload = self._payload(messages)
         started = time.perf_counter()
-        logger.info("Sending hosted LLM request | Provider: Groq | Model: %s | Messages: %s",
-                    self.model, len(payload["messages"]))
-        try:
-            response = await self.client.post(GROQ_API_URL, json=payload)
-            if response.is_error:
-                logger.error("Groq API error %s: %s", response.status_code, response.text[:1000])
-            response.raise_for_status()
-            data = response.json()
-            choices = data.get("choices") or []
-            message = choices[0].get("message") or {} if choices else {}
-            content = _extract_message_text(message)
-            if not content.strip():
-                raise RuntimeError("Groq returned an empty response.")
-            logger.info("Hosted LLM request completed in %.2f seconds.", time.perf_counter() - started)
-            return AIMessage(content=content)
-        except Exception:
-            logger.exception("Hosted LLM request failed after %.2f seconds.", time.perf_counter() - started)
-            raise
+        max_retries = 1
+        max_retry_wait = 5.0
+
+        logger.info(
+            "Sending hosted LLM request | Provider: Groq | Model: %s | Messages: %s",
+            self.model,
+            len(payload["messages"]),
+        )
+
+        for attempt in range(max_retries + 1):
+            try:
+                response = await self.client.post(
+                    GROQ_API_URL,
+                    json=payload,
+                )
+
+                if response.status_code == 429 and attempt < max_retries:
+                    retry_after = response.headers.get("retry-after", "")
+
+                    try:
+                        wait_seconds = float(retry_after)
+                    except (TypeError, ValueError):
+                        wait_seconds = 0
+
+                    if 0 < wait_seconds <= max_retry_wait:
+                        logger.warning(
+                            "Groq rate limited request. Retrying once in %.1f seconds.",
+                            wait_seconds,
+                        )
+                        await asyncio.sleep(wait_seconds)
+                        continue
+
+                    logger.warning(
+                        "Groq returned 429 without a short Retry-After value. "
+                        "Skipping retry so provider fallback can run."
+                    )
+
+                if response.is_error:
+                    diagnostic_headers = {
+                        name: response.headers.get(name)
+                        for name in (
+                            "retry-after",
+                            "x-ratelimit-limit-requests",
+                            "x-ratelimit-remaining-requests",
+                            "x-ratelimit-reset-requests",
+                            "x-ratelimit-limit-tokens",
+                            "x-ratelimit-remaining-tokens",
+                            "x-ratelimit-reset-tokens",
+                        )
+                        if response.headers.get(name) is not None
+                    }
+
+                    logger.error(
+                        "Groq API error | status=%s | headers=%s | body=%s",
+                        response.status_code,
+                        diagnostic_headers,
+                        response.text[:1000],
+                    )
+
+                response.raise_for_status()
+
+                data = response.json()
+                choices = data.get("choices") or []
+                message = choices[0].get("message") or {} if choices else {}
+                content = _extract_message_text(message)
+
+                if not content.strip():
+                    raise RuntimeError("Groq returned an empty response.")
+
+                logger.info(
+                    "Groq request completed in %.2f seconds.",
+                    time.perf_counter() - started,
+                )
+                return AIMessage(content=content)
+
+            except Exception:
+                logger.exception(
+                    "Groq generation failed on attempt %s.",
+                    attempt + 1,
+                )
+                raise
+
+        raise RuntimeError("Groq request failed after retry.")
 
     async def astream(self, messages):
         payload = self._payload(messages, stream=True)

@@ -181,8 +181,91 @@ def get_chat_title(chat):
         last_message
         or "New conversation"
     )
+def _sync_sidebar_page():
+    """Keep the app router in sync with the sidebar radio widget."""
+    st.session_state.selected_page = st.session_state.sidebar_navigation
+
+
+def _go_to_chat():
+    """Return to the main chat workspace from any tool page."""
+    st.session_state.selected_page = "💬 Chat"
+    st.session_state.sidebar_navigation = "💬 Chat"
+
+
+def _open_recent_chat(session_id):
+    """Load a recent conversation before the next Streamlit rerun."""
+    loaded_messages = load_chat(session_id)
+    if loaded_messages:
+        st.session_state.messages = loaded_messages
+        st.session_state.session_id = session_id
+        st.session_state.language = loaded_messages[0].get("language", "english")
+        st.session_state.selected_page = "💬 Chat"
+        st.session_state.sidebar_navigation = "💬 Chat"
+
+
 def show_sidebar():
     with st.sidebar:
+        # Keep recent conversation buttons readable against the dark sidebar.
+        st.markdown(
+            """
+            <style>
+            section[data-testid="stSidebar"] div[class*="st-key-recent_chat_"] button {
+                background: #123b2a !important;
+                background-color: #123b2a !important;
+                color: #f3fff6 !important;
+                -webkit-text-fill-color: #f3fff6 !important;
+                border: 1px solid rgba(137, 195, 153, .28) !important;
+                border-radius: 12px !important;
+                opacity: 1 !important;
+                min-height: 48px !important;
+                height: auto !important;
+                padding: 9px 11px !important;
+                text-align: left !important;
+                box-shadow: none !important;
+            }
+            section[data-testid="stSidebar"] div[class*="st-key-recent_chat_"] button p,
+            section[data-testid="stSidebar"] div[class*="st-key-recent_chat_"] button span {
+                color: #f3fff6 !important;
+                -webkit-text-fill-color: #f3fff6 !important;
+                opacity: 1 !important;
+                white-space: normal !important;
+                line-height: 1.35 !important;
+                font-size: .82rem !important;
+            }
+            section[data-testid="stSidebar"] div[class*="st-key-recent_chat_"] button:hover {
+                background: #1a5038 !important;
+                border-color: #69aa7e !important;
+            }
+            section[data-testid="stSidebar"] div[class*="st-key-recent_chat_"] {
+                margin: 4px 0 !important;
+            }
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            """
+            <style>
+            section[data-testid="stSidebar"] .st-key-start_new_conversation button {
+                background: #1f6b45 !important;
+                background-color: #1f6b45 !important;
+                color: #ffffff !important;
+                -webkit-text-fill-color: #ffffff !important;
+                border: 1px solid #4b9a6b !important;
+                opacity: 1 !important;
+                font-weight: 700 !important;
+                min-height: 42px !important;
+            }
+            section[data-testid="stSidebar"] .st-key-start_new_conversation button p,
+            section[data-testid="stSidebar"] .st-key-start_new_conversation button span {
+                color: #ffffff !important;
+                -webkit-text-fill-color: #ffffff !important;
+                opacity: 1 !important;
+            }
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
         html_block(
             """
             <div class="tribal-brand">
@@ -204,6 +287,8 @@ def show_sidebar():
         )
         if st.button(
             "✨  Start New Conversation",
+            key="start_new_conversation",
+            type="primary",
             use_container_width=True
         ):
 
@@ -211,9 +296,8 @@ def show_sidebar():
             st.session_state.session_id = str(
                 uuid.uuid4()
             )
-            st.session_state.selected_page = (
-                "💬 Chat"
-            )
+            st.session_state.selected_page = "💬 Chat"
+            st.session_state.sidebar_navigation = "💬 Chat"
             st.rerun()
 
         html_block(
@@ -228,18 +312,52 @@ def show_sidebar():
             </div>
             """
         )
-        st.session_state.selected_page = st.radio(
+        # Primary navigation stays in the sidebar.
+        # Tool workspaces are opened from the Chat page's (+) menu.
+        navigation_options = [
+            "🏠 Home",
+            "💬 Chat",
+            "🎤 Voice",
+            "📜 History",
+            "⚙ Settings"
+        ]
+
+        if "sidebar_navigation" not in st.session_state:
+            current_page = st.session_state.get("selected_page", "🏠 Home")
+            st.session_state.sidebar_navigation = (
+                current_page if current_page in navigation_options else "💬 Chat"
+            )
+
+        st.radio(
             "Navigation",
-            [
-                "🏠 Home",
-                "💬 Chat",
-                "📄 Documents",
-                "🎤 Voice",
-                "📜 History",
-                "⚙ Settings"
-            ],
-            label_visibility="collapsed"
+            navigation_options,
+            key="sidebar_navigation",
+            label_visibility="collapsed",
+            on_change=_sync_sidebar_page
         )
+
+        # The radio remains on Chat while a workspace is opened from the
+        # (+) Tools menu. A dedicated button is therefore needed: clicking
+        # an already-selected Chat radio option does not trigger on_change.
+        if st.session_state.get("selected_page") not in (
+            "🏠 Home",
+            "💬 Chat",
+            "🎤 Voice",
+            "📜 History",
+            "⚙ Settings",
+        ):
+            st.button(
+                "← Back to Chat",
+                key="back_to_chat_from_tool",
+                use_container_width=True,
+                on_click=_go_to_chat,
+                type="primary",
+            )
+
+        # Do not overwrite selected_page here.
+        # Tool buttons set selected_page directly and the app router
+        # must be allowed to render the selected workspace.
+
         html_block(
             """
             <div class="sidebar-divider"></div>
@@ -294,36 +412,17 @@ def show_sidebar():
                         f"\n   {date_text}"
                     )
 
-                if st.button(
+                st.button(
                     button_text,
                     key=(
                         f"recent_chat_"
                         f"{index}_"
                         f"{session_id}"
                     ),
-                    use_container_width=True
-                ):
-                    loaded_messages = load_chat(
-                        session_id
-                    )
-
-                    if loaded_messages:
-                        st.session_state.messages = (
-                            loaded_messages
-                        )
-                        st.session_state.session_id = (
-                            session_id
-                        )
-                        st.session_state.language = (
-                            loaded_messages[0].get(
-                                "language",
-                                "english"
-                            )
-                        )
-                        st.session_state.selected_page = (
-                            "💬 Chat"
-                        )
-                        st.rerun()
+                    use_container_width=True,
+                    on_click=_open_recent_chat,
+                    args=(session_id,)
+                )
 
         else:
             html_block(
@@ -351,6 +450,7 @@ def show_sidebar():
             "manipuri": "Manipuri (Bengali Script)",
             "manipuri_mtei": "Manipuri (Meitei Mayek)",
             "monpa": "Monpa",
+            "santali": "Santali (Ol Chiki)",
             "tai_khamti": "Tai Khamti",
             "naga": "Naga",
             "mishmi": "Mishmi"

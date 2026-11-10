@@ -1,5 +1,5 @@
-
 import logging
+import time
 import re
 from functools import lru_cache
 from backend.translation.indictrans_service import indictrans_service
@@ -24,14 +24,39 @@ class TranslationService:
         "manipuri_meitei": "manipuri_mtei",
         "meitei_mayek": "manipuri_mtei",
         "manipuri_mtei": "manipuri_mtei",
-        "mni_mtei": "manipuri_mtei"
+        "mni_mtei": "manipuri_mtei",
+        "as": "assamese", "asm": "assamese",
+        "bn": "bengali", "ben": "bengali",
+        "brx": "bodo", "doi": "dogri",
+        "gu": "gujarati", "guj": "gujarati",
+        "kn": "kannada", "kan": "kannada",
+        "ks": "kashmiri", "kas": "kashmiri",
+        "kas_deva": "kashmiri_deva",
+        "gom": "konkani", "mai": "maithili",
+        "ml": "malayalam", "mal": "malayalam",
+        "mr": "marathi", "mar": "marathi",
+        "ne": "nepali", "npi": "nepali",
+        "or": "odia", "ory": "odia",
+        "pa": "punjabi", "pan": "punjabi",
+        "sa": "sanskrit", "san": "sanskrit",
+        "sd": "sindhi", "snd": "sindhi",
+        "snd_deva": "sindhi_deva",
+        "ta": "tamil", "tam": "tamil",
+        "te": "telugu", "tel": "telugu",
+        "ur": "urdu",
+        "sat": "santali", "sat_olck": "santali"
     }
 
+    # Languages verified by the project's live English -> target -> English
+    # smoke test. Keep Manipuri Meitei Mayek registered as before; its existing
+    # conversion branch below is intentionally unchanged.
     SUPPORTED_LANGUAGES = {
-        "english",
-        "hindi",
-        "manipuri",
-        "manipuri_mtei"
+        "english", "hindi", "manipuri", "manipuri_mtei",
+        "assamese", "bengali", "bodo", "dogri", "gujarati",
+        "kannada", "kashmiri", "kashmiri_deva", "konkani",
+        "maithili", "malayalam", "marathi", "nepali", "odia",
+        "punjabi", "sanskrit", "santali", "sindhi",
+        "sindhi_deva", "tamil", "telugu", "urdu"
     }
 
     def __init__(self):
@@ -183,6 +208,7 @@ class TranslationService:
         return self._translate_uncached(text, source_language, target_language)
 
     def translate(self, text, source_language, target_language):
+        _translation_started = time.perf_counter()
         text = self._validate_text(text)
         if not text:
             return ""
@@ -197,11 +223,18 @@ class TranslationService:
             return text
 
         try:
-            return self._translate_cached(
+            result = self._translate_cached(
                 text,
                 source_language,
                 target_language
             )
+            logger.info(
+                "TranslationService timing | %s -> %s | source_chars=%s | output_chars=%s | seconds=%.3f | cache=%s",
+                source_language, target_language, len(text), len(result or ""),
+                time.perf_counter() - _translation_started,
+                self._translate_cached.cache_info()
+            )
+            return result
         except Exception:
             logger.exception(
                 "Translation failed: %s -> %s",
@@ -266,13 +299,269 @@ class TranslationService:
                 chunks.append(current)
         return chunks
 
-    def translate_response(self, text, target_language, source_language="english"):
-        """Translate a response using the original, non-chunked behavior.
+    @staticmethod
+    def _markdown_line_parts(line):
+        """Return the Markdown line prefix and body without altering syntax."""
+        match = re.match(
+            r"^([ \t]*(?:#{1,6}[ \t]+|>[ \t]?|[-+*][ \t]+|\d+[.)][ \t]+)?)",
+            line,
+        )
+        prefix = match.group(1) if match else ""
+        return prefix, line[len(prefix):]
 
-        Keep this method unchanged in behavior for normal typed chat.
-        Voice-specific callers should use translate_response_for_voice().
-        """
-        return self.translate(text, source_language, target_language)
+    @staticmethod
+    def _translate_markdown_inline(body, source_language, target_language, translate):
+        """Translate only prose spans; retain Markdown syntax/code/URLs verbatim."""
+        syntax = re.compile(
+            r"```.*?```|`[^`]*`|"
+            r"!\[[^\]]*\]\([^)]*\)|\[[^\]]*\]\([^)]*\)|"
+            r"https?://[^\s)]+|"
+            r"</?[A-Za-z][^>]*>|"
+            r"\*\*|__|~~|[*_`~]|\|",
+            re.DOTALL,
+        )
+
+        pieces = []
+        cursor = 0
+
+        def translate_prose(prose):
+            if not prose or not re.search(r"\w", prose, flags=re.UNICODE):
+                return prose
+            return translate(prose, source_language, target_language)
+
+        for match in syntax.finditer(body):
+            if match.start() > cursor:
+                pieces.append(translate_prose(body[cursor:match.start()]))
+            pieces.append(match.group(0))
+            cursor = match.end()
+
+        if cursor < len(body):
+            pieces.append(translate_prose(body[cursor:]))
+
+        return "".join(pieces)
+
+    def _translate_markdown_response(self, text, source_language, target_language):
+        """Translate Markdown prose in batches while preserving source structure."""
+        syntax = re.compile(
+            r"```.*?```|`[^`]*`|"
+            r"!\[[^\]]*\]\([^)]*\)|\[[^\]]*\]\([^)]*\)|"
+            r"https?://[^\s)]+|"
+            r"</?[A-Za-z][^>]*>|"
+            r"\*\*|__|~~|[*_`~]|\|",
+            re.DOTALL,
+        )
+
+        # Keep a reconstruction plan so translations can be batched without moving
+        # Markdown syntax, code, links, URLs, line prefixes, or blank lines.
+        plan = []
+        prose_items = []
+        in_fence = False
+        fence_marker = None
+
+        for line in text.splitlines():
+            stripped = line.lstrip()
+            if stripped.startswith(("```", "~~~")):
+                marker = stripped[:3]
+                if not in_fence:
+                    in_fence = True
+                    fence_marker = marker
+                elif marker == fence_marker:
+                    in_fence = False
+                    fence_marker = None
+                plan.append(("literal", line))
+                continue
+
+            if in_fence or not line.strip():
+                plan.append(("literal", line))
+                continue
+
+            if re.fullmatch(r"[ \t]*(?:-{3,}|\*{3,}|_{3,})[ \t]*", line):
+                plan.append(("literal", line))
+                continue
+
+            prefix, body = self._markdown_line_parts(line)
+            segments = [("literal", prefix)]
+            cursor = 0
+            for match in syntax.finditer(body):
+                if match.start() > cursor:
+                    prose = body[cursor:match.start()]
+                    if re.search(r"\w", prose, flags=re.UNICODE):
+                        index = len(prose_items)
+                        prose_items.append(prose)
+                        segments.append(("prose", index))
+                    else:
+                        segments.append(("literal", prose))
+                segments.append(("literal", match.group(0)))
+                cursor = match.end()
+
+            if cursor < len(body):
+                prose = body[cursor:]
+                if re.search(r"\w", prose, flags=re.UNICODE):
+                    index = len(prose_items)
+                    prose_items.append(prose)
+                    segments.append(("prose", index))
+                else:
+                    segments.append(("literal", prose))
+            plan.append(("segments", segments))
+
+        if not prose_items:
+            literal_lines = []
+            for kind, value in plan:
+                if kind == "literal":
+                    literal_lines.append(value)
+                else:
+                    literal_lines.append("".join(
+                        segment_value
+                        for segment_kind, segment_value in value
+                        if segment_kind == "literal"
+                    ))
+            return "\n".join(literal_lines)
+
+        # Direct IndicTrans2 routes can translate many independent prose spans
+        # in one inference batch. Keep the existing route for Manipuri and
+        # Meitei Mayek, whose specialized conversion/intermediate paths must
+        # remain untouched.
+        direct_indic_route = (
+            source_language not in {"manipuri", "manipuri_mtei"}
+            and target_language not in {"manipuri", "manipuri_mtei"}
+        )
+        if direct_indic_route and hasattr(self.indictrans, "translate_batch"):
+            translated_items = self.indictrans.translate_batch(
+                prose_items, source_language, target_language, batch_size=8
+            )
+        else:
+            translated_items = [
+                self.translate(item, source_language, target_language)
+                for item in prose_items
+            ]
+
+        output_lines = []
+        for kind, value in plan:
+            if kind == "literal":
+                output_lines.append(value)
+                continue
+            rebuilt = []
+            for segment_kind, segment_value in value:
+                if segment_kind == "literal":
+                    rebuilt.append(segment_value)
+                else:
+                    rebuilt.append(translated_items[segment_value])
+            output_lines.append("".join(rebuilt))
+        return "\n".join(output_lines)
+
+    def _translate_direct_indic_items(
+        self, items, source_language, target_language, batch_size=4
+    ):
+        """Batch ordinary Indic language translations without changing special routes."""
+        if not items:
+            return []
+
+        direct_indic_route = (
+            source_language not in {"manipuri", "manipuri_mtei"}
+            and target_language not in {"manipuri", "manipuri_mtei"}
+        )
+
+        if direct_indic_route and hasattr(self.indictrans, "translate_batch"):
+            translated = self.indictrans.translate_batch(
+                items, source_language, target_language, batch_size=batch_size
+            )
+            if len(translated) != len(items):
+                raise ValueError(
+                    "IndicTrans2 batch result count does not match input count."
+                )
+            return translated
+
+        return [
+            self.translate(item, source_language, target_language)
+            for item in items
+        ]
+
+    def _translate_long_direct_text(
+        self, text, source_language, target_language, max_chars=280
+    ):
+        """Translate long plain text in batches, retaining paragraph boundaries."""
+        direct_indic_route = (
+            source_language not in {"manipuri", "manipuri_mtei"}
+            and target_language not in {"manipuri", "manipuri_mtei"}
+        )
+        if not direct_indic_route or len(text) <= max_chars:
+            return self.translate(text, source_language, target_language)
+
+        # Keep blank-line separators exactly where they appeared in the source.
+        parts = re.split(r"(\n\s*\n)", text)
+        translated_parts = []
+        chunks = []
+        chunk_map = []
+
+        for part in parts:
+            if not part:
+                continue
+            if re.fullmatch(r"\n\s*\n", part):
+                chunk_map.append(("literal", part))
+                continue
+            part_chunks = self._split_translation_chunks(part, max_chars=max_chars)
+            if not part_chunks:
+                chunk_map.append(("literal", part))
+                continue
+            indexes = []
+            for chunk in part_chunks:
+                indexes.append(len(chunks))
+                chunks.append(chunk)
+            chunk_map.append(("chunks", indexes))
+
+        if not chunks:
+            return text
+
+        translated_chunks = self._translate_direct_indic_items(
+            chunks, source_language, target_language, batch_size=4
+        )
+
+        for kind, value in chunk_map:
+            if kind == "literal":
+                translated_parts.append(value)
+            else:
+                # Chunks split from the same paragraph are rejoined with spaces.
+                translated_parts.append(" ".join(
+                    str(translated_chunks[index]).strip() for index in value
+                ))
+
+        result = "".join(translated_parts).strip()
+        if not result:
+            raise ValueError("Long-text translation returned empty output.")
+        logger.info(
+            "Long translation completed | %s -> %s | source_chars=%s | chunks=%s | output_chars=%s",
+            source_language, target_language, len(text), len(chunks), len(result)
+        )
+        return result
+
+    def translate_response(self, text, target_language, source_language="english"):
+        """Translate response prose while preserving Markdown and code formatting."""
+        text = self._validate_text(text)
+        source_language = self.normalize_language(source_language)
+        target_language = self.normalize_language(target_language)
+
+        self.validate_language(source_language)
+        self.validate_language(target_language)
+
+        if not text or source_language == target_language:
+            return text
+
+        # Keep the dedicated Meitei Mayek conversion path unchanged.
+        if source_language == "manipuri_mtei" or target_language == "manipuri_mtei":
+            return self.translate(text, source_language, target_language)
+
+        has_markdown = (
+            "\n" in text
+            or bool(re.search(r"(^|\s)(#{1,6}\s|[-+*]\s|\d+[.)]\s|>\s|`|\*\*|__|~~)", text))
+        )
+        if not has_markdown:
+            return self._translate_long_direct_text(
+                text, source_language, target_language
+            )
+
+        return self._translate_markdown_response(
+            text, source_language, target_language
+        )
 
     def translate_response_for_voice(self, text, target_language, source_language="english"):
         """Translate long voice responses in chunks while preserving all source content."""
@@ -308,7 +597,9 @@ class TranslationService:
                 len(result),
             )
             return result
-        return self.translate(text, source_language, target_language)
+        return self._translate_long_direct_text(
+            text, source_language, target_language
+        )
 
     def clear_cache(self):
         self._translate_cached.cache_clear()

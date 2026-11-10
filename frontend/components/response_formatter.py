@@ -26,11 +26,159 @@ def _repair_heading_spacing(text: str) -> str:
             output.append(line)
             continue
         if not in_fence:
-            match = re.match(r"^(\s{0,3}#{1,6})(\S.*)$", line)
+            match = re.match(r"^(\s{0,3}#{1,6})(?!#)(?=\S)(\S.*)$", line)
             if match:
                 line = f"{match.group(1)} {match.group(2)}"
         output.append(line)
     return "\n".join(output)
+
+
+
+def _format_flat_java_code(code: str) -> str:
+    """Best-effort formatting for a flattened, single-line Java code fence."""
+    code = code.replace("\\n", "\n").replace("\\r", "\n")
+    if "\n" in code.strip() or not code.strip():
+        return code
+    out, indent, parens = [], 0, 0
+    buf, quote, block_comment, line_comment = "", None, False, False
+    i = 0
+
+    def flush():
+        nonlocal buf
+        value = buf.strip()
+        if value:
+            out.append("    " * max(indent, 0) + value)
+        buf = ""
+
+    while i < len(code):
+        ch = code[i]
+        nxt = code[i + 1] if i + 1 < len(code) else ""
+        if line_comment:
+            buf += ch
+            if ch == "\n":
+                flush()
+                line_comment = False
+            i += 1
+            continue
+        if block_comment:
+            buf += ch
+            if ch == "*" and nxt == "/":
+                buf += nxt
+                i += 2
+                block_comment = False
+                flush()
+                continue
+            i += 1
+            continue
+        if quote:
+            buf += ch
+            if ch == "\\\\" and nxt:
+                buf += nxt
+                i += 2
+                continue
+            if ch == quote:
+                quote = None
+            i += 1
+            continue
+        if ch in ('"', "\'"):
+            quote = ch
+            buf += ch
+        elif ch == "/" and nxt == "*":
+            buf += "/*"
+            i += 2
+            block_comment = True
+            continue
+        elif ch == "/" and nxt == "/":
+            buf += "//"
+            i += 2
+            line_comment = True
+            continue
+        elif ch == "(":
+            parens += 1
+            buf += ch
+        elif ch == ")":
+            parens = max(0, parens - 1)
+            buf += ch
+        elif ch == "{":
+            buf += ch
+            flush()
+            indent += 1
+        elif ch == "}":
+            flush()
+            indent = max(0, indent - 1)
+            buf = "}"
+            # Keep punctuation after a closing brace with that brace.
+            j = i + 1
+            while j < len(code) and code[j].isspace():
+                j += 1
+            if j < len(code) and code[j] in ";,":
+                buf += code[j]
+                i = j
+            flush()
+        elif ch == ";" and parens == 0:
+            buf += ch
+            flush()
+        else:
+            buf += ch
+        i += 1
+    flush()
+    # Avoid returning a worse result for code the simple formatter cannot improve.
+    return "\n".join(out) if len(out) > 1 else code
+
+
+def _repair_fenced_code_blocks(text: str) -> str:
+    """Preserve code fences and format flattened Java source inside them."""
+    pattern = re.compile(
+        r"(?P<opening>^[ \t]*```(?P<info>[^\n]*)\n)"
+        r"(?P<code>.*?)"
+        r"(?P<closing>^[ \t]*```[ \t]*$)",
+        re.MULTILINE | re.DOTALL,
+    )
+
+    def replace(match):
+        info = match.group("info").strip().lower()
+        language = info.split()[0] if info else ""
+        code = match.group("code")
+        first = code.lstrip().lower()
+        looks_like_java = (
+            language in {"java", "java17", "java-17"}
+            or (not language and (
+                first.startswith(("import java.", "public class ", "class "))
+                and ("class " in first or "interface " in first)
+            ))
+        )
+        if looks_like_java and len(code.splitlines()) <= 1:
+            code = _format_flat_java_code(code)
+        return match.group("opening") + code + match.group("closing")
+
+    return pattern.sub(replace, text)
+
+
+
+def _remove_rendering_artifacts(text: str) -> str:
+    """Remove only HTML-tag-only fences and stray standalone HTML tags from prose."""
+    tag = re.compile(
+        r"^\s*</?(?:div|span|p|section|article|main|header|footer|pre|code|"
+        r"strong|em|ul|ol|li|table|thead|tbody|tr|td|th|br|hr)(?:\s+[^<>]*)?\s*/?>\s*$",
+        re.IGNORECASE,
+    )
+    fence = re.compile(r"(?ms)^[ \t]*```[ \t]*(?:html|xml|markup)?[ \t]*\n(?P<body>.*?)^[ \t]*```[ \t]*$")
+    def strip_html_fence(m):
+        rows = [x.strip() for x in m.group("body").splitlines() if x.strip()]
+        return "" if rows and all(tag.fullmatch(x) for x in rows) else m.group(0)
+    text = fence.sub(strip_html_fence, text)
+    rows, output, in_fence = text.split("\n"), [], False
+    for row in rows:
+        if row.lstrip().startswith(("```", "~~~")):
+            in_fence = not in_fence
+            output.append(row)
+        elif not in_fence and tag.fullmatch(row.strip()):
+            continue
+        else:
+            output.append(row)
+    text = "\n".join(output)
+    # Do not attempt to reconstruct code from serialized object placeholders.
+    return re.sub(r"\n{3,}", "\n\n", text).strip()
 
 def format_response(text: str, language: Optional[str] = None) -> str:
     """Normalize Markdown layout for English, Hindi, Manipuri, Tai Khamti, and other languages."""
@@ -41,7 +189,37 @@ def format_response(text: str, language: Optional[str] = None) -> str:
     text = text.replace("\r\n", "\n").replace("\r", "\n")
     text = text.replace("\u2028", "\n").replace("\ufeff", "").replace("\u200b", "")
     text = text.replace("\u00a0", " ")
+    text = _remove_rendering_artifacts(text)
+    text = _repair_fenced_code_blocks(text)
     text = _repair_heading_spacing(text)
+
+    # Repair heading markers that translation has joined to Gujarati
+    # or other Indic-script words. Leave fenced code blocks untouched.
+    lines, repaired, in_fence = text.split("\n"), [], False
+
+    for line in lines:
+        stripped = line.lstrip()
+
+        if stripped.startswith(("```", "~~~")):
+            in_fence = not in_fence
+            repaired.append(line)
+            continue
+
+        if not in_fence:
+            # Turn inline heading markers into proper Markdown headings.
+            line = re.sub(
+                r"(?<!\S)(#{1,6})(?=\S)",
+                r"\n\1 ",
+                line,
+            )
+            # Remove stray emphasis markers at the end of a line.
+            line = re.sub(r"[ \t]+\*{1,2}[ \t]*$", "", line)
+            line = re.sub(r"[ \t]+_{1,2}[ \t]*$", "", line)
+
+        repaired.append(line)
+
+    text = "\n".join(repaired)
+
     lines, output, in_fence = text.split("\n"), [], False
     for line in lines:
         stripped = line.lstrip()
@@ -54,6 +232,19 @@ def format_response(text: str, language: Optional[str] = None) -> str:
             # when a model/translation has flattened Markdown into a paragraph.
             line = re.sub(r"\s+(?=#{1,6}\s)", "\n\n", line)
             line = re.sub(r"(?<=[.!?。！？])\s+(?=(?:[-*+]|\d+[.)])\s+)", "\n", line)
+            # Give common South Asian-script MCQ options their own lines when
+            # translation returns the question and options as one long line.
+            # This only inserts presentation newlines; it does not rewrite text.
+            line = re.sub(
+                r"(?<!^)[ \t]+(?=(?:\([কখগঘঙচছজঝঞটঠডঢণতথদধনপফবভমযরলশষসহড়ঢ়য়]\)|"
+                r"[কখগঘঙচছজঝঞটঠডঢণতথদধনপফবভমযরলশষসহড়ঢ়য়][.)]))[ \t]*",
+                "\\n",
+                line,
+            )
+            # Repair malformed translated bold markers while preserving words.
+            line = re.sub(r"\*\*[ \t]+(.*?)[ \t]+\*\*", r"\1", line)
+            if line.count("**") % 2:
+                line = line.replace("**", "")
         output.append(line.rstrip())
     text = "\n".join(output)
     text = re.sub(r"\n{3,}", "\n\n", text)

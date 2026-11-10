@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "instructions": "Replace this example with actual runs. Do not mark pass without evidence and human review.",
+  "evaluations": [
+    {
+      "case_id": "sat-asr-001",
+      "language_code": "sat",
+      "capability": "asr",
+      "model_id": "RECORD_EXACT_MODEL_REPOSITORY_ID",
+      "status": "not_run",
+      "notes": "Record script/dialect, noise conditions, and expected behavior.",
+      "reference_transcript": "RECORD_GOLD_TRANSCRIPT",
+      "predicted_transcript": "RECORD_MODEL_OUTPUT",
+      "metrics": {
+        "wer": null,
+        "cer": null
+      },
+      "evidence": "",
+      "reviewer": ""
+    },
+    {
+      "case_id": "sat-translation-001",
+      "language_code": "sat",
+      "capability": "translation",
+      "model_id": "RECORD_EXACT_MODEL_REPOSITORY_ID",
+      "status": "not_run",
+      "notes": "Review meaning preservation, named entities, script, and safety-critical content.",
+      "source_text": "RECORD_SOURCE_TEXT",
+      "translated_text": "RECORD_MODEL_OUTPUT",
+      "reviewer": "",
+      "evidence": ""
+    },
+    {
+      "case_id": "sat-tts-001",
+      "language_code": "sat",
+      "capability": "tts",
+      "model_id": "RECORD_EXACT_MODEL_REPOSITORY_ID",
+      "status": "not_run",
+      "notes": "Check intelligibility, pronunciation, script/phoneme handling, and audio quality.",
+      "audio_path": "",
+      "reviewer": "",
+      "evidence": ""
+    }
+  ]
+}

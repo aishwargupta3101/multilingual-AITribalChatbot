@@ -2,6 +2,7 @@
 Optimized CTranslate2 INT8 NLLB Translation Service.
 """
 import logging
+import time
 from functools import lru_cache
 import threading
 import ctranslate2
@@ -209,6 +210,7 @@ class NLLBService:
         source_language: str,
         target_language: str
     ) -> str:
+        _translation_started = time.perf_counter()
         if not text or not text.strip():
             return ""
         text = text.strip()
@@ -225,10 +227,17 @@ class NLLBService:
                 if len(chunks) > 1:
                     translated_chunks = []
                     for index, chunk in enumerate(chunks, start=1):
+                        _chunk_started = time.perf_counter()
                         translated_chunks.append(
                             self._translate_cached_with_cache(
                                 chunk, source_language, target_language
                             )
+                        )
+                        logger.info(
+                            "NLLB chunk timing | target=%s | chunk=%s/%s | chars=%s | seconds=%.3f | cache=%s",
+                            target_language, index, len(chunks), len(chunk),
+                            time.perf_counter() - _chunk_started,
+                            self._translate_cached_with_cache.cache_info()
                         )
                     translated_text = "\n\n".join(translated_chunks).strip()
                     logger.info(
@@ -244,9 +253,10 @@ class NLLBService:
                     text, source_language, target_language
                 )
             logger.info(
-                "Translation completed: %s -> %s",
-                source_language,
-                target_language
+                "Translation completed: %s -> %s | chars=%s | seconds=%.3f | cache=%s",
+                source_language, target_language, len(text),
+                time.perf_counter() - _translation_started,
+                self._translate_cached_with_cache.cache_info()
             )
             return translated_text
         except Exception:

@@ -189,3 +189,22 @@ Thumbs.db
 !data/tai_khamti/faiss_index/
 !data/tai_khamti/faiss_index/tai_khamti_combined.index
 !data/tai_khamti/faiss_index/tai_khamti_combined_documents.json
+
+# Python virtual environments
+.venv/
+.venv_indic_tts/
+venv/
+env/
+
+# Packaged environments
+.venv.zip
+
+# Local experimental outputs
+experimental_outputs/
+# Local Git backup repositories
+xlit_backup/
+xlit/.git_xlit_backup/
+
+# Local transliteration repositories and data
+xlit/
+xlit_backup/

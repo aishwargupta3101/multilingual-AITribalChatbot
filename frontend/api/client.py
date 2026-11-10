@@ -93,7 +93,7 @@ class APIClient:
             }
     @staticmethod
     def text_to_speech(text: str, language: str = "english"):
-        """Generate speech and return playable MP3 bytes."""
+        """Generate speech and return playable MP3 or WAV bytes."""
         try:
             if not text or not text.strip():
                 logger.error("TTS skipped: empty text.")
@@ -126,7 +126,7 @@ class APIClient:
                 "Content-Type", ""
             ).lower()
 
-            if "audio/mpeg" not in content_type and "audio/mp3" not in content_type:
+            if not any(kind in content_type for kind in ("audio/mpeg", "audio/mp3", "audio/wav", "audio/x-wav")):
                 logger.error(
                     "TTS did not return audio. Content-Type: %s | Response: %s",
                     content_type,
@@ -346,11 +346,64 @@ class APIClient:
                 or data.get("text")
                 or ""
             )
-
         except (requests.RequestException, ValueError) as e:
             logger.exception("Text translation failed.")
             return ""
 
+    @staticmethod
+    def translate_document(
+        uploaded_file,
+        source_language,
+        target_language,
+    ):
+        """Translate a document; return JSON for text responses or bytes for files."""
+        from urllib.parse import unquote
+
+        url = f"{BASE_URL}/api/v1/document-translation/"
+        response = requests.post(
+            url,
+            files={
+                "file": (
+                    uploaded_file.name,
+                    uploaded_file.getvalue(),
+                    uploaded_file.type or "application/octet-stream",
+                )
+            },
+            data={
+                "source_language": source_language,
+                "target_language": target_language,
+            },
+            timeout=(15, 900),
+        )
+        if not response.ok:
+            try:
+                detail = response.json().get("detail", response.text)
+            except ValueError:
+                detail = response.text
+
+            raise RuntimeError(
+                f"Document translation API failed "
+                f"(HTTP {response.status_code}): {detail}"
+            )
+
+        content_type = response.headers.get("Content-Type", "").lower()
+        if "application/json" in content_type:
+            return response.json()
+
+        output_name = response.headers.get("X-Translated-Filename")
+        if output_name:
+            output_name = unquote(output_name)
+        else:
+            output_name = f"{uploaded_file.name.rsplit('.', 1)[0]}_{target_language}.pdf"
+
+        return {
+            "success": True,
+            "filename": output_name,
+            "content_type": content_type or "application/octet-stream",
+            "file_bytes": response.content,
+            "source_language": source_language,
+            "target_language": target_language,
+        }
 
     @staticmethod
     def speech_to_text(audio_bytes, language="english"):

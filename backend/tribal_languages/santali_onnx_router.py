@@ -1,0 +1,89 @@
+"""Separate opt-in API router for the tested Santali ONNX STT adapter."""
+from __future__ import annotations
+
+import logging
+import os
+import threading
+from typing import Any
+
+from dotenv import load_dotenv
+from fastapi import APIRouter, File, HTTPException, UploadFile
+from fastapi.concurrency import run_in_threadpool
+
+from .santali_onnx_stt_service import MODEL_ID, SantaliOnnxSTTService
+
+# Read project .env without overriding values already set by deployment.
+load_dotenv(override=False)
+
+logger = logging.getLogger(__name__)
+router = APIRouter(
+    prefix="/api/v1/tribal-languages/santali-onnx",
+    tags=["Santali ONNX Experimental"],
+)
+MAX_AUDIO_BYTES = 25 * 1024 * 1024
+_SERVICE: SantaliOnnxSTTService | None = None
+_SERVICE_LOCK = threading.RLock()
+
+
+def _enabled() -> bool:
+    """Santali is available by default; explicit false remains an administrative kill switch."""
+    value = os.getenv("TRIBAL_SANTALI_ONNX_STT_ENABLED", "true").strip().lower()
+    return value not in {"0", "false", "no", "off", "disabled"}
+
+def _get_service() -> SantaliOnnxSTTService:
+    global _SERVICE
+    with _SERVICE_LOCK:
+        if _SERVICE is None:
+            _SERVICE = SantaliOnnxSTTService()
+        return _SERVICE
+
+
+@router.get("/status")
+def status() -> dict[str, Any]:
+    """Report flags and lazy-load state; this is not a model quality claim."""
+    return {
+        "language": "santali",
+        "backend": "onnx-asr CPU",
+        "model_id": MODEL_ID,
+        "status": "experimental",
+        "enabled": _enabled(),
+        "model_loaded": bool(_SERVICE and _SERVICE.model_loaded),
+        "note": (
+            "Enabled for normal Santali language selection. Recognition is still machine-generated; "
+            "broader accuracy and native-speaker review are required before production claims."
+        ),
+    }
+
+
+@router.post("/stt")
+async def speech_to_text(audio: UploadFile = File(...)) -> dict[str, Any]:
+    """Transcribe an uploaded audio sample to Santali text. Disabled by default."""
+    if not _enabled():
+        raise HTTPException(
+            status_code=503,
+            detail=(
+                "Santali ONNX STT is administratively disabled. Remove the explicit false setting or set "
+                "TRIBAL_SANTALI_ONNX_STT_ENABLED=true to enable the normal Santali language flow."
+            ),
+        )
+
+    audio_bytes = await audio.read(MAX_AUDIO_BYTES + 1)
+    if not audio_bytes:
+        raise HTTPException(status_code=400, detail="The uploaded audio is empty.")
+    if len(audio_bytes) > MAX_AUDIO_BYTES:
+        raise HTTPException(status_code=413, detail="Audio exceeds the 25 MB limit.")
+
+    try:
+        result = await run_in_threadpool(_get_service().transcribe_bytes, audio_bytes)
+        return result
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:
+        logger.exception("Santali ONNX STT failed")
+        raise HTTPException(
+            status_code=503,
+            detail=(
+                "Santali ONNX STT failed. Check available memory, onnx-asr installation, "
+                "audio format, model cache, and backend logs."
+            ),
+        ) from exc

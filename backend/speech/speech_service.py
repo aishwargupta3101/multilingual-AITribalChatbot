@@ -8,6 +8,7 @@ import logging
 from pathlib import Path
 
 from backend.speech.whisper_service import whisper_service
+from backend.speech.voice_language_capabilities import stt_language_map
 
 logger = logging.getLogger(__name__)
 
@@ -80,7 +81,8 @@ class SpeechService:
                     "is not supported yet."
                 ),
             }
-        if language not in self.LANGUAGE_MAP:
+        language_map = {**self.LANGUAGE_MAP, **stt_language_map()}
+        if language not in language_map:
             return {
                 "success": False,
                 "text": "",
@@ -88,7 +90,7 @@ class SpeechService:
                 "confidence": 0,
                 "error": f"Unsupported language: {language}",
             }
-        whisper_language = self.LANGUAGE_MAP[language]
+        whisper_language = language_map[language]
         logger.info("Whisper Language: %s", whisper_language)
 
         try:

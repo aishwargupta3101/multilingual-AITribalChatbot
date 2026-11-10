@@ -10,8 +10,10 @@ from backend.routes.session import router as session_router
 from backend.routes.llama_test import router as llama_test_router
 from backend.routes.stream import router as stream_router
 from backend.routes.upload import router as upload_router
-
-
+from backend.routes.document_translation import (
+    router as document_translation_router,
+)
+from backend.routes.video_learning import router as video_learning_router
 api_router = APIRouter(prefix="/api/v1")
 api_router.include_router(health_router)
 api_router.include_router(chat_router)
@@ -22,6 +24,7 @@ api_router.include_router(
     upload_router,
     tags=["Upload"]
 )
+api_router.include_router(document_translation_router)
 api_router.include_router(
     history_router,
     tags=["History"]
@@ -39,3 +42,4 @@ api_router.include_router(
     stream_router,
     tags=["Streaming"]
 )
+api_router.include_router(video_learning_router)

@@ -5,56 +5,53 @@ import re
 from components.response_formatter import format_for_display
 
 def normalize_assistant_markdown(content):
-    """Normalize Markdown layout while preserving the answer wording."""
+    """Normalize prose Markdown while preserving fenced code blocks."""
     content = str(content or "").replace("\r\n", "\n").replace("\r", "\n")
     content = content.replace("\\n", "\n")
 
-    # Repair Markdown headings missing the required space after #.
-    content = re.sub(r"(?m)^(#{1,6})(?=[^#\s])", r"\1 ", content)
+    # Process only prose segments. Regex cleanup must never rewrite code.
+    parts = re.split(r"(?ms)(^```[^\n]*\n.*?^```[ \t]*$|^~~~[^\n]*\n.*?^~~~[ \t]*$)", content)
+    normalized = []
+    for part in parts:
+        if part.startswith("```") or part.startswith("~~~"):
+            normalized.append(part)
+            continue
+        part = re.sub(r"(?m)^(#{1,6})(?=[^#\s])", r"\1 ", part)
+        part = re.sub(
+            r"(?i)\b(Definition|Explanation|Examples|Applications\s*/\s*Importance|Summary|Key Concepts)(?=[A-Z])",
+            r"\1\n\n", part,
+        )
+        part = re.sub(r"(\*\*[^*\n]+?\*\*)(?=[A-Za-z0-9])", r"\1 ", part)
+        part = re.sub(r"(?m)(?<!^)\s+([-*+]\s+)", r"\n\1", part)
+        part = re.sub(r"(?m)(?<!^)\s+(\d+[.)]\s+)", r"\n\1", part)
+        part = re.sub(r"\n{3,}", "\n\n", part)
+        normalized.append(part)
+    return "".join(normalized).strip()
 
-    # Separate known section labels when a model joins the label to its text.
-    content = re.sub(
-        r"(?i)\b(Definition|Explanation|Examples|"
-        r"Applications\s*/\s*Importance|Summary|Key Concepts)"
-        r"(?=[A-Z])",
-        r"\1\n\n",
-        content,
-    )
-
-    # Keep a readable space after a closing bold span if the next word
-    # was accidentally concatenated (e.g. **Robotics**that).
-    content = re.sub(
-        r"(\*\*[^*\n]+?\*\*)(?=[A-Za-z0-9])",
-        r"\1 ",
-        content,
-    )
-
-    # Split flattened bullet/numbered items onto separate lines.
-    content = re.sub(r"(?m)(?<!^)\s+([-*+]\s+)", r"\n\1", content)
-    content = re.sub(r"(?m)(?<!^)\s+(\d+[.)]\s+)", r"\n\1", content)
-
-    # Normalize excess blank lines without collapsing intentional paragraphs.
-    content = re.sub(r"\n{3,}", "\n\n", content)
-    return content.strip()
 
 def html_block(content):
-    """
-    Remove indentation/newlines before sending HTML
-    to Streamlit Markdown.
-    """
-    content = " ".join(
-        line.strip()
-        for line in content.splitlines()
-        if line.strip()
-    )
-    st.markdown(
-        content,
-        unsafe_allow_html=True
-    )
+    """Render prebuilt HTML directly, without parsing it a second time as Markdown."""
+    # MarkdownIt has already converted the assistant response to HTML. Passing that
+    # HTML through st.markdown() runs another Markdown parse and can turn escaped or
+    # trailing HTML fragments into visible code blocks. st.html() renders the result
+    # directly while preserving the existing HTML/CSS structure.
+    if hasattr(st, "html"):
+        st.html(content)
+    else:
+        # Compatibility fallback for older Streamlit versions.
+        st.markdown(content, unsafe_allow_html=True)
+
 def apply_message_ui():
     st.markdown(
         """
         <style>
+        @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Ol+Chiki&display=swap");
+        /* SANTALI_OL_CHIKI_WEBFONT_FIX */
+        /* Ol Chiki requires an explicit script-capable font. */
+        .assistant-message.santali-script,
+        .assistant-message.santali-script * {
+            font-family: "Noto Sans Ol Chiki", sans-serif !important;
+        }
         .chat-row {
             display: flex;
             width: 100%;
@@ -215,8 +212,23 @@ def apply_message_ui():
             padding: 13px 15px;
             border-radius: 10px;
             background: #0f172a;
-            color: #e2e8f0;
+            color: #f8fafc;
             margin: 12px 0;
+            white-space: pre;
+            tab-size: 4;
+        }
+        .assistant-message pre code {
+            display: block;
+            padding: 0;
+            margin: 0;
+            background: transparent;
+            color: #f8fafc;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 0.88rem;
+            line-height: 1.55;
+            white-space: pre;
+            overflow-wrap: normal;
+            word-break: normal;
         }
         .assistant-message blockquote {
             margin: 12px 0;
@@ -307,7 +319,73 @@ def render_message(
 
     normalized_content = normalize_assistant_markdown(content)
     normalized_content = format_for_display(normalized_content, language)
+
+    # SANTALI_MARKDOWN_DISPLAY_CLEANUP_V1: translated Markdown markers can
+    # survive translation or leave empty list items. Clean only Santali cards.
+    language_key = str(language or "").strip().lower().replace("_", "-")
+    if "santali" in language_key or language_key in {"sat", "sat-olck", "ol-chiki"}:
+        # Remove heading markers, including stray doubled hashes left mid-line.
+        normalized_content = re.sub(r"(?m)^\s*#{1,6}\s*", "", normalized_content)
+        normalized_content = re.sub(r"#{2,}", "", normalized_content)
+
+        # Convert list items to plain lines so untranslated/empty Markdown
+        # bullets do not appear as blank rows in the answer card.
+        normalized_content = re.sub(
+            r"(?m)^\s*(?:[-*+•◦▪●○]\s+|\d+[.)]\s+)",
+            "",
+            normalized_content,
+        )
+        # Remove list-marker-only rows after translation.
+        normalized_content = re.sub(
+            r"(?m)^\s*(?:[-*+•◦▪●○]|\d+[.)])\s*$\n?",
+            "",
+            normalized_content,
+        )
+        normalized_content = re.sub(r"(?m)^[ \t]+$", "", normalized_content)
+        normalized_content = re.sub(r"\n[ \t]*\n(?:[ \t]*\n)+", "\n\n", normalized_content)
+        normalized_content = normalized_content.strip()
+
     rendered_content = markdown_renderer.render(normalized_content)
+    # SANTALI_OL_CHIKI_FINAL_DISPLAY_FIX_V2: bypass Markdown/font fallbacks for Ol Chiki only.
+    _santali_language_key = str(language or "").strip().lower().replace("_", "-")
+    _santali_display = (
+        "santali" in _santali_language_key
+        or _santali_language_key in {"sat", "sat-olck", "ol-chiki"}
+        or any("\u1c50" <= _ch <= "\u1c7f" for _ch in str(content or ""))
+    )
+    if _santali_display:
+        _santali_plain = normalize_assistant_markdown(content)
+        _santali_plain = format_for_display(_santali_plain, language)
+        # Remove Markdown that survived machine translation, plus empty list rows.
+        _santali_plain = re.sub(r"(?m)^[ \t]*#{1,6}[ \t]*", "", _santali_plain)
+        _santali_plain = re.sub(
+            r"(?m)^[ \t]*(?:[-*+•◦▪●○]|\d+[.)])[ \t]*$\n?", "", _santali_plain
+        )
+        _santali_plain = re.sub(
+            r"(?m)^[ \t]*(?:[-*+•◦▪●○]|\d+[.)])[ \t]+", "", _santali_plain
+        )
+        _santali_plain = re.sub(r"\*\*(.*?)\*\*", r"\1", _santali_plain)
+        _santali_plain = re.sub(r"__(.*?)__", r"\1", _santali_plain)
+        _santali_plain = re.sub(r"`([^`]*)`", r"\1", _santali_plain)
+        _santali_plain = re.sub(r"(?m)^[ \t]+$", "", _santali_plain)
+        _santali_plain = re.sub(r"\n{3,}", "\n\n", _santali_plain).strip()
+        # Nirmala UI is available on Windows 10/11 and includes Ol Chiki glyphs.
+        # Inline styling avoids depending on Google Fonts/network/CSS import behavior.
+        rendered_content = (
+            '<div lang="sat" dir="ltr" '
+            'style="font-family: \'Noto Sans Ol Chiki\', \'Nirmala UI\', sans-serif !important; '
+            'white-space: pre-wrap; line-height: 1.9;">'
+            + escape(_santali_plain).replace("\n", "<br>")
+            + "</div>"
+        )
+
+    # SANTALI_OL_CHIKI_WEBFONT_FIX: opt in only for Santali assistant cards.
+    language_key = str(language or "").strip().lower().replace("_", "-")
+    language_class = (
+        " santali-script"
+        if language_key in {"santali", "sat", "sat-olck", "ol-chiki"}
+        else ""
+    )
 
     # Render the full assistant card in one HTML call to avoid nesting
     # Streamlit elements inside an HTML container.
@@ -320,7 +398,7 @@ def render_message(
                     Tribal AI
                     <span class="ai-online-dot"></span>
                 </div>
-                <div class="assistant-message">
+                <div class="assistant-message{language_class}">
                     {rendered_content}
                 </div>
             </div>

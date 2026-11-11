@@ -284,6 +284,101 @@ class APIClient:
             }
 
     @staticmethod
+    def upload(endpoint, uploaded_file, session_id, language="english"):
+        """Upload and index a document using the deployed backend."""
+
+        try:
+            url = f"{BASE_URL}/{endpoint.lstrip('/')}"
+
+            uploaded_file.seek(0)
+
+            response = requests.post(
+                url,
+                files={
+                    "file": (
+                        uploaded_file.name,
+                        uploaded_file.getvalue(),
+                        uploaded_file.type or "application/octet-stream",
+                    )
+                },
+                data={
+                    "session_id": session_id,
+                    "language": language.lower().strip(),
+                },
+                timeout=(20, 900),
+            )
+
+            logger.info("Document upload status: %s", response.status_code)
+            logger.info("Document upload response: %s", response.text[:2000])
+
+            response.raise_for_status()
+            return response.json()
+
+        except requests.HTTPError as exc:
+            detail = (
+                exc.response.text
+                if exc.response is not None
+                else str(exc)
+            )
+            logger.exception("Document upload HTTP error.")
+            return {"success": False, "error": detail}
+
+        except (requests.RequestException, OSError, ValueError) as exc:
+            logger.exception("Document upload failed.")
+            return {"success": False, "error": str(exc)}
+
+    @staticmethod
+    def chat_with_document(
+        document_id,
+        question,
+        session_id,
+        language="english",
+    ):
+        """Ask questions about an uploaded document."""
+
+        try:
+            url = f"{BASE_URL}/api/v1/chat/"
+
+            payload = {
+                "document_id": document_id,
+                "question": question,
+                "session_id": session_id,
+                "language": language,
+            }
+
+            response = requests.post(
+                url,
+                json=payload,
+                timeout=(20, 900),
+            )
+
+            logger.info(
+                "Document chat status: %s",
+                response.status_code,
+            )
+
+            logger.info(
+                "Document chat response: %s",
+                response.text[:2000],
+            )
+
+            response.raise_for_status()
+            return response.json()
+
+        except requests.HTTPError as exc:
+            detail = (
+                exc.response.text
+                if exc.response is not None
+                else str(exc)
+            )
+            logger.exception("Document chat HTTP error.")
+            return {"success": False, "error": detail}
+
+        except (requests.RequestException, ValueError) as exc:
+            logger.exception("Document chat request failed.")
+            return {"success": False, "error": str(exc)}
+
+    @staticmethod
     def chat_stream(
         question: str,
         session_id: str,

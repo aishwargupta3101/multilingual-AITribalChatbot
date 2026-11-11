@@ -245,30 +245,21 @@ def _render_document_styles() -> None:
       color: #FFFFFF !important;
       -webkit-text-fill-color: #FFFFFF !important;
     }}
-    /* Keep uploader panel and all of its nested text high contrast too. */
-    [data-testid="stFileUploader"],
-    [data-testid="stFileUploader"] section,
-    [data-testid="stFileUploader"] section > div,
-    [data-testid="stFileUploader"] [data-testid="stFileUploaderDropzone"],
-    [data-testid="stFileUploader"] [data-testid="stFileUploaderDropzone"] * {{
-      background-color: #111B14 !important;
-      color: #F4F8F5 !important;
-      -webkit-text-fill-color: #F4F8F5 !important;
-      opacity: 1 !important;
-    }}
-    [data-testid="stFileUploader"] [data-testid="stFileUploaderDropzone"] {{
-      border: 1px dashed #5A7963 !important;
+    /* Keep uploader styling local to its own document panel. */
+    .st-key-doc_upload_panel [data-testid="stFileUploaderDropzone"],
+    .st-key-doc_knowledge_panel [data-testid="stFileUploaderDropzone"] {{
+      background: #F5FBF7 !important;
+      background-color: #F5FBF7 !important;
+      border: 1px dashed #79BD91 !important;
       border-radius: 13px !important;
     }}
-    [data-testid="stFileUploader"] button {{
-      background: #F4F8F5 !important;
-      color: #153321 !important;
-      -webkit-text-fill-color: #153321 !important;
-      border: 1px solid #B8D0BF !important;
-    }}
-    [data-testid="stFileUploader"] button * {{
-      color: #153321 !important;
-      -webkit-text-fill-color: #153321 !important;
+    .st-key-doc_upload_panel [data-testid="stFileUploaderDropzoneInstructions"],
+    .st-key-doc_upload_panel [data-testid="stFileUploaderDropzoneInstructions"] *,
+    .st-key-doc_knowledge_panel [data-testid="stFileUploaderDropzoneInstructions"],
+    .st-key-doc_knowledge_panel [data-testid="stFileUploaderDropzoneInstructions"] * {{
+      color: #244B32 !important;
+      -webkit-text-fill-color: #244B32 !important;
+      opacity: 1 !important;
     }}
     [data-testid="stAppViewContainer"] .main input,
     [data-testid="stAppViewContainer"] .main textarea,
@@ -1257,6 +1248,97 @@ def _render_matching_document_uploader_style() -> None:
         unsafe_allow_html=True,
     )
 
+    # High-contrast status card and reset button for Document Chat.
+    st.markdown(
+        """
+        <style>
+        .doc-ready-status {
+            display: flex !important;
+            align-items: center !important;
+            gap: 15px !important;
+            background: linear-gradient(120deg, #e9f8ee, #d8f2e1) !important;
+            border: 1px solid #a5d6b3 !important;
+            border-left: 5px solid #159957 !important;
+            border-radius: 14px !important;
+            padding: 17px 20px !important;
+            margin: 14px 0 18px !important;
+            box-shadow: 0 4px 14px rgba(0,0,0,.08) !important;
+        }
+        .doc-ready-icon {
+            width: 42px !important;
+            height: 42px !important;
+            min-width: 42px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border-radius: 50% !important;
+            background: #159957 !important;
+            color: #ffffff !important;
+            font-size: 23px !important;
+            font-weight: 800 !important;
+        }
+        .doc-ready-content { flex: 1 !important; min-width: 0 !important; }
+        .doc-ready-title {
+            color: #14532d !important;
+            -webkit-text-fill-color: #14532d !important;
+            font-size: 16px !important;
+            font-weight: 800 !important;
+            margin-bottom: 5px !important;
+        }
+        .doc-ready-filename {
+            color: #166534 !important;
+            -webkit-text-fill-color: #166534 !important;
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            overflow-wrap: anywhere !important;
+            margin-bottom: 4px !important;
+        }
+        .doc-ready-description {
+            color: #42634d !important;
+            -webkit-text-fill-color: #42634d !important;
+            font-size: 12px !important;
+            line-height: 1.5 !important;
+        }
+        .doc-ready-badge {
+            background: #c3ead0 !important;
+            color: #14532d !important;
+            -webkit-text-fill-color: #14532d !important;
+            border: 1px solid #8acba1 !important;
+            padding: 6px 11px !important;
+            border-radius: 20px !important;
+            font-size: 10px !important;
+            font-weight: 850 !important;
+            white-space: nowrap !important;
+        }
+        .st-key-reset_document_chat button {
+            background: #ffffff !important;
+            background-color: #ffffff !important;
+            color: #b42318 !important;
+            -webkit-text-fill-color: #b42318 !important;
+            border: 1px solid #e4b4b4 !important;
+            border-radius: 11px !important;
+            min-height: 44px !important;
+            font-weight: 700 !important;
+            box-shadow: none !important;
+            opacity: 1 !important;
+        }
+        .st-key-reset_document_chat button * {
+            color: #b42318 !important;
+            -webkit-text-fill-color: #b42318 !important;
+        }
+        .st-key-reset_document_chat button:hover {
+            background: #fff1f0 !important;
+            border-color: #d97777 !important;
+        }
+        @media(max-width: 600px) {
+            .doc-ready-status { flex-wrap: wrap !important; padding: 14px !important; }
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def _render_knowledge_upload(language: str, language_name: str) -> None:
     st.markdown(
         """
@@ -1951,11 +2033,84 @@ def _render_document_chat() -> None:
                 except Exception as exc:
                     st.error(f"Document upload failed: {exc}")
         elif document_id:
-            st.success(
-                f"Ready to chat: {st.session_state.get('document_chat_filename', uploaded.name if uploaded else 'Document')}"
+            ready_filename = st.session_state.get(
+                "document_chat_filename",
+                uploaded.name if uploaded else "Document",
             )
+
+            st.markdown(
+                f"""
+                <div style="
+                    display:flex !important;
+                    align-items:center !important;
+                    gap:15px !important;
+                    background:#e9f8ee !important;
+                    border:1px solid #a5d6b3 !important;
+                    border-left:5px solid #159957 !important;
+                    border-radius:14px !important;
+                    padding:17px 20px !important;
+                    margin:14px 0 18px !important;
+                    color:#14532d !important;
+                    -webkit-text-fill-color:#14532d !important;
+                ">
+                    <div style="
+                        width:42px !important;
+                        height:42px !important;
+                        min-width:42px !important;
+                        display:flex !important;
+                        align-items:center !important;
+                        justify-content:center !important;
+                        border-radius:50% !important;
+                        background:#159957 !important;
+                        color:#ffffff !important;
+                        -webkit-text-fill-color:#ffffff !important;
+                        font-size:23px !important;
+                        font-weight:800 !important;
+                    ">✓</div>
+                    <div style="flex:1 !important; min-width:0 !important;">
+                        <div style="
+                            color:#14532d !important;
+                            -webkit-text-fill-color:#14532d !important;
+                            font-size:16px !important;
+                            font-weight:800 !important;
+                            margin-bottom:5px !important;
+                        ">Document ready for chat</div>
+                        <div style="
+                            color:#166534 !important;
+                            -webkit-text-fill-color:#166534 !important;
+                            font-size:13px !important;
+                            font-weight:700 !important;
+                            overflow-wrap:anywhere !important;
+                            margin-bottom:4px !important;
+                        ">{html.escape(ready_filename)}</div>
+                        <div style="
+                            color:#42634d !important;
+                            -webkit-text-fill-color:#42634d !important;
+                            font-size:12px !important;
+                            line-height:1.5 !important;
+                        ">
+                            Your document has been uploaded successfully.
+                            You can now ask questions about its content.
+                        </div>
+                    </div>
+                    <div style="
+                        background:#c3ead0 !important;
+                        color:#14532d !important;
+                        -webkit-text-fill-color:#14532d !important;
+                        border:1px solid #8acba1 !important;
+                        padding:6px 11px !important;
+                        border-radius:20px !important;
+                        font-size:10px !important;
+                        font-weight:850 !important;
+                        white-space:nowrap !important;
+                    ">READY</div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
             if st.button(
-                "Remove document and upload another",
+                "🗑️ Remove document and upload another",
                 key="reset_document_chat",
                 use_container_width=True,
             ):

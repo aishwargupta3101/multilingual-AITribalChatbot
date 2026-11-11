@@ -1,88 +1,50 @@
-# =========================
-# Python
-# =========================
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-
+# Python virtual environments
 .venv/
+.venv_indic_tts/
 venv/
 env/
 ENV/
 
-# =========================
-# Git / IDE
-# =========================
+# Downloaded translation model caches
+models/indictrans2/
+models/translation/
+
+# Python cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Git and IDE
 .git/
 .idea/
 .vscode/
 
-# =========================
-# Environment
-# =========================
+# Secrets
 .env
 .env.*
+.streamlit/secrets.toml
 
-# =========================
-# Python caches
-# =========================
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.ipynb_checkpoints/
-
-# =========================
-# Logs
-# =========================
+# Logs and temporary files
 logs/
 *.log
-
-# =========================
-# Generated audio / uploads
-# =========================
-generated_audio/
-uploads/
-data/audio/
-data/temp/
-data/output/
-
-*.wav
-*.mp3
-*.flac
-*.ogg
-
-# =========================
-# Local ML models / caches
-# =========================
-models/
-checkpoints/
-weights/
-cache/
-hf_cache/
-.huggingface/
-seamless_cache/
-nemo_cache/
-nemo_experiments/
-
-# =========================
-# Local databases
-# =========================
-*.db
-*.sqlite3
-mongodb_data/
-
-# =========================
-# Temporary files
-# =========================
 temp/
 tmp/
 *.tmp
 
-# =========================
-# Tests / coverage
-# =========================
-test_*.py
-.coverage
-.coverage.*
-htmlcov/
+# Generated audio
+generated_audio/
+
+# Model caches
+.cache/
+.huggingface/
+hf_cache/
+transformers_cache/
+seamless_cache/
+nemo_cache/
+nemo_experiments/
+
+# OS files
+.DS_Store
+Thumbs.db

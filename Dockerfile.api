@@ -1,3 +1,4 @@
+
 FROM python:3.11-slim
 
 WORKDIR /app
@@ -5,12 +6,14 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     git \
     curl \
     ffmpeg \
     libsndfile1 \
+    nodejs \
+    npm \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --upgrade pip && \
@@ -24,5 +27,7 @@ COPY requirements-docker.txt .
 RUN pip install --no-cache-dir -r requirements-docker.txt
 
 COPY . .
+
 RUN test -f /app/xlit/src/mt_/__init__.py
+
 CMD ["sh", "-c", "uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-10000} --workers 1"]

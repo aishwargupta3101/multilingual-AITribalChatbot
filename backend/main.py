@@ -69,7 +69,7 @@ app.include_router(manipuri_tts_router,prefix="/api/v1")
 app.include_router(tribal_language_lab_router)
 app.include_router(santali_onnx_stt_router)
 app.include_router(santali_language_router)
-app.include_router(santali_experimental_router)
+#app.include_router(santali_experimental_router)
 app.add_exception_handler(
     Exception,
     generic_exception_handler

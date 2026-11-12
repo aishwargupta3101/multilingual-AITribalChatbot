@@ -478,9 +478,33 @@ def _show_text_to_image_generator():
                 "You can continue using the Education Assistant without an image."
             )
 
-    image_bytes = st.session_state.get("edu_generated_image_bytes")
-    if image_bytes:
-        st.image(image_bytes, caption=st.session_state.get("edu_generated_image_prompt", "Generated image"), width="stretch")
+        image_bytes = st.session_state.get("edu_generated_image_bytes")
+
+        if image_bytes:
+            import base64
+
+            image_type = st.session_state.get(
+                "edu_generated_image_type", "image/jpeg"
+            )
+            image_prompt = st.session_state.get(
+                "edu_generated_image_prompt", "Generated image"
+            )
+            encoded_image = base64.b64encode(image_bytes).decode("utf-8")
+            st.markdown(
+                f"""
+                <div style="text-align:center; margin-top:20px;">
+                    <img
+                        src="data:{image_type};base64,{encoded_image}"
+                        alt="Generated educational image"
+                        style="max-width:100%; height:auto; border-radius:12px;"
+                    />
+                    <p style="color:#5d7567; margin-top:12px;">
+                        {image_prompt}
+                    </p>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
         extension = "png" if "png" in st.session_state.get("edu_generated_image_type", "") else "jpg"
         st.download_button(
             "Download generated image",

@@ -35,6 +35,7 @@ class Settings(BaseSettings):
     # Optional Brave Search MCP integration (Groq/Gemini remains the LLM).
     WEB_SEARCH_ENABLED: bool = True
     BRAVE_SEARCH_API_KEY: str = ""
+    POLLINATIONS_API_KEY: str = ""
     WEB_SEARCH_MCP_COMMAND: str = "npx"
     WEB_SEARCH_MCP_ARGS: str = '["-y", "@brave/brave-search-mcp-server"]'
     WEB_SEARCH_MAX_RESULTS: int = 5

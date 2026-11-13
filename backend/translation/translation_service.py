@@ -72,9 +72,21 @@ class TranslationService:
 
     @classmethod
     def validate_language(cls, language):
-        if language not in cls.SUPPORTED_LANGUAGES:
-            raise ValueError(f"Unsupported language: {language}")
+        logger.info(
+            "TRANSLATION DEBUG | "
+            "language=%s | supported=%s | module=%s",
+            language,
+            language in cls.SUPPORTED_LANGUAGES,
+            __file__
+        )
 
+        if language not in cls.SUPPORTED_LANGUAGES:
+            logger.error(
+                "Unsupported language: %s | Registered languages: %s",
+                language,
+                sorted(cls.SUPPORTED_LANGUAGES)
+            )
+            raise ValueError(f"Unsupported language: {language}")
     @staticmethod
     def _validate_text(text):
         if not isinstance(text, str):

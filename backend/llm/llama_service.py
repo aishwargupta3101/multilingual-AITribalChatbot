@@ -6,21 +6,19 @@ from langchain_core.messages import (
 from backend.llm.groq_client import GroqLLM
 llm = GroqLLM()
 from backend.llm.prompt import SYSTEM_PROMPT
-from backend.llm.educational_prompt import EDUCATIONAL_RESPONSE_STYLE
 from backend.config.logger import logger
 
-MAX_HISTORY_MESSAGES = 2
+MAX_HISTORY_MESSAGES = 8
 MAX_RAG_CONTEXT_CHARS = 3000
 
 
 class LlamaService:
-    def _build_messages(self, conversation, rag_context=None):
-        # Keep the existing system prompt and add educational formatting
-        # guidance. Existing RAG and conversation-history handling stays intact.
-        combined_system_prompt = (
-            f"{SYSTEM_PROMPT.rstrip()}\n\n"
-            f"{EDUCATIONAL_RESPONSE_STYLE.strip()}"
-        )
+    def _build_messages(self, conversation, rag_context=None, system_prompt=None):
+        # Task-specific instructions are supplied by ChatService as a system
+        # message. Keep the shared base prompt for all existing callers.
+        combined_system_prompt = SYSTEM_PROMPT.rstrip()
+        if system_prompt and str(system_prompt).strip():
+            combined_system_prompt += "\n\n" + str(system_prompt).strip()
         messages = [SystemMessage(content=combined_system_prompt)]
 
         if rag_context and rag_context.strip():
@@ -72,8 +70,8 @@ class LlamaService:
 
         return messages
 
-    async def generate_response(self, conversation, rag_context=None):
-        messages = self._build_messages(conversation, rag_context)
+    async def generate_response(self, conversation, rag_context=None, system_prompt=None):
+        messages = self._build_messages(conversation, rag_context, system_prompt)
 
         try:
             response = await llm.ainvoke(messages)
@@ -87,8 +85,8 @@ class LlamaService:
             logger.exception("Llama generation failed.")
             raise
 
-    async def stream_response(self, conversation, rag_context=None):
-        messages = self._build_messages(conversation, rag_context)
+    async def stream_response(self, conversation, rag_context=None, system_prompt=None):
+        messages = self._build_messages(conversation, rag_context, system_prompt)
 
         try:
             async for chunk in llm.astream(messages):

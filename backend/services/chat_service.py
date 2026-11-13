@@ -2,6 +2,7 @@ from datetime import datetime
 import re
 import time
 import json
+import unicodedata
 from backend.config.settings import settings
 from pathlib import Path
 from backend.services.mcp_integration_service import MCPIntegrationService
@@ -21,6 +22,22 @@ from backend.tools.realtime_intent import detect_realtime_intent
 from backend.tools.realtime_tools import get_weather, get_current_time
 from backend.services.response_cleanup import clean_assistant_response
 from backend.services.problem_solver import classify_problem
+
+
+def _is_mostly_latin_text(text: str, threshold: float = 0.80) -> bool:
+    """Return True when most alphabetic characters use the Latin script.
+
+    This detects the input script, not its language: Latin-script input is
+    normally English in this app, but may also be romanized Indic text.
+    """
+    letters = [char for char in (text or "") if char.isalpha()]
+    if not letters:
+        return False
+    latin_letters = sum(
+        1 for char in letters
+        if "LATIN" in unicodedata.name(char, "")
+    )
+    return (latin_letters / len(letters)) >= threshold
 
 
 EDUCATIONAL_RESPONSE_STYLE = """
@@ -122,7 +139,7 @@ class ChatService:
                     return True
         return False
 
-    async def _repair_malformed_answer(self, answer: str, conversation, problem_kind: str) -> str:
+    async def _repair_malformed_answer(self, answer: str, conversation, problem_kind: str, system_prompt=None) -> str:
         """Try one complete rewrite for malformed output; never execute generated code."""
         if not self._looks_like_malformed_answer(answer, problem_kind):
             return clean_assistant_response(answer)
@@ -139,7 +156,7 @@ class ChatService:
             ),
         })
         try:
-            repaired = await llama_service.generate_response(repair_conversation)
+            repaired = await llama_service.generate_response(repair_conversation, system_prompt=system_prompt)
             repaired = clean_assistant_response(repaired)
             if repaired and not self._looks_like_malformed_answer(repaired, problem_kind):
                 return repaired
@@ -412,7 +429,10 @@ RESPONSE STYLE:
             answer_source = "document_index_missing"
         else:
             question_for_search = question
-            if selected_language not in ("english", "tai_khamti"):
+            if (
+                selected_language not in ("english", "tai_khamti")
+                and not _is_mostly_latin_text(question)
+            ):
                 try:
                     question_for_search = translation_service.auto_translate_to_english(
                         question, selected_language
@@ -514,6 +534,36 @@ RESPONSE STYLE:
             request.language or "english"
         )
         is_tai_khamti = selected_language == "tai_khamti"
+
+        # Keep the user's original text for storage/display, but use one English
+        # normalization for routing, retrieval tools, and the general LLM prompt.
+        # Tai Khamti remains on its dedicated knowledge-base path.
+        question_for_processing = original_question
+        if selected_language not in ("english", "tai_khamti") and original_question:
+            # The selected language is the reply language, not proof of the
+            # language/script used to type the question. Avoid corrupting
+            # English questions by sending them through an Indic->English model.
+            if _is_mostly_latin_text(original_question):
+                logger.info(
+                    "Current question detected as Latin-script input; skipping input translation | Output language: %s",
+                    selected_language,
+                )
+            else:
+                try:
+                    normalized_question = translation_service.auto_translate_to_english(
+                        original_question, selected_language
+                    )
+                    if normalized_question and normalized_question.strip():
+                        question_for_processing = normalized_question.strip()
+                    logger.info(
+                        "Current question normalized | Source language: %s | Original chars: %s | English chars: %s",
+                        selected_language, len(original_question), len(question_for_processing)
+                    )
+                except Exception:
+                    logger.exception(
+                        "Current question translation failed; using original question for processing."
+                    )
+
         logger.info(
             "Chat started | Session: %s | Language: %s",
             request.session_id,
@@ -533,7 +583,10 @@ RESPONSE STYLE:
                 previous_language = translation_service.normalize_language(
                     message.get("language", "english")
                 )
-                if previous_language not in ("english", "tai_khamti"):
+                if (
+                    previous_language not in ("english", "tai_khamti")
+                    and not _is_mostly_latin_text(content)
+                ):
                     try:
                         content = translation_service.auto_translate_to_english(
                             content,
@@ -631,7 +684,7 @@ RESPONSE STYLE:
             context = ""
             sources = []
             retrieval_failed = False
-            query = original_question.lower()
+            query = question_for_processing.lower()
             education_keywords = [
                 "scholarship", "scholarships", "education", "school",
                 "college", "student", "students", "study", "studies",
@@ -669,7 +722,7 @@ RESPONSE STYLE:
                 )
                 try:
                     mcp_context, mcp_sources = await self.retrieve_mcp_context(
-                        question=original_question,
+                        question=question_for_processing,
                         selected_language=selected_language,
                     )
                     if mcp_context:
@@ -713,13 +766,13 @@ RESPONSE STYLE:
         web_search_sources = []
         if (
             not is_tai_khamti
-            and not detect_realtime_intent(original_question)
-            and _should_use_web_search(original_question)
+            and not detect_realtime_intent(question_for_processing)
+            and _should_use_web_search(question_for_processing)
         ):
             try:
                 logger.info("Web search intent detected; querying Brave Search MCP.")
                 web_context, web_search_sources = await web_search_mcp_service.search(
-                    original_question
+                    question_for_processing
                 )
                 logger.info(f"Web search sources: {web_search_sources!r}")
                 logger.info(f"Web search context preview: {web_context[:3000]!r}")
@@ -748,11 +801,11 @@ RESPONSE STYLE:
             f"PERFORMANCE | Retrieval/MCP: {retrieval_elapsed:.2f} seconds"
         )
         # Real-time tools provide the factual answer; skip LLM generation for these requests.
-        realtime_intent = detect_realtime_intent(original_question)
+        realtime_intent = detect_realtime_intent(question_for_processing)
         if realtime_intent:
             try:
                 if realtime_intent == "weather":
-                    place = _extract_weather_place(original_question)
+                    place = _extract_weather_place(question_for_processing)
                     if not place:
                         answer = (
                             "Which city or town should I check the current weather for? "
@@ -831,9 +884,9 @@ RESPONSE STYLE:
                 answer_source = "tai_khamti_rag"
         else:
             system_prompt = self.GENERAL_KNOWLEDGE_PROMPT
-            if _is_educational_query(original_question):
+            if _is_educational_query(question_for_processing):
                 system_prompt = system_prompt + "\n\n" + EDUCATIONAL_RESPONSE_STYLE
-            q_lower = (original_question or "").lower()
+            q_lower = (question_for_processing or "").lower()
             math_cues = (
                 "calculate", "solve", "equation", "arithmetic", "percentage",
                 "probability", "integral", "derivative", "simplify", "evaluate",
@@ -880,9 +933,8 @@ RESPONSE STYLE:
         if not answer and not generation_failed:
             prompt_build_start = time.time()
             prompt_parts = [
-                system_prompt,
-                "\n\nUSER QUESTION:\n",
-                original_question,
+                "USER QUESTION:\n",
+                question_for_processing,
             ]
             if context and not retrieval_failed:
                 prompt_parts.extend(
@@ -924,7 +976,7 @@ RESPONSE STYLE:
                         "headlines or snippets, explain that limitation honestly.\n"
                         "Never invent headlines, facts, dates, or source URLs.\n"
                     )
-                if any(word in original_question.lower() for word in ["scholarship", "scholarships", "छात्रवृत्ति"]):
+                if any(word in question_for_processing.lower() for word in ["scholarship", "scholarships", "छात्रवृत्ति"]):
                     prompt_parts.append(
                         "\n\nSCHOLARSHIP-SPECIFIC INSTRUCTION:\n"
                         "Answer only with scholarship schemes directly relevant to the user's question. "
@@ -974,7 +1026,7 @@ RESPONSE STYLE:
             )
             try:
                 generation_start = time.time()
-                specialist_route = classify_problem(original_question)
+                specialist_route = classify_problem(question_for_processing)
                 should_stream_tokens = (
                     on_token is not None
                     and selected_language in {
@@ -1071,7 +1123,9 @@ RESPONSE STYLE:
                         # A translation failure should not abort the complete answer.
                         return text_to_translate
 
-                    async for chunk in llama_service.stream_response(conversation):
+                    async for chunk in llama_service.stream_response(
+                        conversation, system_prompt=system_prompt
+                    ):
                         answer_parts.append(chunk)
                         if not stream_translation_enabled:
                             await on_token(chunk)
@@ -1142,7 +1196,9 @@ RESPONSE STYLE:
                         answer = "".join(answer_parts)
 
                 else:
-                    answer = await llama_service.generate_response(conversation)
+                    answer = await llama_service.generate_response(
+                        conversation, system_prompt=system_prompt
+                    )
                 logger.info(
                     f"LLM generation completed in "
                     f"{time.time() - generation_start:.2f} seconds"
@@ -1153,7 +1209,8 @@ RESPONSE STYLE:
                     )
                 answer = clean_assistant_response(answer)
                 answer = await self._repair_malformed_answer(
-                    answer, conversation, specialist_route.kind
+                    answer, conversation, specialist_route.kind,
+                    system_prompt=system_prompt
                 )
                 # Specialist streaming is intentionally buffered until translation and cleanup finish.
             except Exception:

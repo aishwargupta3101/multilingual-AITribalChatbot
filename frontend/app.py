@@ -34,12 +34,10 @@ VALID_PAGES = {
     "🌿 Education Assistant",
     "📊 Presentation Generator",
 }
-
-if st.session_state.get("selected_page") in (None, "", "Home"):
-    st.session_state.selected_page = "🏠 Home"
+if st.session_state.get("selected_page") in (None, "", "Home", "🏠 Home"):
+    st.session_state.selected_page = "💬 Chat"
 elif st.session_state.get("selected_page") not in VALID_PAGES:
-    st.session_state.selected_page = "🏠 Home"
-
+    st.session_state.selected_page = "💬 Chat"
 # Keep the sidebar radio aligned on a new/invalid navigation state.
 if st.session_state.get("sidebar_navigation") not in VALID_PAGES:
     st.session_state.sidebar_navigation = st.session_state.selected_page

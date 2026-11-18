@@ -1,6 +1,7 @@
 from datetime import datetime
 import re
 import time
+import asyncio
 import json
 import unicodedata
 from backend.config.settings import settings
@@ -506,8 +507,10 @@ RESPONSE STYLE:
 
         if selected_language not in ("english", "tai_khamti"):
             try:
-                translated = translation_service.translate_response(
-                    text=answer, target_language=selected_language,
+                translated = await asyncio.to_thread(
+                    translation_service.translate_response,
+                    text=answer,
+                    target_language=selected_language,
                     source_language="english",
                 )
                 if translated and str(translated).strip():
@@ -856,7 +859,8 @@ RESPONSE STYLE:
                 answer_source = f"realtime_{realtime_intent}_error"
             if selected_language not in {"english", "tai_khamti"} and on_token is not None:
                 try:
-                    translated = translation_service.translate_response(
+                    translated = await asyncio.to_thread(
+                        translation_service.translate_response,
                         text=answer,
                         target_language=selected_language,
                         source_language="english",
@@ -1235,10 +1239,11 @@ RESPONSE STYLE:
                     "Translating final answer: English -> %s",
                     selected_language
                 )
-                answer = translation_service.translate_response(
-                    text=answer,
-                    target_language=selected_language,
-                    source_language="english"
+                answer = await asyncio.to_thread(
+                    translation_service.translate_response,
+                    answer,
+                    selected_language,
+                    "english",
                 )
                 logger.info(
                     f"PERFORMANCE | Translation: "

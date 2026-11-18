@@ -600,7 +600,6 @@ def show_voice_page():
     translated_text = st.session_state.get("voice_translated_text", "")
     saved_language = st.session_state.get("voice_processed_response_language", "")
     saved_label = st.session_state.get("voice_response_label", "")
-
     if transcription:
         st.markdown('<hr class="voice-divider">', unsafe_allow_html=True)
         st.markdown('<div class="voice-kicker">03 · Your results</div>', unsafe_allow_html=True)

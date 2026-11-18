@@ -1,4 +1,4 @@
-﻿# FastAPI
+# FastAPI
 fastapi==0.139.0
 uvicorn==0.50.2
 python-multipart==0.0.32
@@ -33,9 +33,6 @@ faiss-cpu==1.14.3
 rank-bm25==0.2.2
 scikit-learn==1.7.2
 
-# Hugging Face
-# PyTorch for the experimental Gondi/Santali adapters. Dockerfile installs
-# the CPU-only 2.5.1 wheel from the official PyTorch CPU index before this file.
 transformers==4.46.1
 huggingface-hub==0.36.2
 tokenizers==0.20.3

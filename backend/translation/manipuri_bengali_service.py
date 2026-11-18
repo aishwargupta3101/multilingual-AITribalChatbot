@@ -110,7 +110,7 @@ class ManipuriBengaliService:
     def translate_english(self, text):
         if not text or not text.strip():
             return ""
-        from backend.translation.indictrans_service import indictrans_service
+        from backend.translation.indictrans_service_lru_cache import indictrans_service
         hindi = indictrans_service.translate(
             text.strip(),
             "english",

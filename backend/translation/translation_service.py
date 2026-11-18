@@ -2,7 +2,7 @@ import logging
 import time
 import re
 from functools import lru_cache
-from backend.translation.indictrans_service import indictrans_service
+from backend.translation.indictrans_service_lru_cache import indictrans_service
 from backend.translation.nllb_service import nllb_service
 from backend.translation.meitei_script_converter import meitei_script_converter
 from backend.services.sarvam_translation_service import sarvam_translation_service

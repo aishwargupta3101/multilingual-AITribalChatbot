@@ -1,4 +1,4 @@
-from backend.translation.indictrans_service import indictrans_service
+from backend.translation.indictrans_service_lru_cache import indictrans_service
 
 test_sentences = [
     "Hello, how are you?",

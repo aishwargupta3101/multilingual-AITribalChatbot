@@ -9,6 +9,7 @@ import os
 import threading
 import time
 from functools import lru_cache
+from collections import OrderedDict
 from pathlib import Path
 import torch
 from backend.config.translation_config import TranslationConfig
@@ -89,6 +90,12 @@ class IndicTransService:
         self._tokenizer = None
         self._processor = None
         self._active_model_name = None
+        # Keep a small LRU cache of complete model bundles. Default is two;
+        # set TRIBAL_INDIC_MODEL_CACHE_SIZE=1 to restore single-model behavior.
+        self._model_cache_size = max(
+            1, int(os.getenv("TRIBAL_INDIC_MODEL_CACHE_SIZE", "2"))
+        )
+        self._model_cache = OrderedDict()
         self._lock = threading.RLock()
 
     @classmethod
@@ -107,24 +114,64 @@ class IndicTransService:
             return TranslationConfig.INDICTRANS_INDIC_EN_MODEL
         return TranslationConfig.INDICTRANS_INDIC_INDIC_MODEL
 
+    def _set_active_model(self, model_name: str, bundle):
+        """Point the existing inference path at a cached model bundle."""
+        self._model, self._tokenizer, self._processor = bundle
+        self._active_model_name = model_name
+
+    def _evict_oldest_model(self):
+        """Evict the least-recently-used model bundle."""
+        if not self._model_cache:
+            return
+        evicted_name, _ = self._model_cache.popitem(last=False)
+        logger.info("Evicted IndicTrans2 model from cache: %s", evicted_name)
+
+        if self._active_model_name == evicted_name:
+            self._model = None
+            self._tokenizer = None
+            self._processor = None
+            self._active_model_name = None
+
+        gc.collect()
+        if self.device.type == "cuda":
+            torch.cuda.empty_cache()
+
     def _release_model(self):
-        """Release the currently loaded model to limit memory use."""
+        """Release all cached model bundles and reset the active model."""
         self._model = None
         self._tokenizer = None
         self._processor = None
         self._active_model_name = None
+        self._model_cache.clear()
         gc.collect()
         if self.device.type == "cuda":
             torch.cuda.empty_cache()
 
     def _load_model(self, model_name: str):
-        """Load only the model required for the current translation."""
+        """Activate a cached model or load it and retain it in the LRU cache."""
         if self._active_model_name == model_name and self._model is not None:
             return
+
+        # A cache hit avoids downloading/loading weights and avoids a GPU transfer.
+        cached_bundle = self._model_cache.get(model_name)
+        if cached_bundle is not None:
+            self._model_cache.move_to_end(model_name)
+            self._set_active_model(model_name, cached_bundle)
+            logger.info("IndicTrans2 model cache hit: %s", model_name)
+            return
+
         load_started = time.perf_counter()
         previous_model = self._active_model_name
-        logger.info("IndicTrans2 model switch | from=%s | to=%s", previous_model, model_name)
-        self._release_model()
+        logger.info(
+            "IndicTrans2 model cache miss | from=%s | to=%s | cache_size=%d",
+            previous_model, model_name, len(self._model_cache)
+        )
+
+        # Make room before loading. The cache size is configurable; default 2.
+        while len(self._model_cache) >= self._model_cache_size:
+            self._evict_oldest_model()
+
+        model = tokenizer = processor = None
         try:
             from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
             from IndicTransToolkit import IndicProcessor
@@ -133,28 +180,25 @@ class IndicTransService:
             cache_dir = Path(TranslationConfig.INDICTRANS_CACHE_DIR)
             cache_dir.mkdir(parents=True, exist_ok=True)
 
-            self._tokenizer = AutoTokenizer.from_pretrained(
+            tokenizer = AutoTokenizer.from_pretrained(
                 model_name,
                 trust_remote_code=True,
                 cache_dir=str(cache_dir)
             )
-            self._model = AutoModelForSeq2SeqLM.from_pretrained(
+            model = AutoModelForSeq2SeqLM.from_pretrained(
                 model_name,
                 trust_remote_code=True,
                 cache_dir=str(cache_dir),
                 low_cpu_mem_usage=True
             )
-            self._model.to(self.device)
+            model.to(self.device)
 
             if self.device.type == "cuda" and TranslationConfig.USE_FP16:
-                self._model.half()
+                model.half()
 
-            self._model.eval()
+            model.eval()
 
-            # Optional CPU dynamic INT8 quantization. It keeps the same model
-            # architecture and generation settings while reducing Linear-layer
-            # weight size. If the installed PyTorch/model combination does not
-            # support it, safely retain the original FP32 model.
+            # Preserve the existing optional CPU dynamic INT8 behavior.
             use_cpu_int8 = (
                 self.device.type == "cpu"
                 and os.getenv("TRIBAL_INDIC_INT8", "1").strip().lower()
@@ -163,13 +207,13 @@ class IndicTransService:
             if use_cpu_int8:
                 try:
                     quantize_dynamic = torch.ao.quantization.quantize_dynamic
-                    self._model = quantize_dynamic(
-                        self._model,
+                    model = quantize_dynamic(
+                        model,
                         {torch.nn.Linear},
                         dtype=torch.qint8,
                         inplace=False
                     )
-                    self._model.eval()
+                    model.eval()
                     logger.info(
                         "IndicTrans2 CPU dynamic INT8 quantization enabled: %s",
                         model_name
@@ -181,13 +225,33 @@ class IndicTransService:
                         model_name
                     )
 
-            self._processor = IndicProcessor(inference=True)
-            self._active_model_name = model_name
-            logger.info("IndicTrans2 model loaded: %s | seconds=%.3f", model_name, time.perf_counter() - load_started)
+            processor = IndicProcessor(inference=True)
+            bundle = (model, tokenizer, processor)
+            self._model_cache[model_name] = bundle
+            self._model_cache.move_to_end(model_name)
+            self._set_active_model(model_name, bundle)
+
+            logger.info(
+                "IndicTrans2 model loaded and cached: %s | cache_entries=%d "
+                "| cache_limit=%d | seconds=%.3f",
+                model_name, len(self._model_cache), self._model_cache_size,
+                time.perf_counter() - load_started
+            )
 
         except Exception:
-            self._release_model()
-            logger.exception("Failed to load IndicTrans2 model: %s | seconds=%.3f", model_name, time.perf_counter() - load_started)
+            # Drop partially loaded objects without clearing other valid cache entries.
+            model = tokenizer = processor = None
+            self._model = None
+            self._tokenizer = None
+            self._processor = None
+            self._active_model_name = None
+            gc.collect()
+            if self.device.type == "cuda":
+                torch.cuda.empty_cache()
+            logger.exception(
+                "Failed to load IndicTrans2 model: %s | seconds=%.3f",
+                model_name, time.perf_counter() - load_started
+            )
             raise
 
     @classmethod

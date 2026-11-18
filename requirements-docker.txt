@@ -32,11 +32,6 @@ sentence-transformers==5.6.0
 faiss-cpu==1.14.3
 rank-bm25==0.2.2
 scikit-learn==1.7.2
-
-# Hugging Face
-# PyTorch for the experimental Gondi/Santali adapters. Dockerfile installs
-# the CPU-only 2.5.1 wheel from the official PyTorch CPU index before this file.
-torch==2.5.1+cpu
 transformers==4.46.1
 huggingface-hub==0.36.2
 tokenizers==0.20.3
@@ -110,14 +105,7 @@ huggingface_hub==0.36.2
 youtube-transcript-api
 python-docx
 reportlab
-
-# ---------------------------------------------------------------------------
-# Tribal Language Lab Step 9 dependency audit
-# transformers, numpy, scipy, soundfile, sentencepiece, IndicTransToolkit,
-# huggingface-hub, and parler_tts are already pinned above. The Dockerfile
-# installs torch==2.5.1+cpu from https://download.pytorch.org/whl/cpu.
-# Gondi/Santali models still require model access/license review and model weights;
-# Monpa remains metadata-only until a specific variety/model is verified.
-
-# Santali STT + bidirectional translation + Santali Piper TTS
 onnx-asr[cpu,hub]
+
+
+starlette==1.4.1

@@ -563,6 +563,14 @@ def show_voice_page():
             """,
             unsafe_allow_html=True,
         )
+    audio_bytes = audio.get("bytes") if isinstance(audio, dict) else None
+
+    if audio_bytes:
+        st.write("Audio data received:", len(audio_bytes), "bytes")
+        st.write("Audio header:", audio_bytes[:16])
+        st.write("Audio format:", audio.get("format"))
+    else:
+        st.warning("No audio bytes received from recorder.")
 
     audio_bytes = audio.get("bytes") if isinstance(audio, dict) else None
     if audio_bytes:

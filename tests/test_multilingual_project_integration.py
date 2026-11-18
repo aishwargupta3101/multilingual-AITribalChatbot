@@ -1,5 +1,5 @@
 from backend.services.translation_service import TranslationService
-from backend.translation.indictrans_service import IndicTransService
+from backend.translation.indictrans_service_lru_cache import IndicTransService
 
 
 def test_all_matrix_languages_are_registered_in_both_services():

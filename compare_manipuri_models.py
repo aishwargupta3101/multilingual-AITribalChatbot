@@ -2,7 +2,7 @@
 import csv
 import time
 from pathlib import Path
-from backend.translation.indictrans_service import indictrans_service
+from backend.translation.indictrans_service_lru_cache import indictrans_service
 from backend.translation.manipuri_bengali_service import manipuri_bengali_service
 
 TESTS=[

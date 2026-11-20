@@ -21,8 +21,8 @@ RUN pip install --upgrade pip && \
     torch==2.5.1+cpu \
     torchaudio==2.5.1+cpu \
     --index-url https://download.pytorch.org/whl/cpu
-COPY requirements-docker.txt .
-RUN pip install --no-cache-dir -r requirements-docker.txt
+COPY requirements-frontend.txt .
+RUN pip install --no-cache-dir -r requirements-frontend.txt
 COPY . .
 EXPOSE 10000
 CMD ["streamlit", "run", "frontend/app.py", "--server.address=0.0.0.0", "--server.port=10000"]

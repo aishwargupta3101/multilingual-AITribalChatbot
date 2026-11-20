@@ -6,6 +6,8 @@ from backend.translation.indictrans_service_lru_cache import indictrans_service
 from backend.translation.nllb_service import nllb_service
 from backend.translation.meitei_script_converter import meitei_script_converter
 from backend.services.sarvam_translation_service import sarvam_translation_service
+from backend.translation.runpod_indictrans_client import RunPodIndicTransClient
+from backend.config.settings import settings
 logger = logging.getLogger(__name__)
 
 class TranslationService:
@@ -60,7 +62,26 @@ class TranslationService:
     }
 
     def __init__(self):
-        self.indictrans = indictrans_service
+        # Use RunPod GPU inference when configured; retain the existing local
+        # IndicTrans2 service as a fallback and preserve all existing routes.
+        if settings.RUNPOD_ENDPOINT_ID and settings.RUNPOD_API_KEY:
+            self.indictrans = RunPodIndicTransClient(
+                endpoint_id=settings.RUNPOD_ENDPOINT_ID,
+                api_key=settings.RUNPOD_API_KEY,
+                timeout_seconds=settings.RUNPOD_TIMEOUT_SECONDS,
+                poll_interval_seconds=settings.RUNPOD_POLL_INTERVAL_SECONDS,
+                fallback_service=indictrans_service,
+            )
+            logger.info(
+                "Chat translation backend: RunPod endpoint %s",
+                settings.RUNPOD_ENDPOINT_ID,
+            )
+        else:
+            self.indictrans = indictrans_service
+            logger.info(
+                "Chat translation backend: existing local IndicTrans2"
+            )
+
         self.nllb = nllb_service
 
     @classmethod

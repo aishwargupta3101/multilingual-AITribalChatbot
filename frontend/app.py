@@ -20,9 +20,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 initialize_session()
-
-# Streamlit starts a fresh browser session without a selected route.
-# Use the exact page label expected by the sidebar and page router.
 VALID_PAGES = {
     "🏠 Home",
     "💬 Chat",
@@ -34,11 +31,10 @@ VALID_PAGES = {
     "🌿 Education Assistant",
     "📊 Presentation Generator",
 }
-if st.session_state.get("selected_page") in (None, "", "Home", "🏠 Home"):
-    st.session_state.selected_page = "💬 Chat"
+if st.session_state.get("selected_page") in (None, "", "Home"):
+    st.session_state.selected_page = "🏠 Home"
 elif st.session_state.get("selected_page") not in VALID_PAGES:
-    st.session_state.selected_page = "💬 Chat"
-# Keep the sidebar radio aligned on a new/invalid navigation state.
+    st.session_state.selected_page = "🏠 Home"
 if st.session_state.get("sidebar_navigation") not in VALID_PAGES:
     st.session_state.sidebar_navigation = st.session_state.selected_page
 

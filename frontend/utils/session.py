@@ -21,12 +21,9 @@ def initialize_session():
 
     if "theme" not in st.session_state:
         st.session_state.theme = "Light"
-
-    # Open Chat when a new Streamlit session starts.
     if "selected_page" not in st.session_state:
-        st.session_state.selected_page = "💬 Chat"
-    elif st.session_state.selected_page in (None, "", "Home", "🏠 Home"):
-        st.session_state.selected_page = "💬 Chat"
-
+        st.session_state.selected_page = "🏠 Home"
+    elif st.session_state.selected_page in (None, "", "Home"):
+        st.session_state.selected_page = "🏠 Home"
     if "document_id" not in st.session_state:
         st.session_state.document_id = None

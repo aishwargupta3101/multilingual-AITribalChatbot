@@ -32,6 +32,13 @@ class Settings(BaseSettings):
 
     LLM_FALLBACK_TO_OLLAMA: bool = False
 
+    # Optional RunPod Serverless IndicTrans2 GPU backend.
+    # Empty credentials keep the existing local IndicTrans2 backend active.
+    RUNPOD_ENDPOINT_ID: str = ""
+    RUNPOD_API_KEY: str = ""
+    RUNPOD_TIMEOUT_SECONDS: float = 600.0
+    RUNPOD_POLL_INTERVAL_SECONDS: float = 2.0
+
     # Optional Brave Search MCP integration (Groq/Gemini remains the LLM).
     WEB_SEARCH_ENABLED: bool = True
     BRAVE_SEARCH_API_KEY: str = ""
@@ -58,4 +65,4 @@ class Settings(BaseSettings):
 @lru_cache
 def get_settings():
     return Settings()
-settings = get_settings();
+settings = get_settings()

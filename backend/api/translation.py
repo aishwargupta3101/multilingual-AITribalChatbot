@@ -3,7 +3,7 @@ from backend.schemas.translation import (
     TranslationResponse,
     TranslationRequest
 )
-from backend.services.translation_service import translation_service
+from backend.translation.translation_service import translation_service
 
 router = APIRouter(
     prefix="/translation",

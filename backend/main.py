@@ -15,6 +15,7 @@ from backend.middleware import (
 )
 from backend.routes.presentation_router import router as presentation_router
 from backend.routes.education_router import router as education_router
+from backend.routes.chapter_study_router import router as chapter_study_router
 from backend.routes.education_lesson_router import (
     router as education_lesson_router,
 )
@@ -61,6 +62,7 @@ app.include_router(speech_router)
 app.include_router(tts_router)
 app.include_router(education_lesson_router)
 app.include_router(education_router)
+app.include_router(chapter_study_router)
 app.include_router(presentation_router)
 app.include_router(indian_language_router)
 app.include_router(gondi_language_router)

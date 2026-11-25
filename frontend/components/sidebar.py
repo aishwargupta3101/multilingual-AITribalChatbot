@@ -1,5 +1,6 @@
 import uuid
 from datetime import datetime, timezone
+import re
 
 import requests
 import streamlit as st
@@ -140,6 +141,21 @@ def format_chat_date(date_value):
         return ""
 
 
+def _clean_chat_preview(value):
+    """Return a compact, human-readable preview without internal prompt suffixes."""
+    value = str(value or "")
+    # Older records may contain literal escaped newlines rather than real newlines.
+    value = value.replace("\\r\\n", " ").replace("\\n", " ").replace("\\r", " ")
+    value = value.replace("\r\n", " ").replace("\n", " ").replace("\r", " ")
+    value = re.sub(
+        r"(?is)\s*\[\s*TRIBAL\s+AI\s+(?:RESPONSE\s+FORMAT|TEACHING\s+AND\s+PRESENTATION\s+INSTRUCTIONS)\b.*$",
+        "",
+        value,
+    )
+    value = re.sub(r"\s+", " ", value).strip()
+    return value
+
+
 def get_chat_title(chat):
     messages = chat.get(
         "messages",
@@ -152,10 +168,10 @@ def get_chat_title(chat):
             "role"
         ) == "user":
 
-            text = message.get(
+            text = _clean_chat_preview(message.get(
                 "message",
                 ""
-            ).strip()
+            ))
             if text:
                 if len(text) > 32:
                     return (
@@ -168,9 +184,7 @@ def get_chat_title(chat):
         "last_message",
         "New conversation"
     )
-    last_message = str(
-        last_message
-    ).strip()
+    last_message = _clean_chat_preview(last_message)
 
     if len(last_message) > 32:
         return (
@@ -262,6 +276,30 @@ def show_sidebar():
                 -webkit-text-fill-color: #ffffff !important;
                 opacity: 1 !important;
             }
+            /* Strong fallback selectors for Streamlit's changing button DOM. */
+            section[data-testid="stSidebar"] [class*="st-key-start_new_conversation"] button,
+            section[data-testid="stSidebar"] [class*="st-key-start_new_conversation"] [data-testid*="BaseButton"],
+            section[data-testid="stSidebar"] button[kind="primary"] {
+                background: #1f6b45 !important;
+                background-color: #1f6b45 !important;
+                background-image: none !important;
+                color: #ffffff !important;
+                -webkit-text-fill-color: #ffffff !important;
+                border: 1px solid #4b9a6b !important;
+                opacity: 1 !important;
+                filter: none !important;
+                box-shadow: 0 3px 10px rgba(0,0,0,.18) !important;
+            }
+            section[data-testid="stSidebar"] [class*="st-key-start_new_conversation"] button *,
+            section[data-testid="stSidebar"] [class*="st-key-start_new_conversation"] [data-testid*="BaseButton"] * {
+                color: #ffffff !important;
+                -webkit-text-fill-color: #ffffff !important;
+                opacity: 1 !important;
+            }
+            section[data-testid="stSidebar"] [class*="st-key-start_new_conversation"] button:hover {
+                background: #278454 !important;
+                background-color: #278454 !important;
+            }
             </style>
             """,
             unsafe_allow_html=True
@@ -328,6 +366,9 @@ def show_sidebar():
                 current_page if current_page in navigation_options else "💬 Chat"
             )
 
+        # Only the radio callback changes the active page. Do not assign the
+        # radio's current value to selected_page on every rerun: tool pages
+        # opened from the (+) menu intentionally keep Chat selected here.
         st.radio(
             "Navigation",
             navigation_options,

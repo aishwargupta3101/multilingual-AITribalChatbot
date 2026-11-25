@@ -3,6 +3,7 @@ from html import escape
 from markdown_it import MarkdownIt
 import re
 from components.response_formatter import format_for_display
+from components.visual_renderer import extract_mermaid_blocks, render_mermaid_diagrams
 
 def normalize_assistant_markdown(content):
     """Normalize prose Markdown while preserving fenced code blocks."""
@@ -25,6 +26,15 @@ def normalize_assistant_markdown(content):
         part = re.sub(r"(?m)(?<!^)\s+([-*+]\s+)", r"\n\1", part)
         part = re.sub(r"(?m)(?<!^)\s+(\d+[.)]\s+)", r"\n\1", part)
         part = re.sub(r"\n{3,}", "\n\n", part)
+
+        # Prevent a long introductory paragraph wrapped entirely in Markdown
+        # bold from appearing as a wall of bold text. Keep short bold labels
+        # and inline emphasis unchanged.
+        part = re.sub(
+            r"(?m)^\s*\*\*([^*\n]{100,})\*\*\s*$",
+            lambda match: match.group(1).strip(),
+            part,
+        )
         normalized.append(part)
     return "".join(normalized).strip()
 
@@ -88,7 +98,8 @@ def apply_message_ui():
             border: 1px solid rgba(100, 116, 139, 0.16);
         }
         .assistant-message-wrapper {
-            max-width: min(820px, calc(100% - 50px));
+            max-width: min(850px, calc(100% - 50px));
+            width: 100%;
         }
         .user-message-wrapper {
             max-width: min(760px, calc(100% - 50px));
@@ -126,11 +137,14 @@ def apply_message_ui():
             box-sizing: border-box;
         }
         .assistant-message {
-            background: #ffffff;
-            border: 1px solid rgba(100, 116, 139, 0.13);
+            /* Open ChatGPT-style answer: no enclosing bubble/card. */
+            background: transparent !important;
+            border: 0 !important;
             color: #1f2937;
-            box-shadow: 0 5px 18px rgba(15, 23, 42, 0.045);
-            border-top-left-radius: 5px;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+            padding: 0 !important;
+            margin: 0 !important;
             max-width: 100%;
             min-width: 0;
             overflow-wrap: anywhere;
@@ -192,15 +206,66 @@ def apply_message_ui():
         }
         .assistant-message th { background: #f0f7f1; }
         .assistant-message img { max-width: 100%; height: auto; }
+        .assistant-message a { color: #23834b; text-decoration: underline; }
+        .assistant-message pre code { border: 0; }
+        .assistant-message table { width: 100%; }
+
         .user-message {
             background: #1f2937;
             color: #ffffff;
             border-top-right-radius: 5px;
             box-shadow: 0 5px 16px rgba(15, 23, 42, 0.12);
         }
-        .assistant-message strong {
-            font-weight: 700;
+        /* ChatGPT-like answer typography */
+        .assistant-message {
+            color: #30343b !important;
+            font-size: 15.5px !important;
+            line-height: 1.78 !important;
+            font-weight: 400 !important;
+            letter-spacing: 0 !important;
+            text-align: left !important;
         }
+        .assistant-message p,
+        .assistant-message li,
+        .assistant-message blockquote,
+        .assistant-message td {
+            color: #30343b !important;
+            font-weight: 400 !important;
+            font-size: 15.5px !important;
+            line-height: 1.78 !important;
+        }
+        .assistant-message strong,
+        .assistant-message b {
+            color: #202a36 !important;
+            font-weight: 650 !important;
+        }
+        .assistant-message h1,
+        .assistant-message h2,
+        .assistant-message h3,
+        .assistant-message h4 {
+            color: #176b3a !important;
+            font-weight: 700 !important;
+            letter-spacing: -0.015em !important;
+        }
+        .assistant-message h1 { font-size: 1.45rem !important; margin-top: 1rem !important; }
+        .assistant-message h2 { font-size: 1.25rem !important; margin-top: 0.9rem !important; }
+        .assistant-message h3 { font-size: 1.08rem !important; margin-top: 0.75rem !important; }
+        .assistant-message p { margin: 0.45rem 0 0.75rem !important; }
+        .assistant-message ul,
+        .assistant-message ol { margin: 0.35rem 0 0.8rem !important; }
+        .assistant-message li { padding-left: 0.12rem !important; margin: 0.18rem 0 !important; }
+        .assistant-message hr {
+            border: 0 !important;
+            border-top: 1px solid #e5e7eb !important;
+            margin: 1rem 0 !important;
+        }
+        .assistant-message blockquote {
+            border-left: 3px solid #d1d5db !important;
+            background: #f9fafb !important;
+            padding: 0.55rem 0.9rem !important;
+            border-radius: 0 8px 8px 0 !important;
+        }
+        .assistant-message strong { font-weight: 650 !important; }
         .assistant-message code {
             padding: 2px 6px;
             border-radius: 6px;
@@ -259,7 +324,11 @@ def apply_message_ui():
             .user-message-wrapper {
                 max-width: calc(100% - 39px);
             }
-            .assistant-message,
+            .assistant-message {
+                padding: 0 !important;
+                font-size: 0.94rem;
+                line-height: 1.7;
+            }
             .user-message {
                 padding: 11px 13px;
                 font-size: 0.9rem;
@@ -269,17 +338,22 @@ def apply_message_ui():
                 margin-left: 39px;
             }
         }
-        [data-testid="stAppViewContainer"] .assistant-message,
         [data-testid="stAppViewContainer"] .user-message {
             transition: box-shadow 0.18s ease, transform 0.18s ease;
-        }
-        .assistant-message:hover {
-            box-shadow: 0 7px 22px rgba(15, 23, 42, 0.07);
         }
         </style>
         """,
         unsafe_allow_html=True
     )
+
+def _is_santali_language(language, content=""):
+    key = str(language or "").strip().lower().replace("_", "-")
+    return (
+        "santali" in key
+        or key in {"sat", "sat-olck", "ol-chiki"}
+        or any("\\u1c50" <= ch <= "\\u1c7f" for ch in str(content or ""))
+    )
+
 
 def render_message(
     role,
@@ -287,7 +361,8 @@ def render_message(
     language=None,
     detected_language=None,
     sources=None,
-    timestamp=None
+    timestamp=None,
+    show_sources=True
 ):
     """
     Render user and AI messages as clean separate cards.
@@ -295,7 +370,15 @@ def render_message(
     """
     apply_message_ui()
     if role == "user":
-        user_content = escape(str(content)).replace("\r\n", "\n").replace("\r", "\n").replace("\n", "<br>")
+        # UI-only cleanup for legacy messages where internal response-format
+        # guidance was appended to the user's question. Stored data is untouched.
+        user_display_content = str(content or "").replace("\\r\\n", "\n").replace("\\n", "\n")
+        user_display_content = re.sub(
+            r"(?is)\s*\[\s*TRIBAL\s+AI\s+(?:RESPONSE\s+FORMAT|TEACHING\s+AND\s+PRESENTATION\s+INSTRUCTIONS)\b.*$",
+            "",
+            user_display_content,
+        ).strip()
+        user_content = escape(user_display_content).replace("\r\n", "\n").replace("\r", "\n").replace("\n", "<br>")
         html_block(
             f"""
             <div class="chat-row user-row">
@@ -345,7 +428,20 @@ def render_message(
         normalized_content = re.sub(r"\n[ \t]*\n(?:[ \t]*\n)+", "\n\n", normalized_content)
         normalized_content = normalized_content.strip()
 
+    # Replace Mermaid fences with visual placeholders so each diagram appears
+    # exactly where it belongs in the explanation, not after the whole answer.
+    mermaid_diagrams = []
+    if not _is_santali_language(language, content):
+        def _diagram_placeholder(match):
+            mermaid_diagrams.append(match.group(1).strip())
+            return f"\n\nTRIBALVISUALPLACEHOLDER{len(mermaid_diagrams)-1}\n\n"
+        normalized_content = re.sub(
+            r"(?ms)^[ \t]*```mermaid[ \t]*\n(.*?)^[ \t]*```[ \t]*$",
+            _diagram_placeholder, normalized_content
+        )
     rendered_content = markdown_renderer.render(normalized_content)
+    # Keep diagram markers as plain tokens. SVG is rendered in a dedicated
+    # Streamlit HTML component below; st.html sanitizers can strip inline SVG.
     # SANTALI_OL_CHIKI_FINAL_DISPLAY_FIX_V2: bypass Markdown/font fallbacks for Ol Chiki only.
     _santali_language_key = str(language or "").strip().lower().replace("_", "-")
     _santali_display = (
@@ -387,24 +483,65 @@ def render_message(
         else ""
     )
 
-    # Render the full assistant card in one HTML call to avoid nesting
-    # Streamlit elements inside an HTML container.
-    html_block(
-        f"""
-        <div class="chat-row assistant-row">
-            <div class="ai-avatar">🌿</div>
-            <div class="assistant-message-wrapper">
-                <div class="ai-label">
-                    Tribal AI
-                    <span class="ai-online-dot"></span>
-                </div>
-                <div class="assistant-message{language_class}">
-                    {rendered_content}
-                </div>
-            </div>
-        </div>
-        """
-    )
+    # Render answer text and diagrams as separate Streamlit blocks. This avoids
+    # inline-SVG sanitization and guarantees the diagram appears between its
+    # surrounding explanation paragraphs.
+    from components.visual_renderer import flowchart_svg
+    html_block('<div class="chat-row assistant-row"><div class="ai-avatar">🌿</div><div class="assistant-message-wrapper">')
+    _segments = re.split(r"TRIBALVISUALPLACEHOLDER(\d+)", rendered_content)
+    _text_segment = _segments[0] if _segments else rendered_content
+    if _text_segment.strip():
+        html_block(f'<div class="assistant-message{language_class}">{_text_segment}</div>')
+    for _idx in range(1, len(_segments), 2):
+        _diagram_index = int(_segments[_idx])
+        _diagram_source = mermaid_diagrams[_diagram_index] if _diagram_index < len(mermaid_diagrams) else ""
+        _svg = flowchart_svg(_diagram_source)
+        if _svg:
+            _viewbox_match = re.search(
+                r'viewBox="0 0 ([0-9.]+) ([0-9.]+)"',
+                _svg
+            )
+            _view_width = float(_viewbox_match.group(1)) if _viewbox_match else 900
+            _view_height = float(_viewbox_match.group(2)) if _viewbox_match else 420
+            # Compact, left-aligned diagram card. Short diagrams fit naturally;
+            # tall diagrams scroll inside the card without widening the chat.
+            _diagram_scale = min(1.0, 560.0 / max(_view_width, 1.0))
+            _scaled_height = _view_height * _diagram_scale
+            _viewport_height = min(230, max(115, int(_scaled_height + 6)))
+            _card_height = _viewport_height + 48
+            _component_height = _card_height + 16
+            _component_html = f"""<!doctype html><html><head><meta charset="utf-8">
+            <style>
+            *{{box-sizing:border-box}}
+            html,body{{margin:0;padding:0;width:100%;height:100%;background:transparent;overflow:hidden}}
+            .tribal-visual-card{{width:100%;max-width:590px;height:{_card_height}px;
+            margin:8px 0 12px 0;padding:9px 11px;border:1px solid #dce9df;
+            border-radius:13px;background:#f8fbf8;font-family:Arial,sans-serif;
+            overflow:hidden;display:flex;flex-direction:column}}
+            .tribal-visual-label{{flex:0 0 auto;font-size:8px;font-weight:800;
+            letter-spacing:.10em;color:#547561;margin:0 0 6px}}
+            .tribal-diagram-scroll{{flex:1 1 auto;min-height:0;width:100%;
+            overflow-y:auto;overflow-x:auto;overscroll-behavior:contain;
+            scrollbar-width:thin;scrollbar-color:#8db99b #edf5ef;
+            border-radius:8px;padding:2px}}
+            .tribal-diagram-scroll svg{{display:block;width:100%!important;
+            max-width:560px!important;height:auto!important;max-height:none!important;
+            margin:0 auto}}
+            .tribal-diagram-scroll::-webkit-scrollbar{{width:7px;height:7px}}
+            .tribal-diagram-scroll::-webkit-scrollbar-thumb{{background:#8db99b;border-radius:8px}}
+            .tribal-diagram-scroll::-webkit-scrollbar-track{{background:#edf5ef;border-radius:8px}}
+            </style></head><body>
+            <div class="tribal-visual-card">
+              <div class="tribal-visual-label">VISUAL EXPLANATION · SCROLL TO EXPLORE</div>
+              <div class="tribal-diagram-scroll">{_svg}</div>
+            </div></body></html>"""
+            st.components.v1.html(_component_html, height=_component_height, scrolling=False)
+        else:
+            st.info("The diagram format could not be rendered. The written explanation is still available.")
+        _following_text = _segments[_idx + 1] if _idx + 1 < len(_segments) else ""
+        if _following_text.strip():
+            html_block(f'<div class="assistant-message{language_class}">{_following_text}</div>')
+    html_block('</div></div></div>')
     info = []
     if language:
         info.append(
@@ -420,7 +557,7 @@ def render_message(
             f"🕒 {timestamp}"
         )
     # Display official source links returned by MCP.
-    if sources:
+    if sources and show_sources:
         source_blocks = []
         for source in sources:
             if isinstance(source, dict):
@@ -532,3 +669,37 @@ def render_message(
             </div>
             """
         )
+
+
+# VISUAL_LEARNING_PRESENTATION_CSS
+try:
+    st.markdown("""
+    <style>
+    .tribal-visual-card {
+        margin: 18px 0 20px; padding: 18px 18px 14px;
+        border: 1px solid #dce9df; border-radius: 16px;
+        background: linear-gradient(145deg,#ffffff,#f5faf6);
+        box-shadow: 0 5px 18px rgba(30,75,45,.055);
+        overflow: hidden;
+    }
+    .tribal-visual-label {
+        margin: 0 0 12px; color: #547561; font-size: 11px;
+        font-weight: 800; letter-spacing: .11em;
+    }
+    .assistant-message h1, .assistant-message h2, .assistant-message h3 {
+        line-height: 1.28; letter-spacing: -.02em; margin-top: 1.15em;
+        margin-bottom: .48em;
+    }
+    .assistant-message p { line-height: 1.72; margin: .55em 0; }
+    .assistant-message li { line-height: 1.68; margin: .25em 0; }
+    .assistant-message table { width:100%; border-collapse:collapse; margin:14px 0; }
+    .assistant-message th { background:#edf6ef; font-weight:700; }
+    .assistant-message th, .assistant-message td { padding:10px 12px; border:1px solid #dbe6de; text-align:left; }
+    @media (prefers-color-scheme: dark) {
+      .tribal-visual-card { background:#17231c; border-color:#344c3b; }
+      .tribal-visual-label { color:#afc7b6; }
+    }
+    </style>
+    """, unsafe_allow_html=True)
+except Exception:
+    pass

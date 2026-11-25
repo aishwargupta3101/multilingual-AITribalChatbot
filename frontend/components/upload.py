@@ -41,7 +41,7 @@ def _html(content: str) -> None:
 
 def _render_document_styles() -> None:
     """High-contrast, theme-aware styles scoped to the document workspace."""
-    theme_base = (st.get_option("theme.base") or "dark").lower()
+    theme_base = "light"  # Documents Studio always uses a light, high-contrast palette.
     if theme_base == "light":
         text = "#17231b"
         muted = "#526258"
@@ -842,6 +842,116 @@ def _render_document_styles() -> None:
     )
 
 
+    # FINAL HIGH-CONTRAST PATCH. Older theme rules above forced pale/white text
+    # onto light panels. These page-scoped rules intentionally override them.
+    st.markdown("""
+    <style>
+    [data-testid="stAppViewContainer"]:has(.doc-page) {
+        background: #f7fbf8 !important;
+        background-color: #f7fbf8 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main,
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stMain"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stMainBlockContainer"] {
+        background: transparent !important;
+        color: #173b26 !important;
+    }
+    /* All ordinary page copy: deep green, never pale green or white. */
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-page h1,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-page h2,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-page h3,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-page h4,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-page p,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-page li,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-page label,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-page small,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-page strong,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-page span,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-page [data-testid="stMarkdownContainer"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-page [data-testid="stMarkdownContainer"] * {
+        color: #173b26 !important;
+        -webkit-text-fill-color: #173b26 !important;
+        opacity: 1 !important;
+        text-shadow: none !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-page .doc-muted,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-page .doc-section-sub,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-page .doc-file-size,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-page .doc-footer {
+        color: #52685a !important;
+        -webkit-text-fill-color: #52685a !important;
+    }
+    /* White cards and pale-mint upload surfaces. */
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_upload_panel,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_translation_panel,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_knowledge_panel,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-panel {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        color: #173b26 !important;
+        border-color: #d5e8da !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stFileUploader"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stFileUploaderDropzone"] {
+        background: #f2faf4 !important;
+        background-color: #f2faf4 !important;
+        color: #244b32 !important;
+        border: 1.5px dashed #63ad7c !important;
+        border-radius: 14px !important;
+        opacity: 1 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stFileUploader"] *,
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stFileUploaderDropzoneInstructions"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stFileUploaderDropzoneInstructions"] *,
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stFileUploader"] small {
+        color: #244b32 !important;
+        -webkit-text-fill-color: #244b32 !important;
+        opacity: 1 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stFileUploaderDropzone"] button,
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stFileUploaderDropzone"] button * {
+        background: #168447 !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        border-color: #168447 !important;
+        opacity: 1 !important;
+    }
+    /* Tabs and language dropdowns. */
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stTabs"] button[role="tab"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stTabs"] button[role="tab"] * {
+        color: #234b32 !important;
+        -webkit-text-fill-color: #234b32 !important;
+        opacity: 1 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-baseweb="select"] > div,
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-baseweb="input"] > div {
+        background: #ffffff !important;
+        color: #173b26 !important;
+        border-color: #bfd8c6 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-baseweb="select"] input,
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-baseweb="select"] span,
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-baseweb="select"] svg {
+        color: #173b26 !important;
+        fill: #173b26 !important;
+        -webkit-text-fill-color: #173b26 !important;
+        opacity: 1 !important;
+    }
+    /* Main action buttons keep white labels on green backgrounds. */
+    [data-testid="stAppViewContainer"]:has(.doc-page) .stButton button[kind="primary"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) .stButton button[kind="primary"] *,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .stDownloadButton button,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .stDownloadButton button * {
+        background: #168447 !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        border-color: #168447 !important;
+        opacity: 1 !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+
 def _render_upload_success(response) -> None:
     _html(
         """
@@ -873,146 +983,86 @@ def _render_translation() -> None:
         unsafe_allow_html=True,
     )
 
-    # Scoped styles: only affect the translation panel on this page.
+    # Translation-only styling. This block is intentionally loaded immediately
+    # before the widgets and uses stronger selectors than the legacy page CSS.
     st.markdown("""
     <style>
-    .st-key-doc_translation_panel {
-        background: linear-gradient(145deg, #0d2117, #10291c);
-        border: 1px solid #28583a;
-        border-radius: 18px;
-        padding: 22px;
-        margin: 12px 0 18px 0;
-    }
-    .st-key-doc_translation_panel [data-testid="stWidgetLabel"] *,
-    .st-key-doc_translation_panel label,
-    .st-key-doc_translation_panel label p {
-        color: #f4fff7 !important;
-        -webkit-text-fill-color: #f4fff7 !important;
-        opacity: 1 !important;
-        font-weight: 650 !important;
-    }
-    .st-key-doc_translation_panel [data-testid="stFileUploader"] section {
-        background: #14291d !important;
-        border: 1px dashed #4a8c60 !important;
-        border-radius: 14px !important;
-    }
-    .st-key-doc_translation_panel [data-testid="stFileUploader"] *,
-    .st-key-doc_translation_panel [data-testid="stFileUploaderDropzoneInstructions"] {
-        color: #f4fff7 !important;
-        -webkit-text-fill-color: #f4fff7 !important;
-        opacity: 1 !important;
-    }
-    .st-key-doc_translation_panel [data-baseweb="select"] > div {
-        background: #f7fbf8 !important;
-        border: 1px solid #c8d8cc !important;
-        border-radius: 10px !important;
-        min-height: 48px !important;
-    }
-    .st-key-doc_translation_panel [data-baseweb="select"] *,
-    .st-key-doc_translation_panel [data-baseweb="select"] input {
-        color: #17231b !important;
-        -webkit-text-fill-color: #17231b !important;
-        opacity: 1 !important;
-    }
-    .st-key-doc_translation_panel [data-baseweb="select"] svg {
-        fill: #245c38 !important;
-    }
-    .st-key-doc_translation_panel .st-key-translate_complete_document button {
-        background: linear-gradient(90deg, #20bd70, #39d98a) !important;
-        border: 1px solid #39d98a !important;
-        color: #062515 !important;
-        -webkit-text-fill-color: #062515 !important;
-        font-weight: 800 !important;
-        min-height: 48px !important;
-        border-radius: 11px !important;
-        opacity: 1 !important;
-    }
-    .st-key-doc_translation_panel .st-key-translate_complete_document button p,
-    .st-key-doc_translation_panel .st-key-translate_complete_document button span {
-        color: #062515 !important;
-        -webkit-text-fill-color: #062515 !important;
-        opacity: 1 !important;
-    }
-    .doc-translate-heading {
-        display:flex; align-items:center; gap:14px; margin:8px 0 18px;
-    }
-    .doc-translate-icon {
-        width:54px; height:54px; flex:0 0 54px; display:flex;
-        align-items:center; justify-content:center; border-radius:15px;
-        background:linear-gradient(135deg,#20bd70,#0d9f60); font-size:25px;
-    }
-    .doc-translate-panel-title {
-        color:#f4fff7!important; font-size:17px; font-weight:800;
-        margin:0 0 5px 0;
-    }
-    .doc-translate-help {
-        color:#c4ddcc!important; font-size:13px; margin:0 0 16px 0;
-    }
-
-    /* FINAL FIX — translation page only: dark dropzone and readable dropdowns. */
-    div.st-key-doc_translation_panel [data-testid="stFileUploaderDropzone"],
-    div.st-key-doc_translation_panel [data-testid="stFileUploader"] [data-testid="stFileUploaderDropzone"] {
-        background: #10251a !important;
-        background-color: #10251a !important;
-        border: 1px dashed #55a875 !important;
-        border-radius: 14px !important;
-        color: #f4fff7 !important;
-        min-height: 118px !important;
-    }
-    div.st-key-doc_translation_panel [data-testid="stFileUploaderDropzone"] > div,
-    div.st-key-doc_translation_panel [data-testid="stFileUploaderDropzone"] section,
-    div.st-key-doc_translation_panel [data-testid="stFileUploaderDropzone"] p,
-    div.st-key-doc_translation_panel [data-testid="stFileUploaderDropzone"] span,
-    div.st-key-doc_translation_panel [data-testid="stFileUploaderDropzoneInstructions"],
-    div.st-key-doc_translation_panel [data-testid="stFileUploaderDropzoneInstructions"] * {
-        background: transparent !important;
-        color: #f4fff7 !important;
-        -webkit-text-fill-color: #f4fff7 !important;
-        opacity: 1 !important;
-    }
-    div.st-key-doc_translation_panel [data-testid="stFileUploaderDropzone"] button {
-        background: #176b3c !important;
-        background-color: #176b3c !important;
-        color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
-        border: 1px solid #45d889 !important;
-        border-radius: 10px !important;
-    }
-    div.st-key-doc_translation_panel [data-testid="stFileUploaderDropzone"] button * {
-        color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
-    }
-    /* White select surface requires dark selected text and a dark arrow. */
-    div.st-key-doc_translation_panel div[data-baseweb="select"] > div {
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel {
         background: #ffffff !important;
         background-color: #ffffff !important;
-        border: 1px solid #b8d4c1 !important;
-        border-radius: 11px !important;
-        min-height: 48px !important;
-        box-shadow: none !important;
+        border: 1px solid #d7e6db !important;
+        border-radius: 18px !important;
+        padding: 24px !important;
+        box-shadow: 0 10px 28px rgba(24, 74, 43, .07) !important;
     }
-    div.st-key-doc_translation_panel div[data-baseweb="select"] div,
-    div.st-key-doc_translation_panel div[data-baseweb="select"] span,
-    div.st-key-doc_translation_panel div[data-baseweb="select"] input {
-        color: #173b25 !important;
-        -webkit-text-fill-color: #173b25 !important;
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel .doc-translate-panel-title,
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel [data-testid="stWidgetLabel"],
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel [data-testid="stWidgetLabel"] *,
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel label,
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel label *,
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel label p {
+        color: #173b26 !important;
+        -webkit-text-fill-color: #173b26 !important;
+        opacity: 1 !important;
+        font-weight: 700 !important;
+        text-shadow: none !important;
+    }
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel .doc-translate-help {
+        color: #52685a !important;
+        -webkit-text-fill-color: #52685a !important;
+        opacity: 1 !important;
+        font-size: 13px !important;
+    }
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel [data-testid="stFileUploader"],
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel [data-testid="stFileUploaderDropzone"] {
+        background: #f2faf4 !important;
+        background-color: #f2faf4 !important;
+        border: 1.5px dashed #70b987 !important;
+        border-radius: 14px !important;
+        color: #244b32 !important;
         opacity: 1 !important;
     }
-    div.st-key-doc_translation_panel div[data-baseweb="select"] svg {
-        color: #173b25 !important;
-        fill: #173b25 !important;
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel [data-testid="stFileUploader"] *,
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel [data-testid="stFileUploaderDropzoneInstructions"],
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel [data-testid="stFileUploaderDropzoneInstructions"] *,
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel [data-testid="stFileUploader"] small {
+        color: #244b32 !important;
+        -webkit-text-fill-color: #244b32 !important;
+        opacity: 1 !important;
+        text-shadow: none !important;
+    }
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel [data-testid="stFileUploaderDropzone"] button,
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel [data-testid="stFileUploaderDropzone"] button * {
+        background: #168447 !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        border: 1px solid #168447 !important;
         opacity: 1 !important;
     }
-    /* Dropdown menu rendered in a portal outside the translation container. */
-    div[data-baseweb="popover"] ul,
-    div[data-baseweb="popover"] li,
-    div[data-baseweb="popover"] li *,
-    div[data-baseweb="popover"] [role="option"],
-    div[data-baseweb="popover"] [role="option"] * {
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel [data-baseweb="select"] > div {
         background: #ffffff !important;
-        color: #173b25 !important;
-        -webkit-text-fill-color: #173b25 !important;
+        border: 1px solid #bfd8c6 !important;
+        border-radius: 10px !important;
+        min-height: 46px !important;
+    }
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel [data-baseweb="select"] input,
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel [data-baseweb="select"] span,
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel [data-baseweb="select"] svg {
+        color: #173b26 !important;
+        fill: #173b26 !important;
+        -webkit-text-fill-color: #173b26 !important;
         opacity: 1 !important;
+    }
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel .st-key-translate_complete_document button,
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel .st-key-translate_complete_document button *,
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel button[kind="primary"],
+    html body [data-testid="stAppViewContainer"] .main .st-key-doc_translation_panel button[kind="primary"] * {
+        background: #168447 !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        border-color: #168447 !important;
+        opacity: 1 !important;
+        font-weight: 800 !important;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -1948,8 +1998,8 @@ def _render_document_chat() -> None:
 
     st.markdown(
         '<div class="doc-chat-title"><span class="doc-chat-icon">💬</span>'
-        '<div><div class="doc-section-heading">Chat with your document</div>'
-        '<div class="doc-section-sub">Upload a file once, then ask questions about its content. No translation step required.</div></div></div>',
+        '<div><div class="doc-section-heading">Upload Your Document</div>'
+        '<div class="doc-section-sub">Upload, process and translate your documents in multiple languages.</div></div></div>',
         unsafe_allow_html=True,
     )
 
@@ -1982,8 +2032,8 @@ def _render_document_chat() -> None:
             )
 
         st.markdown(
-            '<div class="doc-workspace-step" style="margin-top:20px;">💬 2. Prepare your document chat</div>'
-            '<div class="doc-workspace-help">Upload and index the file to enable document-grounded questions.</div>',
+            '<div class="doc-workspace-step" style="margin-top:20px;">⚙️ 2. Prepare your document</div>'
+            '<div class="doc-workspace-help">Upload and prepare your file to enable document-grounded questions.</div>',
             unsafe_allow_html=True,
         )
 
@@ -2203,22 +2253,27 @@ def show_upload() -> None:
     language = st.session_state.get("language", "english")
     language_name = str(language).replace("_", " ").title()
     st.markdown(f'''<div class="doc-page">
-      <section class="doc-hero doc-hero-wide doc-hero-redesign">
+      <section class="doc-hero doc-hero-wide doc-hero-redesign docs-reference-hero">
         <div class="doc-hero-copy">
-          <div class="doc-eyebrow">🌿 TRIBAL AI · YOUR STUDY SPACE</div>
-          <h1>Make every document<br><span class="doc-hero-accent">easier to understand.</span></h1>
-          <p>Upload your notes, ask questions, create revision material, or translate your study content into a language you’re comfortable with.</p>
-          <div class="doc-pills">
-            <span class="doc-pill">PDF supported</span>
-            <span class="doc-pill">DOCX supported</span>
-            <span class="doc-pill">TXT supported</span>
-            <span class="doc-pill">🌐 Multilingual</span>
+          <div class="docs-reference-eyebrow">▣ &nbsp; DOCUMENTS STUDIO</div>
+          <h1>Document Intelligence <span class="doc-hero-accent">Studio</span></h1>
+          <p>Upload, read, translate and learn from your documents in multiple languages.</p>
+          <div class="doc-pills docs-reference-pills">
+            <span class="doc-pill">▰ &nbsp; Multi-format Support</span>
+            <span class="doc-pill">文 &nbsp; Translation</span>
+            <span class="doc-pill">☏ &nbsp; RAG Q&amp;A</span>
+            <span class="doc-pill">↓ &nbsp; Download</span>
           </div>
         </div>
-        <div class="doc-hero-highlights">
-          <div class="doc-highlight green"><span>💬</span><div><strong>Ask your document</strong><small>Get answers based on your file</small></div></div>
-          <div class="doc-highlight blue"><span>🌐</span><div><strong>Learn in your language</strong><small>Translate study material</small></div></div>
-          <div class="doc-highlight gold"><span>🎓</span><div><strong>Prepare with confidence</strong><small>Summaries, concepts and practice</small></div></div>
+        <div class="docs-reference-art" aria-hidden="true">
+          <div class="docs-art-orbit docs-art-orbit-a"></div>
+          <div class="docs-art-orbit docs-art-orbit-b"></div>
+          <div class="docs-art-platform"></div>
+          <div class="docs-art-folder">文</div>
+          <div class="docs-art-paper"><i></i><i></i><i></i></div>
+          <span class="docs-art-file docs-art-pdf">PDF</span>
+          <span class="docs-art-file docs-art-doc">DOC</span>
+          <span class="docs-art-spark">✦</span>
         </div>
       </section>
     </div>''', unsafe_allow_html=True)
@@ -2355,8 +2410,8 @@ def show_upload() -> None:
     </style>
     """, unsafe_allow_html=True)
 
-    chat_tab, translate_tab, knowledge_tab = st.tabs([
-        "💬  Chat with document", "🌐  Translate document", "📚  Knowledge base"
+    chat_tab, knowledge_tab = st.tabs([
+        "📄  Upload Document", "📚  Knowledge Base"
     ])
     with chat_tab:
         _render_document_chat()
@@ -2368,8 +2423,6 @@ def show_upload() -> None:
             <div class="doc-benefit"><span class="benefit-icon pink">🎓</span><div><strong>Designed for students</strong><p>Turn your notes into a personal study assistant</p></div></div>
           </div>
         ''')
-    with translate_tab:
-        _render_translation()
     with knowledge_tab:
         _render_knowledge_upload(language, language_name)
     st.markdown(
@@ -2571,6 +2624,667 @@ def show_upload() -> None:
       -webkit-text-fill-color: #365c43 !important;
       opacity: 1 !important;
       text-shadow: none !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    # Final reference-inspired design layer. All existing upload, chat, translation,
+    # knowledge-base, API and download handlers above remain unchanged.
+    st.markdown("""
+    <style>
+    [data-testid="stAppViewContainer"]:has(.doc-page) {
+      background:#ffffff !important;
+      background-color:#ffffff !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stHeader"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stToolbar"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stDecoration"] {
+      background:#ffffff !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stMainBlockContainer"] {
+      max-width:1500px !important;
+      padding:1rem 2rem 3rem !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .docs-reference-hero {
+      display:grid !important;
+      grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr) !important;
+      align-items:center !important;
+      min-height:245px !important;
+      gap:22px !important;
+      overflow:hidden !important;
+      padding:25px 34px !important;
+      margin:0 0 22px !important;
+      border:1px solid #d5eddb !important;
+      border-radius:25px !important;
+      background:
+        radial-gradient(ellipse at 80% 45%,rgba(64,225,112,.17),transparent 28%),
+        radial-gradient(ellipse at 98% 0%,rgba(180,245,197,.55),transparent 34%),
+        linear-gradient(115deg,#f5fff7 0%,#fff 54%,#effcf3 100%) !important;
+      box-shadow:0 6px 0 #e4f3e8,0 18px 38px rgba(18,115,55,.08) !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .docs-reference-eyebrow {
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 15px;border:1px solid #d3edda;border-radius:99px;
+      background:linear-gradient(145deg,#fff,#effbf2);
+      box-shadow:0 3px 0 #e2f2e6,0 7px 13px #16834a10;
+      color:#138342 !important;font-size:11px;font-weight:900;letter-spacing:1.2px;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .docs-reference-hero h1 {
+      color:#102f1e !important;font-size:clamp(31px,3vw,45px) !important;
+      line-height:1.08 !important;font-weight:900 !important;letter-spacing:-1.2px !important;
+      margin:15px 0 10px !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .docs-reference-hero h1 span {
+      color:#159447 !important;-webkit-text-fill-color:#159447 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .docs-reference-hero p {
+      color:#496653 !important;-webkit-text-fill-color:#496653 !important;
+      font-size:15px !important;line-height:1.6 !important;max-width:700px !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .docs-reference-pills {
+      display:flex;flex-wrap:wrap;gap:9px;margin-top:17px;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .docs-reference-pills .doc-pill {
+      padding:8px 13px !important;border:1px solid #d3edda !important;
+      border-radius:99px !important;background:linear-gradient(145deg,#fff,#effbf2) !important;
+      box-shadow:0 3px 0 #e2f2e6,0 7px 13px #16834a10 !important;
+      color:#1d5833 !important;font-size:11px !important;font-weight:800 !important;
+    }
+    .docs-reference-art {
+      position:relative;display:grid;place-items:center;height:205px;min-width:250px;
+      perspective:900px;isolation:isolate;
+    }
+    .docs-art-platform {
+      position:absolute;bottom:12px;width:215px;height:25px;border-radius:50%;
+      background:linear-gradient(180deg,#fff,#bfe9cb);border:1px solid #b7e6c4;
+      box-shadow:0 8px 0 #e1f3e6,0 13px 20px #15944725;
+    }
+    .docs-art-folder {
+      position:relative;z-index:2;width:150px;height:108px;border-radius:18px 18px 23px 23px;
+      display:grid;place-items:center;font-size:57px;color:#eaffef;
+      background:linear-gradient(145deg,#70f18c 0%,#1fc65a 45%,#07843c 100%);
+      border:2px solid #9af4ae;
+      box-shadow:inset 8px 8px 13px #ffffff80,inset -12px -13px 18px #00682c50,
+      0 12px 0 #b9e8c6,0 23px 28px #087c3b30;
+      transform:rotateY(-13deg) rotateX(7deg);animation:docsRefFloat 4s ease-in-out infinite;
+    }
+    .docs-art-folder:before {
+      content:"";position:absolute;top:-17px;left:13px;width:68px;height:23px;
+      border-radius:10px 10px 0 0;background:linear-gradient(180deg,#78ef91,#27c85d);
+    }
+    .docs-art-paper {
+      position:absolute;z-index:3;top:8px;right:20%;width:78px;height:103px;
+      border-radius:10px;background:linear-gradient(145deg,#fff,#eaf8ee);
+      border:1px solid #cce8d3;box-shadow:0 8px 17px #075b2a25;
+      transform:rotate(8deg);animation:docsRefPaper 5s ease-in-out infinite;
+    }
+    .docs-art-paper i {
+      position:absolute;left:15px;right:13px;height:7px;border-radius:8px;background:#a8dcb6;
+    }
+    .docs-art-paper i:nth-child(1){top:30px}
+    .docs-art-paper i:nth-child(2){top:47px}
+    .docs-art-paper i:nth-child(3){top:64px}
+    .docs-art-orbit {
+      position:absolute;width:250px;height:80px;border:2px solid #4ddc8170;
+      border-radius:50%;transform:rotate(-17deg);animation:docsRefOrbit 12s linear infinite;
+    }
+    .docs-art-orbit-b {width:225px;height:95px;transform:rotate(24deg);border-color:#a2e9b580;animation-duration:16s;animation-direction:reverse}
+    .docs-art-file {
+      position:absolute;z-index:4;padding:5px 8px;border-radius:7px;background:#fff;
+      font-size:10px;font-weight:950;box-shadow:0 5px 12px #075b2a20;
+    }
+    .docs-art-pdf {top:12px;left:12%;color:#e33b3b;border:1px solid #ffd2d2;transform:rotate(12deg)}
+    .docs-art-doc {right:7%;bottom:48px;color:#315de0;border:1px solid #d4ddff;transform:rotate(10deg)}
+    .docs-art-spark {position:absolute;right:11%;top:15px;color:#22c55e;font-size:26px;text-shadow:0 0 15px #6ef29a}
+    @keyframes docsRefFloat {0%,100%{transform:translateY(0) rotateY(-13deg) rotateX(7deg)}50%{transform:translateY(-9px) rotateY(8deg) rotateX(2deg)}}
+    @keyframes docsRefPaper {0%,100%{transform:translateY(0) rotate(8deg)}50%{transform:translateY(-8px) rotate(3deg)}}
+    @keyframes docsRefOrbit {from{rotate:0deg}to{rotate:360deg}}
+
+    /* Match the reference's pale green uploader while keeping the real uploader widget. */
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_upload_panel,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_examples_container {
+      background:linear-gradient(145deg,#f3fff6,#ffffff) !important;
+      border:1px solid #ccebd5 !important;border-radius:20px !important;
+      box-shadow:0 7px 0 #e5f3e9,0 14px 25px rgba(20,110,55,.07) !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_upload_panel {
+      padding:18px !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_upload_panel [data-testid="stFileUploader"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_upload_panel [data-testid="stFileUploaderDropzone"] {
+      background:
+        radial-gradient(ellipse at 10% 80%,rgba(119,238,151,.18),transparent 28%),
+        radial-gradient(ellipse at 94% 12%,rgba(171,246,189,.32),transparent 30%),
+        linear-gradient(110deg,#f0fff4,#fff 52%,#effcf2) !important;
+      border:1.5px dashed #35c86b !important;border-radius:19px !important;
+      min-height:155px !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_upload_panel [data-testid="stFileUploaderDropzoneInstructions"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_upload_panel [data-testid="stFileUploaderDropzoneInstructions"] *,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_upload_panel [data-testid="stFileUploaderDropzone"] small {
+      color:#315b40 !important;-webkit-text-fill-color:#315b40 !important;opacity:1 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_upload_panel [data-testid="stFileUploaderDropzone"] button {
+      background:linear-gradient(110deg,#18b653,#08763a) !important;
+      color:#fff !important;-webkit-text-fill-color:#fff !important;
+      border:1px solid #55df7b !important;border-radius:999px !important;
+      box-shadow:0 5px 0 #cdebd5,0 10px 20px #15944735 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_upload_panel [data-testid="stFileUploaderDropzone"] button * {
+      color:#fff !important;-webkit-text-fill-color:#fff !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-section-heading,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-examples-heading {
+      color:#173d28 !important;-webkit-text-fill-color:#173d28 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-section-sub,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-muted {
+      color:#607568 !important;-webkit-text-fill-color:#607568 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-benefit {
+      background:linear-gradient(145deg,#fff,#f4fcf6) !important;
+      border:1px solid #d3ecda !important;border-radius:17px !important;
+      box-shadow:0 5px 0 #e3f2e7,0 12px 22px #16834a10 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-benefit strong {color:#173d28 !important}
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-benefit p {color:#607568 !important}
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-footer {
+      color:#617568 !important;border-color:#d4e5d8 !important;
+    }
+    @media(max-width:850px) {
+      [data-testid="stAppViewContainer"]:has(.doc-page) .docs-reference-hero {grid-template-columns:1fr !important;padding:23px !important}
+      .docs-reference-art {height:155px;min-width:0}
+    }
+    @media(max-width:600px) {
+      [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stMainBlockContainer"] {padding:1rem .8rem 2rem !important}
+      [data-testid="stAppViewContainer"]:has(.doc-page) .docs-reference-hero h1 {font-size:30px !important}
+    }
+    @media(prefers-reduced-motion:reduce) {
+      .docs-art-folder,.docs-art-paper,.docs-art-orbit {animation:none !important}
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+
+
+    # Final design override: bright white/mint Documents Studio, matching the
+    # supplied reference. All existing Streamlit upload and processing widgets
+    # remain native and functional.
+    st.markdown("""
+    <style>
+    [data-testid="stAppViewContainer"]:has(.doc-page),
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main,
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stMain"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stMainBlockContainer"] {
+      background:#ffffff !important;
+      color:#173b26 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stMainBlockContainer"] {
+      max-width:1500px !important;
+      padding:1.5rem 2rem 3rem !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-hero-redesign {
+      background:linear-gradient(112deg,#ffffff 0%,#f5fff7 58%,#e5f8eb 100%) !important;
+      border:1px solid #ccebd5 !important;
+      border-radius:24px !important;
+      box-shadow:0 12px 30px rgba(22,120,62,.09) !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-hero-redesign h1,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-hero-redesign h1 *,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-section-heading,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-workspace-step {
+      color:#123b23 !important;
+      -webkit-text-fill-color:#123b23 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-hero-redesign p,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-section-sub,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-workspace-help,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-muted {
+      color:#526b5b !important;
+      -webkit-text-fill-color:#526b5b !important;
+      opacity:1 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_upload_panel,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_examples_container {
+      background:linear-gradient(145deg,#ffffff,#f5fff7) !important;
+      border:1px solid #cfe9d6 !important;
+      border-radius:20px !important;
+      padding:20px !important;
+      box-shadow:0 5px 0 #e6f4e9,0 14px 28px rgba(20,110,55,.07) !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_upload_panel [data-testid="stFileUploader"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_upload_panel [data-testid="stFileUploaderDropzone"] {
+      background:
+        radial-gradient(ellipse at 8% 85%,rgba(112,235,146,.18),transparent 30%),
+        radial-gradient(ellipse at 95% 10%,rgba(164,245,183,.28),transparent 31%),
+        linear-gradient(110deg,#f1fff5,#ffffff 52%,#effcf2) !important;
+      border:1.5px dashed #32bf65 !important;
+      border-radius:18px !important;
+      min-height:160px !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_upload_panel [data-testid="stFileUploaderDropzoneInstructions"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_upload_panel [data-testid="stFileUploaderDropzoneInstructions"] *,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_upload_panel [data-testid="stFileUploaderDropzone"] small {
+      color:#315b40 !important;
+      -webkit-text-fill-color:#315b40 !important;
+      opacity:1 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_upload_panel [data-testid="stFileUploaderDropzone"] button {
+      background:linear-gradient(110deg,#18b653,#08763a) !important;
+      color:#ffffff !important;
+      -webkit-text-fill-color:#ffffff !important;
+      border:1px solid #55df7b !important;
+      border-radius:999px !important;
+      box-shadow:0 4px 0 #cdebd5,0 9px 18px rgba(21,148,71,.2) !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_upload_panel [data-testid="stFileUploaderDropzone"] button * {
+      color:#ffffff !important;-webkit-text-fill-color:#ffffff !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stTabs"] [role="tablist"] {
+      gap:10px !important;
+      border-bottom:1px solid #d7eadc !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stTabs"] button[role="tab"] {
+      background:#ffffff !important;
+      border:1px solid #d7eadc !important;
+      border-radius:13px 13px 0 0 !important;
+      min-height:48px !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stTabs"] button[role="tab"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stTabs"] button[role="tab"] * {
+      color:#234b32 !important;
+      -webkit-text-fill-color:#234b32 !important;
+      opacity:1 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stTabs"] button[aria-selected="true"] {
+      background:#e7f8ec !important;
+      border-color:#9bd6ad !important;
+      box-shadow:inset 0 -3px 0 #159957 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stTabs"] button[aria-selected="true"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stTabs"] button[aria-selected="true"] * {
+      color:#123b23 !important;-webkit-text-fill-color:#123b23 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-file-card,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-benefit {
+      background:linear-gradient(145deg,#ffffff,#f5fff7) !important;
+      border:1px solid #d2ead9 !important;
+      box-shadow:0 5px 0 #e7f4ea,0 10px 20px rgba(20,110,55,.06) !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-file-name,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-benefit strong {
+      color:#173d28 !important;-webkit-text-fill-color:#173d28 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-file-size,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-benefit p {
+      color:#607568 !important;-webkit-text-fill-color:#607568 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .stButton button[kind="primary"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) .stDownloadButton button {
+      background:linear-gradient(100deg,#18b653,#08763a) !important;
+      color:#ffffff !important;-webkit-text-fill-color:#ffffff !important;
+      border:1px solid #159957 !important;border-radius:12px !important;
+      box-shadow:0 4px 0 #d5efdc,0 8px 16px rgba(21,148,71,.15) !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .stButton button[kind="primary"] *,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .stDownloadButton button * {
+      color:#ffffff !important;-webkit-text-fill-color:#ffffff !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-baseweb="select"] > div,
+    [data-testid="stAppViewContainer"]:has(.doc-page) input,
+    [data-testid="stAppViewContainer"]:has(.doc-page) textarea {
+      background:#ffffff !important;
+      color:#173b26 !important;-webkit-text-fill-color:#173b26 !important;
+      border-color:#cbded0 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-footer {
+      color:#617568 !important;border-color:#d4e5d8 !important;
+    }
+    @keyframes docUploadFloat {
+      0%,100% { transform:translateY(0); }
+      50% { transform:translateY(-5px); }
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .docs-art-folder,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .docs-art-paper {
+      animation:docUploadFloat 4.5s ease-in-out infinite !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .docs-art-orbit {
+      animation:docsRefOrbit 13s linear infinite !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-benefit {
+      transition:transform .22s ease,box-shadow .22s ease !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-benefit:hover {
+      transform:translateY(-5px) !important;
+      box-shadow:0 8px 0 #e2f3e7,0 17px 26px rgba(20,110,55,.12) !important;
+    }
+    @media(prefers-reduced-motion:reduce) {
+      [data-testid="stAppViewContainer"]:has(.doc-page) * {animation:none !important;transition:none !important;}
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    # Final, single-source readability layer. This is intentionally emitted
+    # after all legacy page styles so old dark-theme rules cannot hide text.
+    st.markdown("""
+    <style>
+    [data-testid="stAppViewContainer"]:has(.doc-page) {
+        background: #ffffff !important;
+        background-image: radial-gradient(circle at 92% 4%, #eaf8ee 0, transparent 27%) !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stMain"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stMainBlockContainer"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main {
+        background: transparent !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stMainBlockContainer"] {
+        max-width: 1440px !important;
+        padding-top: 1.5rem !important;
+        padding-bottom: 3rem !important;
+    }
+
+    /* Main headings and body copy */
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-hero,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-hero-redesign {
+        background: linear-gradient(120deg, #ffffff 0%, #f1fbf4 100%) !important;
+        border: 1px solid #cfe7d5 !important;
+        box-shadow: 0 12px 32px rgba(23, 91, 48, .08) !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-hero h1,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-section-heading,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-workspace-step,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-translate-panel-title,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-examples-heading {
+        color: #123b24 !important;
+        -webkit-text-fill-color: #123b24 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-hero p,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-section-sub,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-muted,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-translate-help,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-workspace-help,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-file-size {
+        color: #52685a !important;
+        -webkit-text-fill-color: #52685a !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-eyebrow,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .docs-reference-eyebrow {
+        color: #08783d !important;
+        -webkit-text-fill-color: #08783d !important;
+    }
+
+    /* All work panels use a clean white surface */
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_upload_panel,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_knowledge_panel,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_translation_panel,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-panel,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-examples-heading,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .st-key-doc_examples_container {
+        background: #ffffff !important;
+        background-image: none !important;
+        border: 1px solid #d5e8da !important;
+        border-radius: 17px !important;
+        color: #173b26 !important;
+        box-shadow: 0 7px 22px rgba(24, 74, 43, .06) !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-callout,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-first-use {
+        background: #effaf2 !important;
+        border: 1px solid #c9e7d1 !important;
+        color: #244b32 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-callout *,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-first-use * {
+        color: #244b32 !important;
+        -webkit-text-fill-color: #244b32 !important;
+    }
+
+    /* Uploader: pale green surface with readable instructions and button */
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stFileUploader"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stFileUploaderDropzone"] {
+        background: #f4fbf6 !important;
+        background-color: #f4fbf6 !important;
+        border: 1px dashed #79b88e !important;
+        border-radius: 14px !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stFileUploader"] *,
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stFileUploaderDropzoneInstructions"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stFileUploaderDropzoneInstructions"] *,
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stFileUploader"] small {
+        color: #244b32 !important;
+        -webkit-text-fill-color: #244b32 !important;
+        opacity: 1 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stFileUploaderDropzone"] button,
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stFileUploaderDropzone"] button * {
+        background: #168447 !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        border-color: #168447 !important;
+        opacity: 1 !important;
+    }
+
+    /* Tabs */
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stTabs"] [role="tablist"] {
+        gap: 9px !important;
+        border-bottom: 1px solid #d7e8dc !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stTabs"] button[role="tab"] {
+        background: #ffffff !important;
+        border: 1px solid #d7e8dc !important;
+        border-radius: 12px 12px 0 0 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stTabs"] button[role="tab"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stTabs"] button[role="tab"] * {
+        color: #234b32 !important;
+        -webkit-text-fill-color: #234b32 !important;
+        opacity: 1 !important;
+        font-weight: 700 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-testid="stTabs"] button[aria-selected="true"] {
+        background: #e8f8ed !important;
+        border-color: #9bd5ad !important;
+        box-shadow: inset 0 -3px 0 #159957 !important;
+    }
+
+    /* Select boxes and text inputs: white surface, dark text */
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-baseweb="select"] > div,
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-baseweb="input"] > div,
+    [data-testid="stAppViewContainer"]:has(.doc-page) input,
+    [data-testid="stAppViewContainer"]:has(.doc-page) textarea {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        color: #173b26 !important;
+        -webkit-text-fill-color: #173b26 !important;
+        border-color: #bfd8c6 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-baseweb="select"] span,
+    [data-testid="stAppViewContainer"]:has(.doc-page) [data-baseweb="select"] svg {
+        color: #173b26 !important;
+        fill: #173b26 !important;
+        -webkit-text-fill-color: #173b26 !important;
+    }
+    [data-baseweb="popover"] [role="listbox"],
+    [data-baseweb="popover"] [role="option"],
+    [data-baseweb="popover"] [role="option"] * {
+        background: #ffffff !important;
+        color: #173b26 !important;
+        -webkit-text-fill-color: #173b26 !important;
+    }
+
+    /* Labels, markdown and captions */
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main label,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main label *,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main [data-testid="stWidgetLabel"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main [data-testid="stWidgetLabel"] *,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main [data-testid="stMarkdownContainer"] p,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main [data-testid="stCaptionContainer"] * {
+        color: #294b35 !important;
+        -webkit-text-fill-color: #294b35 !important;
+        opacity: 1 !important;
+    }
+
+    /* Buttons */
+    [data-testid="stAppViewContainer"]:has(.doc-page) .stButton button,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .stDownloadButton button {
+        border-radius: 11px !important;
+        min-height: 44px !important;
+        font-weight: 700 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .stButton button[kind="primary"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) .stButton button[kind="primary"] *,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .stDownloadButton button,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .stDownloadButton button * {
+        background: #168447 !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        border-color: #168447 !important;
+        opacity: 1 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .stButton button:disabled {
+        background: #e5eee8 !important;
+        color: #607568 !important;
+        -webkit-text-fill-color: #607568 !important;
+        border-color: #d0dfd4 !important;
+        opacity: 1 !important;
+    }
+
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-file-card,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-benefit {
+        background: #ffffff !important;
+        border: 1px solid #d5e8da !important;
+        box-shadow: 0 5px 16px rgba(24, 74, 43, .06) !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-file-name,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-benefit strong {
+        color: #173b26 !important;
+        -webkit-text-fill-color: #173b26 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-file-size,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-benefit p,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .doc-footer {
+        color: #607568 !important;
+        -webkit-text-fill-color: #607568 !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        [data-testid="stAppViewContainer"]:has(.doc-page) * {
+            animation: none !important;
+            transition: none !important;
+        }
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+
+
+    # FINAL OVERRIDE: repair faded labels and the native Streamlit upload control.
+    # This block intentionally comes last so it wins over legacy theme rules.
+    st.markdown("""
+    <style>
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main .doc-workspace-step,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main .doc-translate-panel-title,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main .doc-section-heading,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main .doc-examples-heading,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main .doc-chat-title,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main .doc-chat-title * {
+        color: #123b24 !important;
+        -webkit-text-fill-color: #123b24 !important;
+        opacity: 1 !important;
+        text-shadow: none !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main .doc-workspace-help,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main .doc-translate-help,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main .doc-section-sub,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main .doc-muted,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main .doc-translate-heading p {
+        color: #52685a !important;
+        -webkit-text-fill-color: #52685a !important;
+        opacity: 1 !important;
+        text-shadow: none !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main .st-key-doc_upload_panel,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main .st-key-doc_knowledge_panel,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main .st-key-doc_translation_panel {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        color: #173b26 !important;
+        border: 1px solid #d5e8da !important;
+        border-radius: 18px !important;
+        box-shadow: 0 8px 24px rgba(24,74,43,.07) !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main [data-testid="stFileUploader"] {
+        background: transparent !important;
+        background-color: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        color: #244b32 !important;
+        padding: 8px 0 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main [data-testid="stFileUploaderDropzone"] {
+        background: linear-gradient(135deg,#f8fdf9 0%,#edf8f0 100%) !important;
+        background-color: #f4faf6 !important;
+        border: 1.5px dashed #63ad7c !important;
+        border-radius: 15px !important;
+        min-height: 116px !important;
+        color: #244b32 !important;
+        opacity: 1 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main [data-testid="stFileUploaderDropzone"] *,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main [data-testid="stFileUploaderDropzoneInstructions"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main [data-testid="stFileUploaderDropzoneInstructions"] * {
+        color: #244b32 !important;
+        -webkit-text-fill-color: #244b32 !important;
+        opacity: 1 !important;
+        text-shadow: none !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main [data-testid="stFileUploaderDropzone"] button,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main [data-testid="stFileUploaderDropzone"] button:hover,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main [data-testid="stFileUploaderDropzone"] button:focus,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main [data-testid="stFileUploaderDropzone"] button:active {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        min-height: 42px !important;
+        padding: 0 18px !important;
+        background: linear-gradient(135deg,#168447,#0e6f3b) !important;
+        background-color: #168447 !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        border: 1px solid #168447 !important;
+        border-radius: 10px !important;
+        box-shadow: 0 3px 9px rgba(23,107,60,.16) !important;
+        opacity: 1 !important;
+        text-shadow: none !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main [data-testid="stFileUploaderDropzone"] button *,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main [data-testid="stFileUploaderDropzone"] button svg {
+        color: #ffffff !important;
+        fill: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main [data-testid="stWidgetLabel"],
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main [data-testid="stWidgetLabel"] *,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main label,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main label * {
+        color: #244b32 !important;
+        -webkit-text-fill-color: #244b32 !important;
+        opacity: 1 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main [data-baseweb="select"] > div {
+        background: #ffffff !important;
+        border: 1px solid #bfd8c6 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main [data-baseweb="select"] input,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main [data-baseweb="select"] span,
+    [data-testid="stAppViewContainer"]:has(.doc-page) .main [data-baseweb="select"] svg {
+        color: #173b26 !important;
+        fill: #173b26 !important;
+        -webkit-text-fill-color: #173b26 !important;
+        opacity: 1 !important;
     }
     </style>
     """, unsafe_allow_html=True)

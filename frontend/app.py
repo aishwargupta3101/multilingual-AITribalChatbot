@@ -4,6 +4,7 @@ from components.sidebar import show_sidebar
 from views.home import show_home
 from views.chat import show_chat_page
 from views.documents import show_documents_page
+from views.translate import show_translate_page
 from views.voice import show_voice_page
 from views.history import show_history_page
 from views.settings import show_settings_page
@@ -12,33 +13,46 @@ from utils.professional_ui import apply_professional_ui
 from views.video_learning import show_video_learning_page
 from views.education import show_education_page
 from views.presentation_generator import show_presentation_generator_page
+from views.chapter_learning import show_chapter_learning_page
 
 st.set_page_config(
     page_title="Tribal AI Chatbot",
     page_icon="🌿",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
 )
 initialize_session()
+
+# Keep all existing workspaces and add Chapter Learning as a tool workspace.
 VALID_PAGES = {
     "🏠 Home",
     "💬 Chat",
     "📄 Documents",
+    "🌐 Language Studio",
     "🎤 Voice",
     "📜 History",
     "⚙ Settings",
     "🎓 Video Learning",
     "🌿 Education Assistant",
     "📊 Presentation Generator",
+    "📘 Chapter Learning",
 }
+
 if st.session_state.get("selected_page") in (None, "", "Home"):
     st.session_state.selected_page = "🏠 Home"
 elif st.session_state.get("selected_page") not in VALID_PAGES:
     st.session_state.selected_page = "🏠 Home"
-if st.session_state.get("sidebar_navigation") not in VALID_PAGES:
-    st.session_state.sidebar_navigation = st.session_state.selected_page
 
-# Defensive initialization for chat components that append to this list.
+# Sidebar navigation intentionally stays on the existing five primary pages.
+# Tool pages are opened through the (+) Tools menu and keep Chat as context.
+PRIMARY_PAGES = {"🏠 Home", "💬 Chat", "🎤 Voice", "📜 History", "⚙ Settings"}
+if st.session_state.get("sidebar_navigation") not in PRIMARY_PAGES:
+    st.session_state.sidebar_navigation = (
+        st.session_state.selected_page
+        if st.session_state.selected_page in PRIMARY_PAGES
+        else "💬 Chat"
+    )
+
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
@@ -46,13 +60,15 @@ apply_professional_ui()
 apply_custom_css()
 show_sidebar()
 
-page = st.session_state.selected_page
+page = st.session_state.get("selected_page", "💬 Chat")
 if page == "🏠 Home":
     show_home()
 elif page == "💬 Chat":
     show_chat_page()
 elif page == "📄 Documents":
     show_documents_page()
+elif page == "🌐 Language Studio":
+    show_translate_page()
 elif page == "🎤 Voice":
     show_voice_page()
 elif page == "📜 History":
@@ -65,3 +81,5 @@ elif page == "🌿 Education Assistant":
     show_education_page()
 elif page == "📊 Presentation Generator":
     show_presentation_generator_page()
+elif page == "📘 Chapter Learning":
+    show_chapter_learning_page()

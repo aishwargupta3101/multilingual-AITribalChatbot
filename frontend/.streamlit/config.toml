@@ -1,3 +1,4 @@
+
 [theme]
 primaryColor="#2E8B57"
 backgroundColor="#F8F9FA"
@@ -16,3 +17,6 @@ enableWebsocketCompression=false
 serverAddress="localhost"
 serverPort=8501
 gatherUsageStats=false
+
+[secrets]
+files = ["/etc/secrets/secrets.toml"]

@@ -40,10 +40,13 @@ sentencepiece==0.2.1
 accelerate==1.14.0
 peft==0.19.1
 PyMuPDF==1.28.2
+
 # Scientific
 numpy==1.26.4
 scipy==1.13.1
 pandas==1.5.3
+pyarrow==24.0.0
+protobuf==5.29.5
 
 # Translation
 langdetect==1.0.9
@@ -57,7 +60,7 @@ ctranslate2==4.8.1
 av==17.1.0
 onnxruntime==1.23.2
 
-
+# Audio
 soundfile==0.14.0
 librosa==0.10.0
 pydub==0.25.1
@@ -69,7 +72,6 @@ pdfminer.six==20260107
 pdfplumber==0.11.10
 python-docx==1.2.0
 python-pptx==1.0.2
-
 
 # HTTP
 requests==2.34.2
@@ -89,10 +91,14 @@ rich==15.0.0
 psutil==7.2.2
 packaging==24.2
 tqdm==4.68.4
+
+# Streamlit frontend
 streamlit==1.61.0
 streamlit-mic-recorder
+streamlit-google-auth
+streamlit-cookies-manager
 
-# Text-to-Speech
+# Text-to-Speech and additional services
 gTTS
 mcp==1.30.0
 meiteitobangla==1.1.1
@@ -102,11 +108,9 @@ python-docx
 reportlab
 onnx-asr[cpu,hub]
 
-
+# Authentication
 starlette==1.4.1
 pwdlib[argon2]
 PyJWT
 google-auth
 email-validator
-streamlit-google-auth
-streamlit-cookies-manager

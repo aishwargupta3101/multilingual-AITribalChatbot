@@ -114,3 +114,4 @@ pwdlib[argon2]
 PyJWT
 google-auth
 email-validator
+Authlib>=1.3.2

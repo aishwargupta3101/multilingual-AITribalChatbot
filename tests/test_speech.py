@@ -1,11 +1,12 @@
-from tests.conftest import client
-def test_speech():
-    payload ={
-        "language":"English"
+def test_translation(client):
+    payload = {
+        "text": "Hello",
+        "source_language": "English",
+        "target_language": "Hindi"
     }
     response = client.post(
-        "/api/v1/speech/",
+        "/api/v1/translation/",
         json=payload
     )
-    assert response.status_code ==200
+    assert response.status_code == 200
     assert response.json()["success"] is True

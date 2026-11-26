@@ -208,3 +208,12 @@ xlit/.git_xlit_backup/
 # Local transliteration repositories and data
 xlit/
 xlit_backup/
+# Local secrets
+frontend/.streamlit/secrets.toml
+
+# Local virtual environments
+.venv_desktop/
+modal-env/
+
+# Local backup files
+*_backup*.py

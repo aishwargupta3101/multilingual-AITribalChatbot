@@ -13,4 +13,9 @@ async def create_indexes():
         unique=True,
         name="video_lesson_cache_lookup_unique",
     )
+    await database["users"].create_index(
+        [("email", 1)],
+        unique=True,
+        name="users_email_unique",
+    )
     logger.info("MongoDB indexes created.")

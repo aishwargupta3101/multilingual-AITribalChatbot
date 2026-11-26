@@ -111,3 +111,9 @@ python-docx
 reportlab
 
 onnx-asr[cpu,hub]
+pwdlib[argon2]
+PyJWT
+google-auth
+email-validator
+streamlit-google-auth
+streamlit-cookies-manager

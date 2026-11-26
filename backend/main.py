@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from backend.api.router import api_router
+from backend.auth.auth_routes import router as auth_router
 from backend.api.translation import router as translation_router
 from backend.config.logger import logger
 from backend.config.settings import settings
@@ -57,6 +58,7 @@ app.add_middleware(RequestIDMiddleware)
 app.add_middleware(TimerMiddleware)
 app.add_middleware(LoggingMiddleware)
 app.include_router(api_router)
+app.include_router(auth_router)
 app.include_router(translation_router)
 app.include_router(speech_router)
 app.include_router(tts_router)

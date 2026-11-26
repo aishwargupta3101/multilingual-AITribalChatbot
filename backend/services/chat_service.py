@@ -408,13 +408,13 @@ RESPONSE STYLE:
             return ""
         finally:
             await mcp_service.disconnect()
-    async def _process_document_chat(self, request: ChatRequest, on_token=None):
+    async def _process_document_chat(self, request: ChatRequest, user_id: str, on_token=None):
         """Isolated document-only chat; never falls back to general/Tai Khamti RAG."""
         selected_language = translation_service.normalize_language(
             request.language or "english"
         )
         question = request.question.strip()[:2000]
-        document = await document_repository.get_document_by_id(request.document_id)
+        document = await document_repository.get_document_by_id(request.document_id, user_id)
         if not document or document.get("session_id") != request.session_id:
             return ResponseBuilder.success(
                 message="Document not found for this session.",
@@ -528,9 +528,9 @@ RESPONSE STYLE:
                   "sources": sources, "images": [], "timestamp": str(datetime.now())},
         )
 
-    async def process_chat(self, request: ChatRequest, on_token=None):
+    async def process_chat(self, request: ChatRequest, user_id: str, on_token=None):
         if request.document_id:
-            return await self._process_document_chat(request, on_token=on_token)
+            return await self._process_document_chat(request, user_id=user_id, on_token=on_token)
         start_time = time.time()
         original_question = request.question.strip()[:2000]
         selected_language = translation_service.normalize_language(
@@ -573,11 +573,12 @@ RESPONSE STYLE:
             selected_language,
         )
         # Session management
-        await session_repository.create_session(request.session_id)
-        await session_repository.update_activity(request.session_id)
-        history = await chat_repository.get_recent_message(
-            request.session_id
-        )
+        session = await session_repository.create_session(request.session_id, user_id)
+        if not session:
+            from fastapi import HTTPException
+            raise HTTPException(status_code=404, detail="Session not found")
+        await session_repository.update_activity(request.session_id, user_id)
+        history = await chat_repository.get_recent_message(request.session_id, user_id)
         conversation = []
         for message in history:
             role = message["role"]
@@ -1306,6 +1307,7 @@ RESPONSE STYLE:
         )
         await chat_repository.save_message(
             session_id=request.session_id,
+            user_id=user_id,
             role="user",
             message=original_question,
             language=request.language,
@@ -1313,6 +1315,7 @@ RESPONSE STYLE:
         if not generation_failed:
             await chat_repository.save_message(
                 session_id=request.session_id,
+                user_id=user_id,
                 role="assistant",
                 message=answer,
                 language=request.language,

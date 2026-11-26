@@ -1,11 +1,19 @@
 
 import logging
+import streamlit as st
 import requests
 from api.endpoints import BASE_URL
 import json
 logger = logging.getLogger(__name__)
 
 class APIClient:
+    @staticmethod
+    def _auth_headers():
+        token = st.session_state.get("auth_token")
+        if not token:
+            raise RuntimeError("Please sign in to continue.")
+        return {"Authorization": f"Bearer {token}"}
+
 
     @staticmethod
     def upload_audio(endpoint, audio_path, language="english"):
@@ -244,6 +252,7 @@ class APIClient:
                     "session_id": session_id,
                     "language": language,
                 },
+                headers=APIClient._auth_headers(),
                 timeout=300,
             )
 
@@ -305,6 +314,7 @@ class APIClient:
                     "session_id": session_id,
                     "language": language.lower().strip(),
                 },
+                headers=APIClient._auth_headers(),
                 timeout=(20, 900),
             )
 
@@ -349,6 +359,7 @@ class APIClient:
             response = requests.post(
                 url,
                 json=payload,
+                headers=APIClient._auth_headers(),
                 timeout=(20, 900),
             )
 
@@ -395,6 +406,7 @@ class APIClient:
                     "session_id": session_id,
                     "language": language,
                 },
+                headers=APIClient._auth_headers(),
                 stream=True,
                 timeout=(10, 600),
             ) as response:

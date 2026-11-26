@@ -1,4 +1,5 @@
 from functools import lru_cache
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     APP_NAME : str ="Tribal AI Chatbot"
@@ -31,9 +32,6 @@ class Settings(BaseSettings):
     GROQ_TOP_P: float | None = None
 
     LLM_FALLBACK_TO_OLLAMA: bool = False
-
-    # Optional RunPod Serverless IndicTrans2 GPU backend.
-    # Empty credentials keep the existing local IndicTrans2 backend active.
     RUNPOD_ENDPOINT_ID: str = ""
     RUNPOD_API_KEY: str = ""
     RUNPOD_TIMEOUT_SECONDS: float = 600.0
@@ -49,7 +47,10 @@ class Settings(BaseSettings):
     WEB_SEARCH_MAX_CONTEXT_CHARS: int = 6000
     ALLOWED_FILE_TYPES:str
     OLLAMA_BASE_URL: str = "http://127.0.0.1:11434"
-    OLLAMA_PROXY_TOKEN: str = ""
+    AUTH_SECRET_KEY: str = Field(min_length=32)
+    AUTH_ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
+    AUTH_TOKEN_ISSUER: str = "tribal-ai"
+    GOOGLE_CLIENT_ID: str = ""
     model_config = SettingsConfigDict(
         env_file=".env",
         case_sensitive=True,

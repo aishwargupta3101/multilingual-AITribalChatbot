@@ -1,24 +1,16 @@
 from datetime import datetime
-
 from backend.database.collections import collections
 
 
 class DocumentRepository:
-    async def save_document(
-        self,
-        session_id: str,
-        document_id: str,
-        original_filename: str,
-        filename: str,
-        file_path: str,
-        vector_db_path: str,
-        file_size: int,
-        file_type: str,
-        language: str = "english",
-    ):
+    async def save_document(self, session_id: str, user_id: str, document_id: str,
+                            original_filename: str, filename: str, file_path: str,
+                            vector_db_path: str, file_size: int, file_type: str,
+                            language: str = "english"):
         document = {
             "document_id": document_id,
             "session_id": session_id,
+            "user_id": str(user_id),
             "filename": filename,
             "original_filename": original_filename,
             "file_path": file_path,
@@ -32,32 +24,36 @@ class DocumentRepository:
         result = await collections.documents.insert_one(document)
         return str(result.inserted_id)
 
-    async def get_documents(self, session_id: str):
-        cursor = collections.documents.find({"session_id": session_id})
+    async def get_documents(self, session_id: str, user_id: str):
+        cursor = collections.documents.find(
+            {"session_id": session_id, "user_id": str(user_id)}
+        )
         documents = await cursor.to_list(length=100)
         for document in documents:
             document["_id"] = str(document["_id"])
         return documents
 
-    async def get_document_by_id(self, document_id: str):
+    async def get_document_by_id(self, document_id: str, user_id: str):
         document = await collections.documents.find_one(
-            {"document_id": document_id}
+            {"document_id": document_id, "user_id": str(user_id)}
         )
         if document:
             document["_id"] = str(document["_id"])
         return document
 
-    async def get_latest_document(self, session_id: str):
+    async def get_latest_document(self, session_id: str, user_id: str):
         document = await collections.documents.find_one(
-            {"session_id": session_id},
+            {"session_id": session_id, "user_id": str(user_id)},
             sort=[("uploaded_at", -1)],
         )
         if document:
             document["_id"] = str(document["_id"])
         return document
 
-    async def delete_document(self, filename: str):
-        await collections.documents.delete_one({"filename": filename})
+    async def delete_document(self, filename: str, user_id: str):
+        return await collections.documents.delete_one(
+            {"filename": filename, "user_id": str(user_id)}
+        )
 
 
 document_repository = DocumentRepository()

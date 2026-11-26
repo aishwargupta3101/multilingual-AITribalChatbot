@@ -48,3 +48,21 @@ nemo_experiments/
 # OS files
 .DS_Store
 Thumbs.db
+# Local virtual environments
+.venv_desktop/
+modal-env/
+
+# Local backup files
+*_backup*.py
+
+
+# Streamlit secrets in any directory
+**/.streamlit/secrets.toml
+
+# Environment and credential files
+**/.env
+**/.env.*
+**/*credentials*.json
+
+# Local test and development data
+tests/

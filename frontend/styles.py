@@ -4435,6 +4435,22 @@ def apply_custom_css():
 
 
         /* Theme-specific final colors are applied by apply_professional_ui(). */
+
+        /* Tribal AI authentication: high-contrast logout button */
+        section[data-testid="stSidebar"] .stButton > button[kind="primary"] {
+            background: linear-gradient(100deg, #22c55e, #0f9f75) !important;
+            color: #052014 !important;
+            border: 1px solid #86efac !important;
+            font-weight: 800 !important;
+            border-radius: 10px !important;
+            box-shadow: 0 5px 18px rgba(34, 197, 94, .18) !important;
+        }
+        section[data-testid="stSidebar"] .stButton > button[kind="primary"]:hover {
+            background: linear-gradient(100deg, #4ade80, #2dd4bf) !important;
+            color: #052014 !important;
+            transform: translateY(-1px);
+        }
+
         </style>
         """,
         unsafe_allow_html=True

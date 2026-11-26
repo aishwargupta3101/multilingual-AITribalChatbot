@@ -109,3 +109,9 @@ onnx-asr[cpu,hub]
 
 
 starlette==1.4.1
+pwdlib[argon2]
+PyJWT
+google-auth
+email-validator
+streamlit-google-auth
+streamlit-cookies-manager

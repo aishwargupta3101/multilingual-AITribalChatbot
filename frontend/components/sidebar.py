@@ -26,78 +26,61 @@ def html_block(html):
     )
 
 def get_recent_chats(limit=8):
+    """Fetch recent conversations for the currently authenticated user."""
+    token = st.session_state.get("auth_token")
+    if not token:
+        print("Recent chat error: authentication token is missing.")
+        return []
+
     try:
         response = requests.get(
-            f"{BASE_URL}/api/v1/history/recent",
-            params={
-                "limit": limit
-            },
-            timeout=10
+            f"{BASE_URL.rstrip('/')}/api/v1/history/recent",
+            params={"limit": limit},
+            headers={"Authorization": f"Bearer {token}"},
+            timeout=15
         )
         response.raise_for_status()
         data = response.json()
         if data.get("success"):
-            return data.get(
-                "data",
-                []
-            )
+            return data.get("data", [])
         return []
 
-    except Exception as e:
-        print(
-            f"Recent chat error: {e}"
-        )
+    except requests.RequestException as e:
+        print(f"Recent chat error: {e}")
         return []
 
 
 def load_chat(session_id):
+    """Load one conversation using the current user's access token."""
+    token = st.session_state.get("auth_token")
+    if not token:
+        st.error("Please sign in again to load this conversation.")
+        return []
 
     try:
         response = requests.get(
-            f"{BASE_URL}/api/v1/history/{session_id}",
-            timeout=10
+            f"{BASE_URL.rstrip('/')}/api/v1/history/{session_id}",
+            headers={"Authorization": f"Bearer {token}"},
+            timeout=15
         )
         response.raise_for_status()
         data = response.json()
         if not data.get("success"):
             return []
-        history = data.get(
-            "message",
-            []
-        )
+
+        history = data.get("message", [])
         messages = []
         for item in history:
-            role = item.get(
-                "role"
-            )
-            content = item.get(
-                "message",
-                ""
-            )
-            language = item.get(
-                "language",
-                "english"
-            )
-            created_at = item.get(
-                "created_at",
-                ""
-            )
-            messages.append(
-                {
-                    "role": role,
-                    "content": content,
-                    "language": language,
-                    "timestamp": str(
-                        created_at
-                    )
-                }
-            )
+            messages.append({
+                "role": item.get("role"),
+                "content": item.get("message", ""),
+                "language": item.get("language", "english"),
+                "timestamp": str(item.get("created_at", ""))
+            })
         return messages
 
-    except Exception as e:
-        st.error(
-            f"Unable to load conversation: {e}"
-        )
+    except requests.RequestException as e:
+        st.error(f"Unable to load conversation: {e}")
         return []
 
 

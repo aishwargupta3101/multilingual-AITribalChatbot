@@ -4,23 +4,18 @@ from backend.services.translation_service import TranslationService
 from backend.tts.tts_service import TTSService
 from backend.services.health_service import HealthService
 from backend.database.connection import mongodb
-from backend.services.translation_service import (
-    TranslationService,
-    translation_service
-)
-def get_chat_service()-> ChatService:
-    return ChatService()
+from backend.auth.auth_routes import get_current_user
 
+def get_chat_service() -> ChatService:
+    return ChatService()
 def get_speech_service() -> SpeechService:
     return SpeechService()
-
 def get_translation_service() -> TranslationService:
     return TranslationService()
-
 def get_tts_service() -> TTSService:
     return TTSService()
-
 def get_health_service() -> HealthService:
     return HealthService()
 def get_database():
-    return mongodb()
+    # mongodb is a connection manager instance, not a callable.
+    return mongodb.database

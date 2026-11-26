@@ -14,6 +14,7 @@ from views.video_learning import show_video_learning_page
 from views.education import show_education_page
 from views.presentation_generator import show_presentation_generator_page
 from views.chapter_learning import show_chapter_learning_page
+from components.auth_ui import require_authentication, show_user_logout
 
 st.set_page_config(
     page_title="Tribal AI Chatbot",
@@ -22,6 +23,10 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 initialize_session()
+
+# Authentication gate: existing workspaces remain unchanged after sign-in.
+if not require_authentication():
+    st.stop()
 
 # Keep all existing workspaces and add Chapter Learning as a tool workspace.
 VALID_PAGES = {
@@ -59,6 +64,7 @@ if "messages" not in st.session_state:
 apply_professional_ui()
 apply_custom_css()
 show_sidebar()
+show_user_logout()
 
 page = st.session_state.get("selected_page", "💬 Chat")
 if page == "🏠 Home":

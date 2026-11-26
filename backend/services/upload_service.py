@@ -12,6 +12,7 @@ class UploadService:
     async def upload_document(
         self,
         session_id: str,
+        user_id: str,
         language: str,
         file: UploadFile,
     ):
@@ -73,6 +74,7 @@ class UploadService:
         )
         await document_repository.save_document(
             session_id=session_id,
+            user_id=user_id,
             document_id=document_id,
             filename=unique_filename,
             original_filename=file.filename,
